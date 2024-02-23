@@ -32,13 +32,13 @@ TODO
 <details>
   <summary>TODO</summary>
   <table>
-	  <tr>
-	     <td>Before</td>
-	     <td>After</td>
-	  </tr>
+    <tr>
+      <td>Before</td>
+      <td>After</td>
+    </tr>
   <tr>
     <td><video src="enterurlhere" type="video/mp4"></td>
-		<td><video src="enterurlhere" type="video/mp4"></td>
+    <td><video src="enterurlhere" type="video/mp4"></td>
   </tr>
  </table>
 </details>
@@ -47,13 +47,13 @@ TODO
 <details>
   <summary>TODO</summary>
   <table>
-	  <tr>
-	     <td>Before</td>
-	     <td>After</td>
-	  </tr>
+    <tr>
+      <td>Before</td>
+      <td>After</td>
+    </tr>
   <tr>
     <td><img src="enterurlhere" width="300px" height="auto"></td>
-		<td><img src="enterurlhere" width="300px" height="auto"></td>
+    <td><img src="enterurlhere" width="300px" height="auto"></td>
   </tr>
  </table>
 </details>
@@ -62,5 +62,5 @@ TODO
 <details>
   <summary>TODO</summary>
   <img src="enterurlhere" width="300px" height="auto">
-	<video src="enterurlhere" type="video/mp4">
+  <video src="enterurlhere" type="video/mp4">
 </details>
