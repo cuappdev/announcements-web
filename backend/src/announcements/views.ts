@@ -2,7 +2,7 @@ import AnnouncementController from "./controllers";
 import { Router } from "express";
 import { errorJson, successJson } from "../utils/jsonResponses";
 import mongoose from "mongoose";
-import UploadUtils from "../utils/upload";
+import { upload, uploadImage } from "../utils/upload";
 
 const announcementRouter = Router();
 
@@ -15,7 +15,7 @@ announcementRouter.get("/", async (req, res) => {
 
 announcementRouter.put(
   "/edit/:id",
-  UploadUtils.upload.single("image"),
+  upload.single("image"),
   async (req, res) => {
     // #swagger.tags = ['Announcements']
     try {
@@ -26,7 +26,8 @@ announcementRouter.put(
       const buttonText = req.body.buttonText;
       const buttonUrl = req.body.buttonUrl;
       const endDate = req.body.endDate;
-      const imageUrl = req.body.imageUrl;
+      const image = req.body.image;
+      // const imageUrl = req.body.imageUrl;
       const startDate = req.body.startDate;
       const title = req.body.title;
 
@@ -38,7 +39,7 @@ announcementRouter.put(
         !buttonText ||
         !buttonUrl ||
         !endDate ||
-        !imageUrl ||
+        // !imageUrl ||
         !startDate ||
         !title
       ) {
@@ -58,6 +59,13 @@ announcementRouter.put(
         return res.status(400).send(errorJson("No image uploaded"));
       }
 
+      // wait for promise to be resolved
+      const imageUrl = await uploadImage(req.file);
+
+      // check if imageUrl is undefined
+      if (!imageUrl) {
+        return res.status(400).send(errorJson("Image upload failed"));
+      }
       return res
         .status(200)
         .send(

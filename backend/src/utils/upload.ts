@@ -1,5 +1,5 @@
 import { createReadStream, unlinkSync } from "fs";
-import fetch from "node-fetch";
+import fetch from "node-fetch-commonjs";
 import FormData from "form-data";
 import multer, { diskStorage } from "multer";
 import path from "path";
@@ -19,7 +19,7 @@ const storage = diskStorage({
     );
   },
 });
-const upload = multer({ storage });
+export const upload = multer({ storage });
 
 /**
  * Upload an image to our servers
@@ -27,7 +27,7 @@ const upload = multer({ storage });
  * @param image the file that the user sent in their form data request
  * @returns the URl representing the image
  */
-const uploadImage = async (
+export const uploadImage = async (
   image: Express.Multer.File
 ): Promise<string | undefined> => {
   // Upload image via a POST request
@@ -59,7 +59,7 @@ const uploadImage = async (
  * @param imageURL the image URL to remove
  * @returns true if the deletion was successful; otherwise false
  */
-const removeImage = async (imageURL: string): Promise<boolean> => {
+export const removeImage = async (imageURL: string): Promise<boolean> => {
   // Delete image via a POST request
   const payload = {
     bucket: process.env.UPLOAD_BUCKET,
@@ -78,5 +78,3 @@ const removeImage = async (imageURL: string): Promise<boolean> => {
   }
   return responseData.success;
 };
-
-export default { removeImage, uploadImage, upload };
