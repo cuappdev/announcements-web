@@ -24,15 +24,15 @@ const getAnnouncements = async () => AnnouncementModel.find({});
  */
 const editAnnouncement = async (
   id: mongoose.Types.ObjectId,
-  apps: string[],
-  body: string,
-  buttonColor: string,
-  buttonText: string,
-  buttonUrl: string,
-  endDate: Date,
-  imageUrl: string,
-  startDate: Date,
-  title: string
+  apps?: string[],
+  body?: string,
+  buttonColor?: string,
+  buttonText?: string,
+  buttonUrl?: string,
+  endDate?: Date,
+  imageUrl?: string,
+  startDate?: Date,
+  title?: string
 ) =>
   AnnouncementModel.findOneAndUpdate(
     { _id: id },
@@ -49,6 +49,7 @@ const editAnnouncement = async (
     },
     {
       new: true,
+      omitUndefined: true,
     }
   );
 

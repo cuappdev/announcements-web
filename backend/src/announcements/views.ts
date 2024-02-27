@@ -1,8 +1,9 @@
 import AnnouncementController from "./controllers";
+import { AnnouncementModel } from "./models";
 import { Router } from "express";
 import { errorJson, successJson } from "../utils/jsonResponses";
 import mongoose from "mongoose";
-import { upload, uploadImage } from "../utils/upload";
+import { upload, uploadImage, removeImage } from "../utils/upload";
 
 const announcementRouter = Router();
 
@@ -20,52 +21,46 @@ announcementRouter.put(
     // #swagger.tags = ['Announcements']
     try {
       const id = new mongoose.Types.ObjectId(req.params.id);
-      const apps = req.body.apps;
-      const body = req.body.body;
-      const buttonColor = req.body.buttonColor;
-      const buttonText = req.body.buttonText;
-      const buttonUrl = req.body.buttonUrl;
-      const endDate = req.body.endDate;
-      const image = req.body.image;
-      // const imageUrl = req.body.imageUrl;
-      const startDate = req.body.startDate;
-      const title = req.body.title;
+      const {
+        apps,
+        body,
+        buttonColor,
+        buttonText,
+        buttonUrl,
+        endDate,
+        startDate,
+        title,
+      } = req.body;
 
-      // Check for missing input
-      if (
-        !apps ||
-        !body ||
-        !buttonColor ||
-        !buttonText ||
-        !buttonUrl ||
-        !endDate ||
-        // !imageUrl ||
-        !startDate ||
-        !title
-      ) {
-        return res.status(400).send(errorJson("Missing required field"));
+      if (buttonColor) {
+        // Validate hex code
+        const Reg_Exp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+        if (!Reg_Exp.test(buttonColor)) {
+          return res
+            .status(400)
+            .send(errorJson("buttonColor must be a valid hexcode"));
+        }
       }
 
-      // Validate hex code
-      let Reg_Exp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
-      if (!Reg_Exp.test(buttonColor)) {
-        return res
-          .status(400)
-          .send(errorJson("buttonColor must be a valid hexcode"));
+      let imageUrl;
+
+      if (req.file) {
+        // Find original image to delete it
+        const oldAnnouncement = AnnouncementModel.findById(id);
+        const oldImageUrl = oldAnnouncement.imageUrl;
+
+        await removeImage(oldImageUrl);
+
+        // Upload new image
+        // Wait for promise to be resolved
+        imageUrl = await uploadImage(req.file);
+
+        // Check if imageUrl is undefined
+        if (!imageUrl) {
+          return res.status(400).send(errorJson("Image upload failed"));
+        }
       }
 
-      // Check for image upload
-      if (!req.file) {
-        return res.status(400).send(errorJson("No image uploaded"));
-      }
-
-      // wait for promise to be resolved
-      const imageUrl = await uploadImage(req.file);
-
-      // check if imageUrl is undefined
-      if (!imageUrl) {
-        return res.status(400).send(errorJson("Image upload failed"));
-      }
       return res
         .status(200)
         .send(
