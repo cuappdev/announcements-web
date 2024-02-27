@@ -50,7 +50,6 @@ export const uploadImage = async (
   } catch (e) {
     console.log(`Error sending request: ${e}`);
   }
-  console.log(responseData);
   return responseData?.data;
 };
 

@@ -152,4 +152,15 @@ announcementRouter.put(
   }
 );
 
+announcementRouter.delete("/delete/:id", async (req, res) => {
+  try {
+    const id = new mongoose.Types.ObjectId(req.params.id);
+    res
+      .status(200)
+      .send(successJson(await AnnouncementController.deleteAnnouncement(id)));
+  } catch {
+    res.status(500).send(errorJson("Announcement does not exist"));
+  }
+});
+
 export default announcementRouter;

@@ -90,8 +90,16 @@ const editAnnouncement = async (
     }
   );
 
+/**
+ * Finds all announcment docs in DB
+ * @returns promise with all announcment docs or error
+ */
+const deleteAnnouncement = async (id: mongoose.Types.ObjectId) =>
+  AnnouncementModel.deleteOne({});
+
 export default {
   getAnnouncements,
   insertAnnouncement,
   editAnnouncement,
+  deleteAnnouncement,
 };
