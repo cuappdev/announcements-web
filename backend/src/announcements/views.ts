@@ -41,7 +41,7 @@ announcementRouter.post(
         !startDate ||
         !title
       ) {
-        return res.status(400).send(errorJson("Invalid request body"));
+        return res.status(400).send(errorJson("Missing required field"));
       }
 
       // Validate hex code

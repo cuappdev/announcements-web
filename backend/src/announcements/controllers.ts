@@ -8,6 +8,19 @@ import { AnnouncementModel, Announcement } from "./models";
  */
 const getAnnouncements = async () => AnnouncementModel.find({});
 
+/**
+ * Create an announcement doc in DB.
+ * @param apps The slugs of apps that this announcement will be presented in.
+ * @param body The body text of the announcement.
+ * @param buttonColor The color of the call to action button in Hex (e.g. #FFFFFF).
+ * @param buttonText The text label for the call to action button.
+ * @param buttonUrl The redirect URL for the call to action button.
+ * @param endDate The date in which the announcement will be removed.
+ * @param imageUrl The URL of the image to display.
+ * @param startDate The date in which the announcement will be released.
+ * @param title The heading text of the announcement.
+ * @returns Promise with new announcement doc or error.
+ */
 const insertAnnouncement = async (
   apps: string[],
   body: string,
