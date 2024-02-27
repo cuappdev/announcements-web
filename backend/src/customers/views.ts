@@ -1,6 +1,6 @@
-import { Router } from "express";
-import mongoose from "mongoose";
 import CustomerController from "./controllers";
+import mongoose from "mongoose";
+import { Router } from "express";
 
 // Note: we should use a try/catch to choose successJson or errorJson for responses
 // this has been left out of this snippet for brevity
