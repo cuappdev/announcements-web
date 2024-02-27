@@ -52,6 +52,11 @@ announcementRouter.post(
         return res.status(400).send(errorJson("Invalid hex color"));
       }
 
+      // Validate start date < end date
+      if (startDate > endDate) {
+        return res.status(400).send(errorJson("Invalid start or end date"));
+      }
+
       // Check for image upload
       if (!req.file) {
         return res.status(400).send(errorJson("No image uploaded"));
