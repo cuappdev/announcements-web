@@ -1,10 +1,9 @@
-import express from "express";
+import appRouter from "./apps/views";
 import bodyParser from "body-parser";
-import userRouter from "./users/views";
-import customerRouter from "./customers/views";
+import { dbConnect } from "./database";
+import express from "express";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
-import { dbConnect } from "./database";
 
 const app = express();
 
@@ -15,18 +14,13 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(spec));
 /**
  * Sub-routers for our main router, we should have one sub-router per "entity" in the application
  */
-app.use("/users", userRouter);
-app.use("/customers", customerRouter);
+app.use("/api/apps", appRouter);
 
 /**
  * Some dummy routes to illustrate express syntax
  */
 app.get("/", function (req, res) {
   res.send("Hello World!");
-});
-
-app.post("/", (req, res) => {
-  res.send(req.body);
 });
 
 app.listen(process.env.PORT || 8000, async () => {
