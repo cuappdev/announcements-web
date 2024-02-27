@@ -7,7 +7,7 @@ const appRouter = Router();
 
 appRouter.get("/", async (req, res) => {
   // #swagger.tags = ['Apps']
-  res.status(200).send(successJson(await AppController.getApps()));
+  return res.status(200).send(successJson(await AppController.getApps()));
 });
 
 export default appRouter;

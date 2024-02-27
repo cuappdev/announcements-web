@@ -4,9 +4,11 @@ import { AnnouncementModel, Announcement } from "./models";
 
 /**
  * Finds all announcment docs in DB
- * @returns promise with all announcment docs or error
+ * @returns Promise with all announcment docs or error
  */
-const getAnnouncements = async () => AnnouncementModel.find({});
+const getAnnouncements = async () => {
+  return AnnouncementModel.find({});
+};
 
 /**
  * Create an announcement doc in DB.
@@ -31,8 +33,8 @@ const insertAnnouncement = async (
   imageUrl: string,
   startDate: Date,
   title: string
-) =>
-  AnnouncementModel.create(
+) => {
+  return AnnouncementModel.create(
     new Announcement(
       apps,
       body,
@@ -45,6 +47,7 @@ const insertAnnouncement = async (
       title
     )
   );
+};
 
 /**
  * Edits an announcement doc in DB
@@ -71,8 +74,8 @@ const editAnnouncement = async (
   imageUrl: string,
   startDate: Date,
   title: string
-) =>
-  AnnouncementModel.findOneAndUpdate(
+) => {
+  return AnnouncementModel.findOneAndUpdate(
     { _id: id },
     {
       apps: apps,
@@ -89,13 +92,15 @@ const editAnnouncement = async (
       new: true,
     }
   );
+};
 
 /**
- * Finds all announcment docs in DB
- * @returns promise with all announcment docs or error
+ * Deletes a announcment doc in DB
+ * @returns Promise with the deleted announcment doc or error
  */
-const deleteAnnouncement = async (id: mongoose.Types.ObjectId) =>
-  AnnouncementModel.deleteOne({});
+const deleteAnnouncement = async (id: mongoose.Types.ObjectId) => {
+  return AnnouncementModel.findByIdAndDelete(id);
+};
 
 export default {
   getAnnouncements,

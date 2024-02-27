@@ -2,13 +2,13 @@ import AnnouncementController from "./controllers";
 import { Router } from "express";
 import { successJson, errorJson } from "../utils/jsonResponses";
 import mongoose from "mongoose";
-import { upload, uploadImage } from "../utils/upload";
+import { removeImage, upload, uploadImage } from "../utils/upload";
 
 const announcementRouter = Router();
 
 announcementRouter.get("/", async (req, res) => {
   // #swagger.tags = ['Announcements']
-  res
+  return res
     .status(200)
     .send(successJson(await AnnouncementController.getAnnouncements()));
 });
@@ -29,6 +29,8 @@ announcementRouter.post(
         startDate,
         title,
       } = req.body;
+
+      console.log(apps);
 
       // Check for missing input
       if (
@@ -116,7 +118,7 @@ announcementRouter.put(
       }
 
       // Validate hex code
-      let Reg_Exp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+      const Reg_Exp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
       if (!Reg_Exp.test(buttonColor)) {
         return res
           .status(400)
@@ -147,19 +149,23 @@ announcementRouter.put(
           )
         );
     } catch (error) {
-      res.status(500).send(errorJson(error));
+      return res.status(500).send(errorJson(error));
     }
   }
 );
 
 announcementRouter.delete("/delete/:id", async (req, res) => {
-  try {
-    const id = new mongoose.Types.ObjectId(req.params.id);
-    res
-      .status(200)
-      .send(successJson(await AnnouncementController.deleteAnnouncement(id)));
-  } catch {
-    res.status(500).send(errorJson("Announcement does not exist"));
+  // #swagger.tags = ['Announcements']
+  const id = new mongoose.Types.ObjectId(req.params.id);
+  const deleted = await AnnouncementController.deleteAnnouncement(id);
+
+  if (deleted) {
+    // Remove image from storage
+    await removeImage(deleted.imageUrl);
+
+    return res.status(200).send(successJson(deleted));
+  } else {
+    return res.status(400).send(errorJson("Announcement does not exist"));
   }
 });
 
