@@ -1,9 +1,10 @@
+import announcementRouter from "./announcements/views";
 import appRouter from "./apps/views";
 import bodyParser from "body-parser";
-import { dbConnect } from "./database";
 import express from "express";
-import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
+import swaggerUI from "swagger-ui-express";
+import { dbConnect } from "./database";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(spec));
 /**
  * Sub-routers for our main router, we should have one sub-router per "entity" in the application
  */
+app.use("/api/announcements", announcementRouter);
 app.use("/api/apps", appRouter);
 
 /**
