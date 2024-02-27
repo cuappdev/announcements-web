@@ -8,6 +8,31 @@ import { AnnouncementModel, Announcement } from "./models";
  */
 const getAnnouncements = async () => AnnouncementModel.find({});
 
+const insertAnnouncement = async (
+  apps: string[],
+  body: string,
+  buttonColor: string,
+  buttonText: string,
+  buttonUrl: string,
+  endDate: Date,
+  imageUrl: string,
+  startDate: Date,
+  title: string
+) =>
+  AnnouncementModel.create(
+    new Announcement(
+      apps,
+      body,
+      buttonColor,
+      buttonText,
+      buttonUrl,
+      endDate,
+      imageUrl,
+      startDate,
+      title
+    )
+  );
 export default {
   getAnnouncements,
+  insertAnnouncement,
 };
