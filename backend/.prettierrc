@@ -18,6 +18,6 @@
     "trailingComma": "es5",
     "useTabs": false,
     "vueIndentScriptAndStyle": false,
-    "filepath": "/Users/archit/Downloads/mern-base/backend/src/index.ts",
+    "filepath": "/Users/archit/Downloads/mern-base/backend/src/app.ts",
     "parser": "typescript"
 }

@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-
 import { AnnouncementModel, Announcement } from "./models";
 
 /**
- * Finds all announcment docs in DB
- * @returns Promise with all announcment docs or error
+ * Finds all announcement docs in DB.
+ * @returns Promise with all announcment docs or error.
  */
 const getAnnouncements = async () => {
   return AnnouncementModel.find({});
@@ -50,18 +49,18 @@ const insertAnnouncement = async (
 };
 
 /**
- * Edits an announcement doc in DB
- * @param id announcement id
- * @param apps list of apps
- * @param body announcement body
- * @param buttonColor button color
- * @param buttonText button text
- * @param buttonUrl button url
- * @param endDate end date
- * @param imageUrl PNG/JPG
- * @param startDate start date
- * @param title title
- * @returns promise with original announcement doc or error
+ * Edits an announcement doc in DB.
+ * @param id The unique identifier of this announcement.
+ * @param apps The slugs of apps that this announcement will be presented in.
+ * @param body The body text of the announcement.
+ * @param buttonColor The color of the call to action button in Hex (e.g. #FFFFFF).
+ * @param buttonText The text label for the call to action button.
+ * @param buttonUrl The redirect URL for the call to action button.
+ * @param endDate The date in which the announcement will be removed.
+ * @param imageUrl The URL of the image to display.
+ * @param startDate The date in which the announcement will be released.
+ * @param title The heading text of the announcement.
+ * @returns Promise with original announcement doc or error.
  */
 const editAnnouncement = async (
   id: mongoose.Types.ObjectId,
@@ -95,17 +94,17 @@ const editAnnouncement = async (
 };
 
 /**
- * Deletes a announcment doc in DB
- * @returns Promise with the deleted announcment doc or error
+ * Deletes an announcment doc in DB.
+ * @returns Promise with the deleted announcment doc or error.
  */
 const deleteAnnouncement = async (id: mongoose.Types.ObjectId) => {
   return AnnouncementModel.findByIdAndDelete(id);
 };
 
 /**
- * Finds an announcement by slug
- * @param slug the app slug
- * @returns Promise with the announcement doc or error
+ * Finds an announcement by slug.
+ * @param slug The slug nickname for an app.
+ * @returns Promise with the announcement doc or error.
  */
 const getAnnouncementsBySlug = async (slug: string) => {
   return AnnouncementModel.find({ apps: slug });

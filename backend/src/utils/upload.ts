@@ -23,7 +23,6 @@ export const upload = multer({ storage });
 
 /**
  * Upload an image to our servers
- *
  * @param image the file that the user sent in their form data request
  * @returns the URl representing the image
  */
@@ -55,7 +54,6 @@ export const uploadImage = async (
 
 /**
  * Remove an image from AppDev servers
- *
  * @param imageURL the image URL to remove
  * @returns true if the deletion was successful; otherwise false
  */
