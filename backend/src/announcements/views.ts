@@ -1,8 +1,10 @@
 import AnnouncementController from "./controllers";
+import AppController from "../apps/controllers";
 import { Router } from "express";
 import { successJson, errorJson } from "../utils/jsonResponses";
 import mongoose from "mongoose";
 import { removeImage, upload, uploadImage } from "../utils/upload";
+import getApps from "../apps/controllers";
 
 const announcementRouter = Router();
 
@@ -54,7 +56,9 @@ announcementRouter.post(
 
       // Validate start date < end date
       if (startDate > endDate) {
-        return res.status(400).send(errorJson("Invalid start or end date"));
+        return res
+          .status(400)
+          .send(errorJson("startDate must be before endDate"));
       }
 
       // Check for image upload
@@ -171,6 +175,34 @@ announcementRouter.delete("/delete/:id", async (req, res) => {
     return res.status(200).send(successJson(deleted));
   } else {
     return res.status(400).send(errorJson("Announcement does not exist"));
+  }
+});
+
+announcementRouter.get("/:slug", async (req, res) => {
+  // #swagger.tags = ['Announcements']
+  try {
+    const slug = req.params.slug;
+
+    // Check if slug exists
+    const allApps = await AppController.getApps();
+    const allSlugs = allApps.map((x) => x.slug);
+    if (!allSlugs.includes(slug)) {
+      return res.status(400).send(errorJson("Slug does not exist"));
+    }
+
+    // Fetch announcements with that slug
+    let announcements = await AnnouncementController.getAnnouncementsBySlug(
+      slug
+    );
+
+    // Return active announcements
+    announcements = announcements.filter((a) => {
+      return a.startDate < new Date() && new Date() < a.endDate;
+    });
+
+    return res.status(200).send(successJson(announcements));
+  } catch (error) {
+    return res.status(500).send(errorJson(error));
   }
 });
 

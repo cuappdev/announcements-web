@@ -102,9 +102,19 @@ const deleteAnnouncement = async (id: mongoose.Types.ObjectId) => {
   return AnnouncementModel.findByIdAndDelete(id);
 };
 
+/**
+ * Finds an announcement by slug
+ * @param slug the app slug
+ * @returns Promise with the announcement doc or error
+ */
+const getAnnouncementsBySlug = async (slug: string) => {
+  return AnnouncementModel.find({ apps: slug });
+};
+
 export default {
   getAnnouncements,
   insertAnnouncement,
   editAnnouncement,
   deleteAnnouncement,
+  getAnnouncementsBySlug,
 };
