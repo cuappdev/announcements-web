@@ -1,5 +1,13 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  prop,
+  modelOptions,
+  Severity,
+} from "@typegoose/typegoose";
 
+@modelOptions({
+  options: { allowMixed: Severity.ALLOW },
+})
 class Announcement {
   constructor(
     apps: string[],
