@@ -1,7 +1,7 @@
 import AnnouncementController from "./controllers";
 import { AnnouncementModel } from "./models";
 import { Router } from "express";
-import { errorJson, successJson } from "../utils/jsonResponses";
+import { successJson, errorJson } from "../utils/jsonResponses";
 import mongoose from "mongoose";
 import { upload, uploadImage, removeImage } from "../utils/upload";
 
@@ -14,6 +14,76 @@ announcementRouter.get("/", async (req, res) => {
     .send(successJson(await AnnouncementController.getAnnouncements()));
 });
 
+announcementRouter.post(
+  "/create/",
+  upload.single("image"),
+  async (req, res) => {
+    // #swagger.tags = ['Announcements']
+    try {
+      const {
+        apps,
+        body,
+        buttonColor,
+        buttonText,
+        buttonUrl,
+        endDate,
+        startDate,
+        title,
+      } = req.body;
+
+      // Check for missing input
+      if (
+        !apps ||
+        !body ||
+        !buttonColor ||
+        !buttonText ||
+        !buttonUrl ||
+        !endDate ||
+        !startDate ||
+        !title
+      ) {
+        return res.status(400).send(errorJson("Missing required field"));
+      }
+
+      // Validate hex code
+      const regex = /^#[0-9A-F]{6}$/i;
+      if (!regex.test(buttonColor)) {
+        return res.status(400).send(errorJson("Invalid hex color"));
+      }
+
+      // Check for image upload
+      if (!req.file) {
+        return res.status(400).send(errorJson("No image uploaded"));
+      }
+
+      const imageUrl = await uploadImage(req.file);
+      if (!imageUrl) {
+        return res.status(500).send(errorJson("Image upload failed"));
+      }
+
+      return res
+        .status(201)
+        .send(
+          successJson(
+            await AnnouncementController.insertAnnouncement(
+              apps,
+              body,
+              buttonColor,
+              buttonText,
+              buttonUrl,
+              endDate,
+              imageUrl,
+              startDate,
+              title
+            )
+          )
+        );
+    } catch (error) {
+      return res.status(500).send(errorJson(error));
+    }
+  }
+);
+
 announcementRouter.put(
   "/edit/:id",
   upload.single("image"),
@@ -21,6 +91,12 @@ announcementRouter.put(
     // #swagger.tags = ['Announcements']
     try {
       const id = new mongoose.Types.ObjectId(req.params.id);
+
+      // Check if id is valid (if announcement exists)
+      if (!(await AnnouncementController.announcementExists(id))) {
+        return res.status(400).send(errorJson("Announcement does not exist"));
+      }
+
       const {
         apps,
         body,
@@ -45,11 +121,15 @@ announcementRouter.put(
       let imageUrl;
 
       if (req.file) {
-        // Find original image to delete it
-        const oldAnnouncement = AnnouncementModel.findById(id);
-        const oldImageUrl = oldAnnouncement.imageUrl;
+        // Get original image to delete it
 
-        await removeImage(oldImageUrl);
+        const oldAnnouncement =
+          await AnnouncementController.getAnnouncementById(id);
+        const oldImageUrl = oldAnnouncement?.imageUrl;
+
+        if (oldImageUrl) {
+          await removeImage(oldImageUrl);
+        }
 
         // Upload new image
         // Wait for promise to be resolved
@@ -80,7 +160,7 @@ announcementRouter.put(
           )
         );
     } catch (error) {
-      res.status(500).send(errorJson(error));
+      return res.status(500).send(errorJson(error));
     }
   }
 );

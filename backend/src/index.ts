@@ -17,7 +17,6 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(spec));
  */
 app.use("/api/announcements", announcementRouter);
 app.use("/api/apps", appRouter);
-app.use("api/announcements/edit/:id", announcementRouter);
 
 /**
  * Some dummy routes to illustrate express syntax
