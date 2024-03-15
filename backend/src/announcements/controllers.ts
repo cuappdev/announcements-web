@@ -2,15 +2,17 @@ import mongoose from "mongoose";
 import { AnnouncementModel, Announcement } from "./models";
 
 /**
- * Finds all announcement docs in DB.
- * @returns Promise with all announcment docs or error.
+ * Finds all announcement docs.
+ *
+ * @returns A promise with all announcement docs or error.
  */
 const getAnnouncements = async () => {
   return AnnouncementModel.find({});
 };
 
 /**
- * Create an announcement doc in DB.
+ * Creates an announcement doc.
+ *
  * @param apps The slugs of apps that this announcement will be presented in.
  * @param body The body text of the announcement.
  * @param buttonColor The color of the call to action button in Hex (e.g. #FFFFFF).
@@ -20,7 +22,8 @@ const getAnnouncements = async () => {
  * @param imageUrl The URL of the image to display.
  * @param startDate The date in which the announcement will be released.
  * @param title The heading text of the announcement.
- * @returns Promise with new announcement doc or error.
+ *
+ * @returns A promise with the new announcement doc or error.
  */
 const insertAnnouncement = async (
   apps: string[],
@@ -49,7 +52,8 @@ const insertAnnouncement = async (
 };
 
 /**
- * Edits an announcement doc in DB.
+ * Edits an announcement doc.
+ *
  * @param id The unique identifier of this announcement.
  * @param apps The slugs of apps that this announcement will be presented in.
  * @param body The body text of the announcement.
@@ -60,19 +64,20 @@ const insertAnnouncement = async (
  * @param imageUrl The URL of the image to display.
  * @param startDate The date in which the announcement will be released.
  * @param title The heading text of the announcement.
- * @returns Promise with original announcement doc or error.
+ *
+ * @returns A promise with the edited announcement doc or error.
  */
 const editAnnouncement = async (
   id: mongoose.Types.ObjectId,
-  apps: string[],
-  body: string,
-  buttonColor: string,
-  buttonText: string,
-  buttonUrl: string,
-  endDate: Date,
-  imageUrl: string,
-  startDate: Date,
-  title: string
+  apps?: string[],
+  body?: string,
+  buttonColor?: string,
+  buttonText?: string,
+  buttonUrl?: string,
+  endDate?: Date,
+  imageUrl?: string,
+  startDate?: Date,
+  title?: string
 ) => {
   return AnnouncementModel.findOneAndUpdate(
     { _id: id },
@@ -94,20 +99,36 @@ const editAnnouncement = async (
 };
 
 /**
- * Deletes an announcment doc in DB.
- * @returns Promise with the deleted announcment doc or error.
+ * Deletes an announcement doc.
+ *
+ * @param id The ID of the announcement to delete.
+ *
+ * @returns A promise with the deleted announcement doc or error.
  */
 const deleteAnnouncement = async (id: mongoose.Types.ObjectId) => {
   return AnnouncementModel.findByIdAndDelete(id);
 };
 
 /**
- * Finds an announcement by slug.
+ * Fetches announcements given an app slug.
+ *
  * @param slug The slug nickname for an app.
- * @returns Promise with the announcement doc or error.
+ *
+ * @returns A promise with a list of announcement docs or error.
  */
 const getAnnouncementsBySlug = async (slug: string) => {
   return AnnouncementModel.find({ apps: slug });
+};
+
+/**
+ * Fetches an announcement by id.
+ *
+ * @param id The ID of the announcement to fetch.
+ *
+ * @returns A promise with the anouncement doc or error.
+ */
+const getAnnouncementById = async (id: mongoose.Types.ObjectId) => {
+  return AnnouncementModel.findById(id);
 };
 
 export default {
@@ -116,4 +137,5 @@ export default {
   editAnnouncement,
   deleteAnnouncement,
   getAnnouncementsBySlug,
+  getAnnouncementById,
 };

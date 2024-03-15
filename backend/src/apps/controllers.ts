@@ -1,8 +1,9 @@
 import { AppModel } from "./models";
 
 /**
- * Finds all app docs in DB.
- * @returns Promise with all app docs or error.
+ * Finds all app docs.
+ *
+ * @returns A promise with all app docs or error.
  */
 const getApps = async () => {
   return AppModel.find({});

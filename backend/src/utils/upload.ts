@@ -22,9 +22,11 @@ export const storage = diskStorage({
 export const upload = multer({ storage });
 
 /**
- * Upload an image to our servers
- * @param image the file that the user sent in their form data request
- * @returns the URl representing the image
+ * Upload an image to AppDev storage.
+ *
+ * @param image The file that the user sent in their form data request.
+ *
+ * @returns The URL representing the image.
  */
 export const uploadImage = async (
   image: Express.Multer.File
@@ -53,9 +55,11 @@ export const uploadImage = async (
 };
 
 /**
- * Remove an image from AppDev servers
- * @param imageURL the image URL to remove
- * @returns true if the deletion was successful; otherwise false
+ * Remove an image from AppDev storage.
+ *
+ * @param imageURL The image URL to remove.
+ *
+ * @returns True if the deletion was successful; otherwise false.
  */
 export const removeImage = async (imageURL: string): Promise<boolean> => {
   // Delete image via a POST request

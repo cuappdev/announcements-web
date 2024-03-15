@@ -45,6 +45,14 @@ announcementRouter.post(
         return res.status(400).send(errorJson("Missing required field"));
       }
 
+      // Validate slugs
+      const validSlugs = (await AppController.getApps()).map((doc) => doc.slug);
+      for (const slug of apps) {
+        if (!validSlugs.includes(slug)) {
+          return res.status(400).send(errorJson("Invalid slug"));
+        }
+      }
+
       // Validate hex code
       const regex = /^#[0-9A-F]{6}$/i;
       if (!regex.test(buttonColor)) {
@@ -52,10 +60,8 @@ announcementRouter.post(
       }
 
       // Validate start date < end date
-      if (startDate > endDate) {
-        return res
-          .status(400)
-          .send(errorJson("startDate must be before endDate"));
+      if (new Date(startDate) > new Date(endDate)) {
+        return res.status(400).send(errorJson("Invalid startDate or endDate"));
       }
 
       // Check for image upload
@@ -73,6 +79,122 @@ announcementRouter.post(
         .send(
           successJson(
             await AnnouncementController.insertAnnouncement(
+              apps,
+              body,
+              buttonColor,
+              buttonText,
+              buttonUrl,
+              endDate,
+              imageUrl,
+              startDate,
+              title
+            )
+          )
+        );
+    } catch (error) {
+      return res.status(500).send(errorJson(error));
+    }
+  }
+);
+
+announcementRouter.put(
+  "/edit/:id",
+  upload.single("image"),
+  async (req, res) => {
+    // #swagger.tags = ['Announcements']
+    try {
+      // Retrieve request data
+      const id = new mongoose.Types.ObjectId(req.params.id);
+      const {
+        apps,
+        body,
+        buttonColor,
+        buttonText,
+        buttonUrl,
+        endDate,
+        startDate,
+        title,
+      } = req.body;
+
+      // Fetch original announcement and validate
+      const originalAnnouncement =
+        await AnnouncementController.getAnnouncementById(id);
+      if (!originalAnnouncement) {
+        return res.status(400).send(errorJson("Announcement does not exist"));
+      }
+
+      // Validate slugs
+      if (apps) {
+        const validSlugs = (await AppController.getApps()).map(
+          (doc) => doc.slug
+        );
+        for (const slug of apps) {
+          if (!validSlugs.includes(slug)) {
+            return res.status(400).send(errorJson("Invalid slug"));
+          }
+        }
+      }
+
+      // Validate hex code
+      if (buttonColor) {
+        const regex = /^#[0-9A-F]{6}$/i;
+        if (!regex.test(buttonColor)) {
+          return res.status(400).send(errorJson("Invalid hex color"));
+        }
+      }
+
+      // Validate start date < end date
+      let invalidDate = false;
+      if (startDate && endDate) {
+        // Provides new start date and end date
+        invalidDate = new Date(startDate) > new Date(endDate);
+      } else if (startDate) {
+        // Only provides start date
+        invalidDate = new Date(startDate) > originalAnnouncement.endDate;
+      } else if (endDate) {
+        // Only provides end date
+        invalidDate = new Date(endDate) < originalAnnouncement.startDate;
+      }
+      if (invalidDate) {
+        return res.status(400).send(errorJson("Invalid startDate or endDate"));
+      }
+
+      // Check for image upload
+      let imageUrl;
+      if (req.file) {
+        // Remove original image
+        await removeImage(originalAnnouncement.imageUrl);
+
+        // Upload new image
+        imageUrl = await uploadImage(req.file);
+        if (!imageUrl) {
+          return res.status(500).send(errorJson("Image upload failed"));
+        }
+      }
+
+      // Mongoose will reset all fields if all values are undefined so we check for missing input
+      if (
+        !apps &&
+        !body &&
+        !buttonColor &&
+        !buttonText &&
+        !buttonUrl &&
+        !endDate &&
+        !imageUrl &&
+        !startDate &&
+        !title
+      ) {
+        return res
+          .status(400)
+          .send(errorJson("Must provide at least one field"));
+      }
+
+      return res
+        .status(200)
+        .send(
+          successJson(
+            await AnnouncementController.editAnnouncement(
+              id,
               apps,
               body,
               buttonColor,
