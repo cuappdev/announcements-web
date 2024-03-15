@@ -2,9 +2,7 @@ version: "3.6"
 
 services:
   web:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    image: cornellappdev/announcements:${ANNOUNCEMENTS_IMG_TAG}
     env_file: .env
     ports:
-      - "3000:3000"
+      - "8000:8000"
