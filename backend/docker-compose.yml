@@ -5,4 +5,4 @@ services:
     image: cornellappdev/announcements:${ANNOUNCEMENTS_IMG_TAG}
     env_file: .env
     ports:
-      - "8080:3000"
+      - "3000:3000"
