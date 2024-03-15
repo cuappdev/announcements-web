@@ -41,9 +41,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            export ANNOUNCEMENTS_IMG_TAG="${{ steps.vars.outputs.sha_short }}"
-            docker stop announcements-web-1
-            docker rm announcements-web-1
-            yes | sudo docker container prune
-            yes | sudo docker system prune
-            docker compose up -d --name announcements
+            export ANNOUNCEMENTS_IMG_TAG="${{ steps.vars.outputs.sha_short }}"            
+            cd docker-compose
+            docker stack rm the-stack
+            sleep 20s
+            docker stack deploy -c docker-compose.yml the-stack --with-registry-auth
+            yes | docker system prune -a
