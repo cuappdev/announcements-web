@@ -125,7 +125,7 @@ const getAnnouncementsBySlug = async (slug: string) => {
  *
  * @param id The ID of the announcement to fetch.
  *
- * @returns A promise with the anouncement doc or error.
+ * @returns A promise with the announcement doc or error.
  */
 const getAnnouncementById = async (id: mongoose.Types.ObjectId) => {
   return AnnouncementModel.findById(id);
