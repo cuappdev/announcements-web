@@ -10,14 +10,8 @@ const doc = {
   host: "localhost:8000",
   basePath: "/",
   schemes: ["http", "https"],
-  consumes: ["application/json"],
-  produces: ["application/json"],
-  tags: [
-    {
-      name: "User",
-      description: "Endpoints",
-    },
-  ],
+  consumes: ["multipart/form-data"],
+  produces: ["multipart/form-data"],
   securityDefinitions: {
     apiKeyAuth: {
       type: "apiKey",

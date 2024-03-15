@@ -22,7 +22,7 @@ app.use("/api/apps", appRouter);
  * Some dummy routes to illustrate express syntax
  */
 app.get("/", function (req, res) {
-  res.send("Welcome to announcements-backend!");
+  return res.sendFile("index.html", { root: __dirname });
 });
 
 app.listen(process.env.PORT || 8000, async () => {

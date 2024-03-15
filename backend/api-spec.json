@@ -7,12 +7,6 @@
   },
   "host": "localhost:8000",
   "basePath": "/",
-  "tags": [
-    {
-      "name": "User",
-      "description": "Endpoints"
-    }
-  ],
   "schemes": [
     "http",
     "https"
@@ -26,10 +20,10 @@
     }
   },
   "consumes": [
-    "application/json"
+    "multipart/form-data"
   ],
   "produces": [
-    "application/json"
+    "multipart/form-data"
   ],
   "paths": {
     "/": {
@@ -101,6 +95,66 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/announcements/edit/{id}": {
+      "put": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "apps": {
+                  "example": "any"
+                },
+                "body": {
+                  "example": "any"
+                },
+                "buttonColor": {
+                  "example": "any"
+                },
+                "buttonText": {
+                  "example": "any"
+                },
+                "buttonUrl": {
+                  "example": "any"
+                },
+                "endDate": {
+                  "example": "any"
+                },
+                "startDate": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
