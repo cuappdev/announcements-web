@@ -23,6 +23,7 @@ class Announcement {
     body: string,
     buttonColor: string,
     buttonText: string,
+    buttonTextColor: string,
     buttonUrl: string,
     endDate: Date,
     imageUrl: string,
@@ -33,6 +34,7 @@ class Announcement {
     this.body = body;
     this.buttonColor = buttonColor;
     this.buttonText = buttonText;
+    this.buttonTextColor = buttonTextColor;
     this.buttonUrl = buttonUrl;
     this.endDate = endDate;
     this.imageUrl = imageUrl;
@@ -51,6 +53,9 @@ class Announcement {
 
   @prop()
   public buttonText!: string;
+
+  @prop()
+  public buttonTextColor!: string;
 
   @prop()
   public buttonUrl!: string;

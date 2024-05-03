@@ -17,6 +17,7 @@ const getAnnouncements = async () => {
  * @param body The body text of the announcement.
  * @param buttonColor The color of the call to action button in Hex (e.g. #FFFFFF).
  * @param buttonText The text label for the call to action button.
+ * @param buttonTextColor The color of the text label for the call to action button.
  * @param buttonUrl The redirect URL for the call to action button.
  * @param endDate The date in which the announcement will be removed.
  * @param imageUrl The URL of the image to display.
@@ -30,6 +31,7 @@ const insertAnnouncement = async (
   body: string,
   buttonColor: string,
   buttonText: string,
+  buttonTextColor: string,
   buttonUrl: string,
   endDate: Date,
   imageUrl: string,
@@ -42,6 +44,7 @@ const insertAnnouncement = async (
       body,
       buttonColor,
       buttonText,
+      buttonTextColor,
       buttonUrl,
       endDate,
       imageUrl,
@@ -59,6 +62,7 @@ const insertAnnouncement = async (
  * @param body The body text of the announcement.
  * @param buttonColor The color of the call to action button in Hex (e.g. #FFFFFF).
  * @param buttonText The text label for the call to action button.
+ * @param buttonTextColor The color of the text label for the call to action button.
  * @param buttonUrl The redirect URL for the call to action button.
  * @param endDate The date in which the announcement will be removed.
  * @param imageUrl The URL of the image to display.
@@ -73,6 +77,7 @@ const editAnnouncement = async (
   body?: string,
   buttonColor?: string,
   buttonText?: string,
+  buttonTextColor?: string,
   buttonUrl?: string,
   endDate?: Date,
   imageUrl?: string,
@@ -86,6 +91,7 @@ const editAnnouncement = async (
       body: body,
       buttonColor: buttonColor,
       buttonText: buttonText,
+      buttonTextColor: buttonTextColor,
       buttonUrl: buttonUrl,
       endDate: endDate,
       imageUrl: imageUrl,

@@ -25,6 +25,7 @@ announcementRouter.post(
         body,
         buttonColor,
         buttonText,
+        buttonTextColor,
         buttonUrl,
         endDate,
         startDate,
@@ -37,6 +38,7 @@ announcementRouter.post(
         !body ||
         !buttonColor ||
         !buttonText ||
+        !buttonTextColor ||
         !buttonUrl ||
         !endDate ||
         !startDate ||
@@ -55,7 +57,7 @@ announcementRouter.post(
 
       // Validate hex code
       const regex = /^#[0-9A-F]{6}$/i;
-      if (!regex.test(buttonColor)) {
+      if (!regex.test(buttonColor) || !regex.test(buttonTextColor)) {
         return res.status(400).send(errorJson("Invalid hex color"));
       }
 
@@ -83,6 +85,7 @@ announcementRouter.post(
               body,
               buttonColor,
               buttonText,
+              buttonTextColor,
               buttonUrl,
               endDate,
               imageUrl,
@@ -110,6 +113,7 @@ announcementRouter.put(
         body,
         buttonColor,
         buttonText,
+        buttonTextColor,
         buttonUrl,
         endDate,
         startDate,
@@ -139,6 +143,13 @@ announcementRouter.put(
       if (buttonColor) {
         const regex = /^#[0-9A-F]{6}$/i;
         if (!regex.test(buttonColor)) {
+          return res.status(400).send(errorJson("Invalid hex color"));
+        }
+      }
+
+      if (buttonTextColor) {
+        const regex = /^#[0-9A-F]{6}$/i;
+        if (!regex.test(buttonTextColor)) {
           return res.status(400).send(errorJson("Invalid hex color"));
         }
       }
@@ -178,6 +189,7 @@ announcementRouter.put(
         !body &&
         !buttonColor &&
         !buttonText &&
+        !buttonTextColor &&
         !buttonUrl &&
         !endDate &&
         !imageUrl &&
@@ -199,6 +211,7 @@ announcementRouter.put(
               body,
               buttonColor,
               buttonText,
+              buttonTextColor,
               buttonUrl,
               endDate,
               imageUrl,
