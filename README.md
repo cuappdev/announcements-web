@@ -5,7 +5,7 @@ Announcements is AppDev's generalized system for scheduling one-time marketing b
 ## Getting Started
 
 1. Duplicate the `.envtemplate` file, rename it to `.env.local`, and fill out the environment variables.
-2. Yarn is required for this project. If you do not have Yarn installed, run `npm install --global yarn` to install it.
+2. Yarn is required for this project. Install dependencies with `yarn install`. If you do not have Yarn installed, run `npm install --global yarn` to install it.
 3. If using VSCode, install the Prettier extension and configure your settings to use it.
 
 ## Running the Server
