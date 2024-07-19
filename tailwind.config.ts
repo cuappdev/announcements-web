@@ -64,7 +64,7 @@ const config: Config = {
           800: "#24292E",
           900: "#1B1F23",
           white: "#FFFFFF",
-          black: "000000",
+          black: "#000000",
         },
         other: {
           stroke: "#E5E6EA",
