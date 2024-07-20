@@ -3,5 +3,142 @@
 @tailwind utilities;
 
 @layer base {
-  /* Add styles here */
+  /* Mobile */
+  h1 {
+    @apply text-[48px] leading-[60px] font-sfprodisplay font-semibold;
+  }
+
+  h2 {
+    @apply text-[32px] leading-[40px] font-sfprodisplay font-semibold;
+  }
+
+  h3 {
+    @apply text-[24px] leading-[28px] font-sfprodisplay font-medium;
+  }
+
+  h4 {
+    @apply text-[20px] leading-[24px] font-sfprodisplay font-medium;
+  }
+
+  h5 {
+    @apply text-[16px] leading-[20px] font-sfprodisplay font-medium;
+  }
+
+  h6 {
+    @apply text-[14px] leading-[16px] font-sfprodisplay font-medium;
+  }
+
+  .s1 {
+    @apply text-[16px] leading-[20px] font-sfprodisplay font-normal;
+  }
+
+  .s2 {
+    @apply text-[14px] leading-[16px] font-sfprodisplay font-medium;
+  }
+
+  .b1 {
+    @apply text-[16px] leading-[20px] font-sfprodisplay font-normal;
+  }
+
+  .b2 {
+    @apply text-[14px] leading-[16px] font-sfprodisplay font-normal;
+  }
+
+  .label {
+    @apply text-[12px] leading-[16px] font-sfprodisplay font-normal;
+  }
+
+  /* Tablet*/
+  @screen md {
+    h1 {
+      @apply text-[60px] leading-[72px] font-sfprodisplay font-semibold;
+    }
+  
+    h2 {
+      @apply text-[48px] leading-[60px] font-sfprodisplay font-semibold;
+    }
+  
+    h3 {
+      @apply text-[32px] leading-[40px] font-sfprodisplay font-medium;
+    }
+  
+    h4 {
+      @apply text-[24px] leading-[28px] font-sfprodisplay font-medium;
+    }
+  
+    h5 {
+      @apply text-[20px] leading-[24px] font-sfprodisplay font-medium;
+    }
+  
+    h6 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-medium;
+    }
+  
+    .s1 {
+      @apply text-[20px] leading-[24px] font-sfprodisplay font-normal;
+    }
+  
+    .s2 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-medium;
+    }
+  
+    .b1 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-normal;
+    }
+  
+    .b2 {
+      @apply text-[14px] leading-[16px] font-sfprodisplay font-normal;
+    }
+  
+    .label {
+      @apply text-[12px] leading-[16px] font-sfprodisplay font-normal;
+    }
+  }
+
+  /* Desktop*/
+  @screen lg {
+    h1 {
+      @apply text-[60px] leading-[72px] font-sfprodisplay font-semibold;
+    }
+  
+    h2 {
+      @apply text-[48px] leading-[60px] font-sfprodisplay font-semibold;
+    }
+  
+    h3 {
+      @apply text-[32px] leading-[40px] font-sfprodisplay font-medium;
+    }
+  
+    h4 {
+      @apply text-[24px] leading-[28px] font-sfprodisplay font-medium;
+    }
+  
+    h5 {
+      @apply text-[20px] leading-[24px] font-sfprodisplay font-medium;
+    }
+  
+    h6 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-medium;
+    }
+  
+    .s1 {
+      @apply text-[20px] leading-[24px] font-sfprodisplay font-normal;
+    }
+  
+    .s2 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-medium;
+    }
+  
+    .b1 {
+      @apply text-[16px] leading-[20px] font-sfprodisplay font-normal;
+    }
+  
+    .b2 {
+      @apply text-[14px] leading-[16px] font-sfprodisplay font-normal;
+    }
+  
+    .label {
+      @apply text-[12px] leading-[16px] font-sfprodisplay font-normal;
+    }
+  }
 }
