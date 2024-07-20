@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sfprodisplay: ["var(--font-sfprodisplay)"],
+      },
       colors: {
         blue: {
           100: "#E7F2F7",
@@ -69,7 +72,7 @@ const config: Config = {
         other: {
           stroke: "#E5E6EA",
           background: "#EFF1F4",
-          "offWhite": "#FAFAFA",
+          offWhite: "#FAFAFA",
           highlight: "#BACCFA",
         },
       },
