@@ -7,6 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    borderRadius: {
+      sm: "4px",
+      md: "8px",
+      lg: "12px",
+      xl: "32px",
+    },
     extend: {
       fontFamily: {
         sfprodisplay: ["var(--font-sfprodisplay)"],
