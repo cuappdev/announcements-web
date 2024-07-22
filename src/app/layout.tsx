@@ -1,7 +1,7 @@
 import "./globals.css";
 import localFont from "next/font/local";
 
-//Fonts
+// Fonts
 const sfProDisplay = localFont({
   src: [
     {
