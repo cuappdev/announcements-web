@@ -13,6 +13,13 @@ const config: Config = {
       lg: "12px",
       xl: "32px",
     },
+    screens: {
+      sm: "0px",
+      md: "768px",
+      lg: "1280px",
+      xl: "1280px",
+      "2xl": "1280px",
+    },
     extend: {
       fontFamily: {
         sfprodisplay: ["var(--font-sfprodisplay)"],
