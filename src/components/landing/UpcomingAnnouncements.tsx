@@ -4,42 +4,27 @@ import { useState, useEffect } from "react";
 import HourglassIcon from "@/icons/HourglassIcon";
 import AnnouncementBanner from "../shared/AnnouncementBanner";
 import { Announcement } from "@/models/Announcement";
+import {
+  calculateTimeRemaining,
+  filterFutureAnnouncements,
+  getEarliestAnnouncements,
+} from "@/utils/utils";
+import { NO_ANNOUNCEMENTS_MESSAGE } from "@/utils/constants";
 
 interface Props {
   announcements: Announcement[];
 }
 
 export default function UpcomingAnnouncements({ announcements }: Props) {
-  const futureAnnouncements = announcements
-    .filter((announcement) => new Date(announcement.startDate) > new Date())
-    .sort(
-      (a, b) =>
-        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    );
+  const futureAnnouncements = getEarliestAnnouncements(
+    filterFutureAnnouncements(announcements)
+  );
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
-
-  const calculateTimeRemaining = (startDate: Date) => {
-    const now = new Date();
-    const timeDiff = startDate.getTime() - now.getTime();
-    if (timeDiff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-    const seconds = Math.floor(timeDiff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    return {
-      days: Math.min(days, 99),
-      hours: hours % 24,
-      minutes: minutes % 60,
-      seconds: seconds % 60,
-    };
-  };
 
   useEffect(() => {
     if (futureAnnouncements.length === 0) return;
@@ -72,7 +57,7 @@ export default function UpcomingAnnouncements({ announcements }: Props) {
 
       {futureAnnouncements.length > 0 ? (
         <>
-          <div className="flex justify-center items-start gap-4 md:gap-6 self-stretch mt-4">
+          <div className="flex justify-center items-start gap-4 md:gap-6 self-stretch">
             <div className="flex flex-col w-[64px] items-center gap-1">
               <h3 className="text-neutral-black text-center">
                 {timeRemaining.days}
@@ -109,7 +94,7 @@ export default function UpcomingAnnouncements({ announcements }: Props) {
         </>
       ) : (
         <div className="b1 text-neutral-400 text-center self-stretch">
-          There's nothing to show here.
+          {NO_ANNOUNCEMENTS_MESSAGE}
         </div>
       )}
     </div>
