@@ -1,16 +1,13 @@
 import CrossThick from "@/icons/CrossThickIcon";
 import { Announcement } from "@/models/Announcement";
 
-interface props {
+interface Props {
   announcement: Announcement;
 }
 
-export default function AnnouncementBanner({ announcement }: props) {
+export default function AnnouncementBanner({ announcement }: Props) {
   return (
-    <div
-      className="flex w-[281px] md:w-[361px] p-4 items-start gap-4 rounded-sm bg-neutral-white border border-other-stroke"
-      style={{ boxShadow: "0px 10px 10px 0px rgba(36, 41, 46, 0.15)" }}
-    >
+    <div className="flex w-[281px] md:w-[361px] p-4 items-start gap-4 rounded-sm bg-neutral-white border border-other-stroke shadow-lg">
       <img
         src={announcement.imageUrl}
         className="w-[64px] h-[64px] flex-shrink-0 rounded-sm object-cover object-center"

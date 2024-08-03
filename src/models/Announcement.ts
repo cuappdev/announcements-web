@@ -1,10 +1,12 @@
+import { AppName } from "./AppName";
+
 export interface Announcement {
   id: string;
-  apps: string[];
+  apps: AppName[];
   body: string;
-  endDate: string;
+  endDate: Date;
   imageUrl: string;
   link: string;
-  startDate: string;
+  startDate: Date;
   title: string;
 }

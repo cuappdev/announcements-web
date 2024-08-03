@@ -20,6 +20,11 @@ const config: Config = {
       xl: "1280px",
       "2xl": "1280px",
     },
+    boxShadow: {
+      sm: "0px 5px 10px 0px rgba(36, 41, 46, 0.05)",
+      md: "0px 8px 10px 0px rgba(36, 41, 46, 0.10)",
+      lg: "0px 10px 10px 0px rgba(36, 41, 46, 0.15)",
+    },
     extend: {
       fontFamily: {
         sfprodisplay: ["var(--font-sfprodisplay)"],
