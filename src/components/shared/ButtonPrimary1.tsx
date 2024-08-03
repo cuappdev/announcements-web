@@ -1,11 +1,11 @@
 "use client";
 
-interface props {
+interface Props {
   text: string;
   action: () => void;
 }
 
-export default function ButtonPrimary1({ text, action }: props) {
+export default function ButtonPrimary1({ text, action }: Props) {
   return (
     <button
       className="flex p-4 justify-center items-center gap-1 self-stretch bg-red-600 rounded-md"
