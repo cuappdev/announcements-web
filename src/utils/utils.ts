@@ -3,20 +3,20 @@ import { Announcement } from "@/models/Announcement";
 /**
  * Filters out announcements whose startDate is in the past.
  *
- * @param announcements - An array of Announcement objects.
+ * @param announcements - The announcements to filter.
  * @returns An array of Announcement objects where each startDate is greater than the current date.
  */
 export const filterFutureAnnouncements = (
-  announcements: Announcement[]
+  announcements: Announcement[],
+  date: Date = new Date()
 ): Announcement[] => {
-  const now = new Date();
-  return announcements.filter((announcement) => announcement.startDate > now);
+  return announcements.filter((announcement) => announcement.startDate > date);
 };
 
 /**
  * Sorts an array of announcements by their startDate in ascending order.
  *
- * @param announcements - An array of Announcement objects.
+ * @param announcements - The announcements to filter.
  * @returns An array of Announcement objects sorted by startDate, with the earliest date first.
  */
 export const sortAnnouncementsByStartDate = (
@@ -30,7 +30,7 @@ export const sortAnnouncementsByStartDate = (
 /**
  * Returns the announcement(s) with the earliest start date.
  *
- * @param announcements - An array of Announcement objects.
+ * @param announcements - The announcements to filter.
  * @returns An array of Announcement object(s) from [announcements] which have the earliest start date.
  */
 export const getEarliestAnnouncements = (

@@ -54,13 +54,46 @@ const duplicateStartAnnouncements: Announcement[] = [
   ...announcements,
 ];
 
+const noFutureAnnouncements: Announcement[] = [
+  {
+    id: "0",
+    apps: [AppName.EATERY],
+    body: "Announcement 1",
+    endDate: new Date("2024-05-01T00:00:00Z"),
+    imageUrl: "image4.jpg",
+    link: "link4",
+    startDate: new Date("2024-03-15T00:00:00Z"),
+    title: "Announcement 4",
+  },
+  {
+    id: "1",
+    apps: [AppName.EATERY],
+    body: "Announcement 2",
+    endDate: new Date("2023-011-12T00:00:00Z"),
+    imageUrl: "image4.jpg",
+    link: "link4",
+    startDate: new Date("2023-05-30T00:00:00Z"),
+    title: "Announcement 4",
+  },
+];
+
 describe("Utils", () => {
   describe("filterFutureAnnouncements", () => {
     it("should filter announcements to only include those with a start date in the future", () => {
-      const result = filterFutureAnnouncements(announcements);
+      const result = filterFutureAnnouncements(
+        announcements,
+        new Date(2024, 7, 1)
+      );
       expect(result.length).toBe(2);
       expect(result[0].id).toBe("2");
       expect(result[1].id).toBe("3");
+    });
+    it("should filter out past announcements (no future announcements)", () => {
+      const result = filterFutureAnnouncements(
+        noFutureAnnouncements,
+        new Date(2024, 7, 1)
+      );
+      expect(result.length).toBe(0);
     });
   });
 
@@ -74,22 +107,39 @@ describe("Utils", () => {
   });
 
   describe("calculateTimeRemaining", () => {
-    it("should calculate the time remaining until the given start date", () => {
-      const startDate = new Date(Date.now() + 86400000); // 1 day from now
+    it("should calculate the days remaining until the given start date", () => {
+      const startDate = new Date(Date.now() + 3 * 86400000); // 3 days from now
       const result = calculateTimeRemaining(startDate);
-      expect(result.days).toBe(1);
-      expect(result.hours).toBe(0);
-      expect(result.minutes).toBe(0);
-      expect(result.seconds).toBe(0);
+      expect(result.days).toBe(3);
     });
 
-    it("should cap the days at 99", () => {
-      const startDate = new Date(Date.now() + 100 * 86400000); // 100 days from now
+    it("should calculate the hours remaining until the given start date", () => {
+      const startDate = new Date(Date.now() + 5 * 3600000); // 5 hours from now
       const result = calculateTimeRemaining(startDate);
-      expect(result.days).toBe(99);
-      expect(result.hours).toBe(0);
-      expect(result.minutes).toBe(0);
-      expect(result.seconds).toBe(0);
+      expect(result.hours).toBe(5);
+    });
+
+    it("should calculate the minutes remaining until the given start date", () => {
+      const startDate = new Date(Date.now() + 45 * 60000); // 45 minutes from now
+      const result = calculateTimeRemaining(startDate);
+      expect(result.minutes).toBe(45);
+    });
+
+    it("should calculate the seconds remaining until the given start date", () => {
+      const startDate = new Date(Date.now() + 30 * 1000); // 30 seconds from now
+      const result = calculateTimeRemaining(startDate);
+      expect(result.seconds).toBe(30);
+    });
+
+    it("should calculate days, hours, minutes, and seconds remaining accurately", () => {
+      const startDate = new Date(
+        Date.now() + 1 * 86400000 + 5 * 3600000 + 45 * 60000 + 30 * 1000
+      ); // 1 day, 5 hours, 45 minutes, 30 seconds from now
+      const result = calculateTimeRemaining(startDate);
+      expect(result.days).toBe(1);
+      expect(result.hours).toBe(5);
+      expect(result.minutes).toBe(45);
+      expect(result.seconds).toBe(30);
     });
 
     it("should return 0 for all units if the start date is in the past", () => {
@@ -99,6 +149,12 @@ describe("Utils", () => {
       expect(result.hours).toBe(0);
       expect(result.minutes).toBe(0);
       expect(result.seconds).toBe(0);
+    });
+
+    it("should cap the days at 99", () => {
+      const startDate = new Date(Date.now() + 100 * 86400000); // 100 days from now
+      const result = calculateTimeRemaining(startDate);
+      expect(result.days).toBe(99);
     });
   });
 

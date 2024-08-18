@@ -16,6 +16,12 @@ To run a production build, use `yarn build` folowed by `yarn start`.
 
 To clear the cache, delete the auto-generated `.next` folder.
 
+## Running the Test Suite
+
+Make sure all dependencies are installed with `yarn install`.
+
+To run the test suite, use `yarn test`.
+
 ## Project Structure
 
 This project uses App Router by Next.js which uses a file-based routing system within the `app` directory. Routes can be created by making new directories inside of the `app` folder with a `page.tsx` file.

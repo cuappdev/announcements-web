@@ -29,17 +29,13 @@ export default function UpcomingAnnouncements({ announcements }: Props) {
   useEffect(() => {
     if (futureAnnouncements.length === 0) return;
 
-    const firstFutureAnnouncement = futureAnnouncements[0];
-
-    const startDate = new Date(firstFutureAnnouncement.startDate);
-
+    const startDate = futureAnnouncements[0].startDate;
     const updateCountdown = () => {
       setTimeRemaining(calculateTimeRemaining(startDate));
     };
-
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
 
+    const interval = setInterval(updateCountdown, 1000); // Sets up a timer to call updateCountdown every 1000 milliseconds (1 second)
     return () => clearInterval(interval);
   }, [announcements]);
 

@@ -2,6 +2,8 @@ import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
 import { Announcement } from "@/models/Announcement";
 import { AppName } from "@/models/AppName";
 
+// TODO: Remove hardcoded announcements once API is connected
+
 const pastAnn: Announcement = {
   id: "65f3c6c85ec12921d8bbd0e3",
   apps: [AppName.EATERY, AppName.RESELL],
