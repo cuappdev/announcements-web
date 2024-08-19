@@ -6,6 +6,7 @@ import {
   getEarliestAnnouncements,
   dateInRange,
   formatDate,
+  filterActiveAnnouncements,
 } from "../src/utils/utils";
 import { Announcement } from "@/models/Announcement";
 
@@ -180,9 +181,9 @@ describe("Utils", () => {
     });
   });
 
-  describe("filterOutPastAnnouncements", () => {
+  describe("filterActiveAnnouncements", () => {
     it("should filter announcements to only include those with an end date in the future", () => {
-      const result = filterFutureAnnouncements(
+      const result = filterActiveAnnouncements(
         announcements,
         new Date(2024, 11, 1)
       );
@@ -190,11 +191,20 @@ describe("Utils", () => {
       expect(result[0].id).toBe("3");
     });
     it("should filter announcements to only include those with an end date in the future (all announcements have concluded)", () => {
-      const result = filterFutureAnnouncements(
+      const result = filterActiveAnnouncements(
         duplicateStartAnnouncements,
         new Date(2026, 11, 1)
       );
       expect(result.length).toBe(0);
+    });
+    it("should filter announcements to only include those with an end date in the future (includes active announcement)", () => {
+      const result = filterActiveAnnouncements(
+        announcements,
+        new Date(2024, 7, 25)
+      );
+      expect(result.length).toBe(2);
+      expect(result[0].id).toBe("2");
+      expect(result[1].id).toBe("3");
     });
   });
 

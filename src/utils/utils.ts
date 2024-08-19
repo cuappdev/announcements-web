@@ -15,13 +15,13 @@ export const filterFutureAnnouncements = (
 };
 
 /**
- * Filters out announcements whose endDate is in the past.
+ * Filters active announcements, which are either current or upcoming, based on their endDate.
  *
- * @param announcements - An array of Announcement objects.
+ * @param announcements - The announcements to filter.
  * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
  * @returns An array of Announcement objects where each endDate is greater than the current date.
  */
-export const filterOutPastAnnouncements = (
+export const filterActiveAnnouncements = (
   announcements: Announcement[],
   date: Date = new Date()
 ): Announcement[] => {
@@ -89,14 +89,19 @@ export const calculateTimeRemaining = (startDate: Date) => {
 };
 
 /**
- * Returns whether the current date is in the range of a given start and end date.
+ * Returns whether the given date is in the range of a given start and end date.
  *
+ * @param targetDate - Optional. The date that is to be checked if it's in range of [startDate] and [endDate]. If not provided, the current date and time when the function is called will be used.
  * @param startDate - A date, must be before [endDate].
  * @param endDate - A date, must be after [startDate].
  * @returns A boolean stating if the current date is greater than or equal to startDate and less than or equal to endDate.
  */
-export const dateInRange = (date: Date, startDate: Date, endDate: Date) => {
-  return date >= startDate && date <= endDate;
+export const dateInRange = (
+  targetDate: Date = new Date(),
+  startDate: Date,
+  endDate: Date
+) => {
+  return targetDate >= startDate && targetDate <= endDate;
 };
 
 /**
