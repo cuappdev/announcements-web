@@ -4,6 +4,7 @@ import { Announcement } from "@/models/Announcement";
  * Filters out announcements whose startDate is in the past.
  *
  * @param announcements - The announcements to filter.
+ * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
  * @returns An array of Announcement objects where each startDate is greater than the current date.
  */
 export const filterFutureAnnouncements = (
