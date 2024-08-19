@@ -5,4 +5,5 @@ export enum AppName {
   COURSEGRAB = "coursegrab",
   VOLUME = "volume",
   UPLIFT = "uplift",
+  SCOOPED = "scooped",
 }

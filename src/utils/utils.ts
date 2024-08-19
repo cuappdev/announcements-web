@@ -15,6 +15,20 @@ export const filterFutureAnnouncements = (
 };
 
 /**
+ * Filters out announcements whose endDate is in the past.
+ *
+ * @param announcements - An array of Announcement objects.
+ * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
+ * @returns An array of Announcement objects where each endDate is greater than the current date.
+ */
+export const filterOutPastAnnouncements = (
+  announcements: Announcement[],
+  date: Date = new Date()
+): Announcement[] => {
+  return announcements.filter((announcement) => announcement.endDate > date);
+};
+
+/**
  * Sorts an array of announcements by their startDate in ascending order.
  *
  * @param announcements - The announcements to filter.
@@ -72,4 +86,32 @@ export const calculateTimeRemaining = (startDate: Date) => {
     minutes: minutes % 60,
     seconds: seconds % 60,
   };
+};
+
+/**
+ * Returns whether the current date is in the range of a given start and end date.
+ *
+ * @param startDate - A date, must be before [endDate].
+ * @param endDate - A date, must be after [startDate].
+ * @returns A boolean stating if the current date is greater than or equal to startDate and less than or equal to endDate.
+ */
+export const dateInRange = (date: Date, startDate: Date, endDate: Date) => {
+  return date >= startDate && date <= endDate;
+};
+
+/**
+ * Formats a Date object into a string in the M/D 00:00 AM/PM format.
+ *
+ * @param date - A date.
+ * @returns A string representing [date] in the above format.
+ */
+export const formatDate = (date: Date) => {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const time = date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  return `${month}/${day} ${time}`;
 };
