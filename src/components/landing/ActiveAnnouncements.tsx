@@ -5,7 +5,7 @@ import { Announcement } from "@/models/Announcement";
 import { NO_ANNOUNCEMENTS_MESSAGE } from "@/utils/constants";
 import {
   calculateTimeRemaining,
-  filterOutPastAnnouncements,
+  filterActiveAnnouncements,
   sortAnnouncementsByStartDate,
 } from "@/utils/utils";
 import ActiveCell from "./ActiveCell";
@@ -17,7 +17,7 @@ interface Props {
 
 export default function ActiveAnnouncements({ announcements }: Props) {
   const activeAnnouncements = sortAnnouncementsByStartDate(
-    filterOutPastAnnouncements(announcements)
+    filterActiveAnnouncements(announcements)
   );
 
   const [timeRemaining, setTimeRemaining] = useState({
