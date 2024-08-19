@@ -4,6 +4,8 @@ import {
   sortAnnouncementsByStartDate,
   calculateTimeRemaining,
   getEarliestAnnouncements,
+  dateInRange,
+  formatDate,
 } from "../src/utils/utils";
 import { Announcement } from "@/models/Announcement";
 
@@ -22,10 +24,10 @@ const announcements: Announcement[] = [
     id: "2",
     apps: [AppName.RESELL, AppName.COURSEGRAB],
     body: "Announcement 2",
-    endDate: new Date("2024-08-20T00:00:00Z"),
+    endDate: new Date("2024-08-30T00:00:00Z"),
     imageUrl: "image2.jpg",
     link: "link2",
-    startDate: new Date("2024-08-10T00:00:00Z"),
+    startDate: new Date("2024-08-20T00:00:00Z"),
     title: "Announcement 2",
   },
   {
@@ -108,7 +110,7 @@ describe("Utils", () => {
 
   describe("calculateTimeRemaining", () => {
     it("should calculate the days remaining until the given start date", () => {
-      const startDate = new Date(Date.now() + 3 * 86400000); // 3 days from now
+      const startDate = new Date(Date.now() + 3 * 86400001); // 3 days from now
       const result = calculateTimeRemaining(startDate);
       expect(result.days).toBe(3);
     });
@@ -175,6 +177,105 @@ describe("Utils", () => {
     it("should return an empty array if there are no announcements", () => {
       const result = getEarliestAnnouncements([]);
       expect(result.length).toBe(0);
+    });
+  });
+
+  describe("filterOutPastAnnouncements", () => {
+    it("should filter announcements to only include those with an end date in the future", () => {
+      const result = filterFutureAnnouncements(
+        announcements,
+        new Date(2024, 11, 1)
+      );
+      expect(result.length).toBe(1);
+      expect(result[0].id).toBe("3");
+    });
+    it("should filter announcements to only include those with an end date in the future (all announcements have concluded)", () => {
+      const result = filterFutureAnnouncements(
+        duplicateStartAnnouncements,
+        new Date(2026, 11, 1)
+      );
+      expect(result.length).toBe(0);
+    });
+  });
+
+  describe("dateInRange", () => {
+    it("should return true as first date is in the range set by the second two dates", () => {
+      const result = dateInRange(
+        new Date("2024-07-15T14:30:00"),
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-30T14:30:00")
+      );
+      expect(result).toBe(true);
+    });
+    it("the first date is before the range of the second two dates (not in range)", () => {
+      const result = dateInRange(
+        new Date("2024-07-01T12:30:00"),
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-30T14:30:00")
+      );
+      expect(result).toBe(false);
+    });
+    it("the first date is after the range of the second two dates (not in range)", () => {
+      const result = dateInRange(
+        new Date("2024-07-30T16:30:00"),
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-30T14:30:00")
+      );
+      expect(result).toBe(false);
+    });
+    it("the given date is exactly the same date as the earlier bound of the range (in range)", () => {
+      const result = dateInRange(
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-30T14:30:00")
+      );
+      expect(result).toBe(true);
+    });
+    it("the given date is exactly the same date as the later bound of the range (in range)", () => {
+      const result = dateInRange(
+        new Date("2024-07-30T14:30:00"),
+        new Date("2024-07-01T14:30:00"),
+        new Date("2024-07-30T14:30:00")
+      );
+      expect(result).toBe(true);
+    });
+  });
+
+  describe("formatDate", () => {
+    it("should format the date correctly for a date in the middle of the year", () => {
+      const date = new Date("2024-07-15T14:30:00");
+      const result = formatDate(date);
+      expect(result).toBe("7/15 02:30 PM");
+    });
+  
+    it("should format the date correctly for a date at the beginning of the year", () => {
+      const date = new Date("2024-01-01T00:00:00");
+      const result = formatDate(date);
+      expect(result).toBe("1/1 12:00 AM");
+    });
+  
+    it("should format the date correctly for a date at the end of the year", () => {
+      const date = new Date("2024-12-31T23:59:59");
+      const result = formatDate(date);
+      expect(result).toBe("12/31 11:59 PM");
+    });
+  
+    it("should format the date correctly for a single-digit month and day", () => {
+      const date = new Date("2024-03-05T07:05:00");
+      const result = formatDate(date);
+      expect(result).toBe("3/5 07:05 AM");
+    });
+  
+    it("should format the date correctly for noon", () => {
+      const date = new Date("2024-06-15T12:00:00");
+      const result = formatDate(date);
+      expect(result).toBe("6/15 12:00 PM");
+    });
+  
+    it("should format the date correctly for midnight", () => {
+      const date = new Date("2024-09-22T00:00:00");
+      const result = formatDate(date);
+      expect(result).toBe("9/22 12:00 AM");
     });
   });
 });

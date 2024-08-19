@@ -1,4 +1,5 @@
-import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
+import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
+import ActiveCell from "@/components/landing/ActiveCell";
 import { Announcement } from "@/models/Announcement";
 import { AppName } from "@/models/AppName";
 
@@ -16,19 +17,39 @@ const pastAnn: Announcement = {
   title: "Demo Day",
 };
 
-const ann1: Announcement = {
+const liveAnn: Announcement = {
   id: "65f3c6c85ec12921d8bbd0e3",
   apps: [AppName.UPLIFT],
   body: "Short body.",
-  endDate: new Date("2024-08-16T03:00:00Z"),
+  endDate: new Date("2024-08-25T19:15:00Z"),
   imageUrl:
-    "https://kidszoo.org/wp-content/uploads/2017/06/IMG_2034-2-scaled.jpg",
+    "https://runningscaredsite.wordpress.com/wp-content/uploads/2016/01/running-scared-chicken.jpeg?w=640",
   link: "https://www.instagram.com/p/C4ft4SyOaUj/",
-  startDate: new Date("2024-08-10T23:42:20Z"),
+  startDate: new Date("2024-07-10T23:42:20Z"),
   title: "Title",
 };
 
-const ann2: Announcement = {
+const liveAnn2: Announcement = {
+  id: "65f3c6c85ec12921d8bbd0e3",
+  apps: [
+    AppName.TRANSIT,
+    AppName.EATERY,
+    AppName.SCOOPED,
+    AppName.COURSEGRAB,
+    AppName.RESELL,
+    AppName.UPLIFT,
+    AppName.VOLUME,
+  ],
+  body: "Come ASAP.",
+  endDate: new Date("2024-08-28T19:15:00Z"),
+  imageUrl:
+    "https://cdn.britannica.com/55/174255-050-526314B6/brown-Guernsey-cow.jpg",
+  link: "https://www.instagram.com/p/C4ft4SyOaUj/",
+  startDate: new Date("2024-08-01T23:42:20Z"),
+  title: "Happening now.",
+};
+
+const futureAnn: Announcement = {
   id: "65f3c6c85ec12921d8bbd0e3",
   apps: [AppName.EATERY, AppName.RESELL, AppName.UPLIFT, AppName.TRANSIT],
   body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -40,31 +61,29 @@ const ann2: Announcement = {
   title: "Very, Very, Very Big Announcement.",
 };
 
-const ann3: Announcement = {
+const futureAnn2: Announcement = {
   id: "65f3c6c85ec12921d8bbd0e3",
   apps: [AppName.RESELL],
   body: "Starting at the same time as ...",
-  endDate: new Date("2024-08-16T03:00:00Z"),
+  endDate: new Date("2025-08-09T18:57:00Z"),
   imageUrl:
     "https://kidszoo.org/wp-content/uploads/2017/06/IMG_2034-2-scaled.jpg",
   link: "https://www.instagram.com/p/C4ft4SyOaUj/",
-  startDate: new Date("2024-08-10T23:42:20Z"),
+  startDate: new Date("2025-08-08T19:24:20Z"),
   title: "Announcement",
 };
 
 export default function Landing() {
   return (
-    <div className="w-[361px] md:w-[770px] lg:w-[499px]">
+    <div className="w-[361px] md:w-[770px] lg:w-[597px]">
       {/* empty state (there are no announcements) */}
-      <UpcomingAnnouncements announcements={[]} />
-      {/* empty state (there are no upcoming announcements, only past announcements) */}
-      <UpcomingAnnouncements announcements={[pastAnn]} />
-      {/* only one announcement, which is upcoming */}
-      <UpcomingAnnouncements announcements={[ann2]} />
-      {/* multiple upcoming announcements with different start times, and one past announcement */}
-      <UpcomingAnnouncements announcements={[pastAnn, ann1, ann2]} />
-      {/* multiple upcoming announcements with the same start time, and one past announcemnet */}
-      <UpcomingAnnouncements announcements={[pastAnn, ann1, ann3]} />
+      <ActiveAnnouncements announcements={[]} />
+      {/* empty state (there are only past announcements) */}
+      <ActiveAnnouncements announcements={[pastAnn]} />
+      {/* multiple announcements, including ones that are currently live and ones that are in the future */}
+      <ActiveAnnouncements
+        announcements={[pastAnn, liveAnn, liveAnn2, futureAnn, futureAnn2]}
+      />
     </div>
   );
 }
