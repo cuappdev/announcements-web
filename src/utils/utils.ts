@@ -91,15 +91,15 @@ export const calculateTimeRemaining = (startDate: Date) => {
 /**
  * Returns whether the given date is in the range of a given start and end date.
  *
- * @param targetDate - Optional. The date that is to be checked if it's in range of [startDate] and [endDate]. If not provided, the current date and time when the function is called will be used.
  * @param startDate - A date, must be before [endDate].
  * @param endDate - A date, must be after [startDate].
+ * @param targetDate - Optional. The date that is to be checked if it's in range of [startDate] and [endDate]. If not provided, the current date and time when the function is called will be used.
  * @returns A boolean stating if the current date is greater than or equal to startDate and less than or equal to endDate.
  */
 export const dateInRange = (
-  targetDate: Date = new Date(),
   startDate: Date,
-  endDate: Date
+  endDate: Date,
+  targetDate: Date = new Date()
 ) => {
   return targetDate >= startDate && targetDate <= endDate;
 };
