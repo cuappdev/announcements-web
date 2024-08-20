@@ -114,7 +114,7 @@ export const formatDate = (date: Date) => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const time = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
     hour12: true,
   });
