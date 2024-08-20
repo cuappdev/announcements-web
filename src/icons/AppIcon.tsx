@@ -1,10 +1,11 @@
 import { AppName } from "@/models/AppName";
+import { IconProps } from "@/models/IconProps";
 
-interface Props {
+interface Props extends IconProps {
   appName: AppName;
 }
 
-export default function AppIcon({ appName }: Props) {
+export default function AppIcon({ appName, className }: Props) {
   const getAppSrc = (appName: AppName): string => {
     switch (appName) {
       case AppName.TRANSIT:
@@ -26,10 +27,5 @@ export default function AppIcon({ appName }: Props) {
     }
   };
 
-  return (
-    <img
-      src={getAppSrc(appName)}
-      className="rounded-sm w-[32px] h-[32px]"
-    ></img>
-  );
+  return <img src={getAppSrc(appName)} className={className} />;
 }
