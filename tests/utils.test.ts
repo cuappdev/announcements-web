@@ -7,6 +7,7 @@ import {
   dateInRange,
   formatDate,
   filterActiveAnnouncements,
+  filterPastAnnouncements,
 } from "../src/utils/utils";
 import { Announcement } from "@/models/Announcement";
 
@@ -72,7 +73,7 @@ const noFutureAnnouncements: Announcement[] = [
     id: "1",
     apps: [AppName.EATERY],
     body: "Announcement 2",
-    endDate: new Date("2023-011-12T00:00:00Z"),
+    endDate: new Date("2023-11-12T00:00:00Z"),
     imageUrl: "image4.jpg",
     link: "link4",
     startDate: new Date("2023-05-30T00:00:00Z"),
@@ -286,6 +287,46 @@ describe("Utils", () => {
       const date = new Date("2024-09-22T00:00:00");
       const result = formatDate(date);
       expect(result).toBe("9/22 12:00 AM");
+    });
+  });
+
+  describe("filterPastAnnouncements", () => {
+    it("should filter announcements to only include those with an end date in the past", () => {
+      const result = filterPastAnnouncements(
+        announcements,
+        new Date(2024, 11, 1)
+      );
+      expect(result.length).toBe(2);
+      expect(result[0].id).toBe("1");
+      expect(result[1].id).toBe("2");
+    });
+    it("all announcements are in the future (returns empty array)", () => {
+      const result = filterPastAnnouncements(
+        duplicateStartAnnouncements,
+        new Date(2011, 11, 1)
+      );
+      expect(result.length).toBe(0);
+    });
+    it("all announcements are in the past (returns the same array as input)", () => {
+      const result = filterPastAnnouncements(
+        noFutureAnnouncements,
+        new Date(2025, 11, 1)
+      );
+      expect(result.length).toBe(noFutureAnnouncements.length);
+      expect(result).toEqual(noFutureAnnouncements);
+    });
+    it("no announcements are given (returns empty array)", () => {
+      const result = filterPastAnnouncements([], new Date(2025, 11, 1));
+      expect(result.length).toBe(0);
+    });
+    it("one input announcement has the exact same end date as the date it's being compared to (should not be in the output)", () => {
+      const result = filterPastAnnouncements(
+        announcements,
+        new Date("2025-03-30T00:00:00Z")
+      );
+      expect(result.length).toBe(2);
+      expect(result[0].id).toBe("1");
+      expect(result[1].id).toBe("2");
     });
   });
 });
