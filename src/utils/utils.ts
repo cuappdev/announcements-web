@@ -29,6 +29,20 @@ export const filterActiveAnnouncements = (
 };
 
 /**
+ * Filters past announcements, which are announcements that have concluded, based on their endDate.
+ *
+ * @param announcements - The announcements to filter.
+ * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
+ * @returns An array of Announcement objects where each endDate is less than the current date.
+ */
+export const filterPastAnnouncements = (
+  announcements: Announcement[],
+  date: Date = new Date()
+): Announcement[] => {
+  return announcements.filter((announcement) => announcement.endDate < date);
+};
+
+/**
  * Sorts an array of announcements by their startDate in ascending order.
  *
  * @param announcements - The announcements to filter.

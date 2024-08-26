@@ -5,7 +5,7 @@ import EditIcon from "@/icons/EditIcon";
 interface Props {
   text: string;
   action: () => void;
-  className?: string
+  className?: string;
 }
 
 export default function TertiaryButton({ text, action, className }: Props) {

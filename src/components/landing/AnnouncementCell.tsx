@@ -1,10 +1,13 @@
 "use client";
 
 import AppIcon from "@/icons/AppIcon";
-import EditIcon from "@/icons/EditIcon";
-import TertiaryButton from "../shared/TertiaryButton";
+import TertiaryButton from "../shared/ButtonTertiary";
 import { Announcement } from "@/models/Announcement";
-import { dateInRange, formatDate } from "@/utils/utils";
+import {
+  dateInRange,
+  filterActiveAnnouncements,
+  formatDate,
+} from "@/utils/utils";
 import { useEffect, useState } from "react";
 import LiveIndicator from "../shared/LiveIndicator";
 
@@ -12,7 +15,7 @@ interface Props {
   announcement: Announcement;
 }
 
-export default function ActiveCell({ announcement }: Props) {
+export default function AnnouncementCell({ announcement }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -41,22 +44,26 @@ export default function ActiveCell({ announcement }: Props) {
               {formatDate(announcement.endDate)}{" "}
             </p>
           </div>
-          <TertiaryButton
-            text="Edit"
-            action={() => console.log("Button clicked")}
-            className="max-md:hidden"
-          />
+          {filterActiveAnnouncements([announcement]).length > 0 ? (
+            <TertiaryButton
+              text="Edit"
+              action={() => console.log("Button clicked")}
+              className="max-md:hidden"
+            />
+          ) : null}
         </div>
         <div className="flex h-[32px] items-center gap-2">
           {announcement.apps.map((app) => (
             <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
           ))}
         </div>
-        <TertiaryButton
-          text="Edit"
-          action={() => console.log("Button clicked")}
-          className="md:hidden"
-        />
+        {filterActiveAnnouncements([announcement]).length > 0 ? (
+          <TertiaryButton
+            text="Edit"
+            action={() => console.log("Button clicked")}
+            className="md:hidden"
+          />
+        ) : null}
       </div>
       {dateInRange(
         currentDate,
