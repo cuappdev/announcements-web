@@ -20,24 +20,6 @@ export default function PastAnnouncements({ announcements }: Props) {
     filterPastAnnouncements(announcements)
   );
 
-  const [annLimit, setAnnLimit] = useState(3);
-
-  useEffect(() => {
-    const updateLimit = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= 768) {
-        setAnnLimit(1);
-      } else {
-        setAnnLimit(3);
-      }
-    };
-
-    updateLimit();
-    window.addEventListener("resize", updateLimit);
-
-    return () => window.removeEventListener("resize", updateLimit);
-  }, []);
-
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
@@ -50,23 +32,41 @@ export default function PastAnnouncements({ announcements }: Props) {
         </div>
       </div>
       {pastAnnouncements.length > 0 ? (
-        <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3">
-          {pastAnnouncements.length > annLimit ? (
-            <>
-              {pastAnnouncements.slice(0, annLimit).map((announcement) => (
-                <ActiveCell key={announcement.id} announcement={announcement} />
-              ))}
+        <>
+          <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3 md:hidden">
+            <ActiveCell
+              key={pastAnnouncements[0].id}
+              announcement={pastAnnouncements[0]}
+            />
+            {pastAnnouncements.length > 1 && (
               <ButtonSecondary1
                 text="View all announcements"
                 action={() => console.log("Button clicked")}
               />
-            </>
-          ) : (
-            pastAnnouncements.map((announcement) => (
-              <ActiveCell key={announcement.id} announcement={announcement} />
-            ))
-          )}
-        </div>
+            )}
+          </div>
+
+          <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3 max-md:hidden">
+            {pastAnnouncements.length > 3 ? (
+              <>
+                {pastAnnouncements.slice(0, 3).map((announcement) => (
+                  <ActiveCell
+                    key={announcement.id}
+                    announcement={announcement}
+                  />
+                ))}
+                <ButtonSecondary1
+                  text="View all announcements"
+                  action={() => console.log("Button clicked")}
+                />
+              </>
+            ) : (
+              pastAnnouncements.map((announcement) => (
+                <ActiveCell key={announcement.id} announcement={announcement} />
+              ))
+            )}
+          </div>
+        </>
       ) : (
         <p className="b1 self-stretch text-neutral-400 text-center">
           {NO_ANNOUNCEMENTS_MESSAGE}

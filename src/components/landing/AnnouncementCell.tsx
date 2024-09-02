@@ -17,6 +17,7 @@ interface Props {
 
 export default function AnnouncementCell({ announcement }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const isActive = filterActiveAnnouncements([announcement]).length > 0;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -44,7 +45,7 @@ export default function AnnouncementCell({ announcement }: Props) {
               {formatDate(announcement.endDate)}{" "}
             </p>
           </div>
-          {filterActiveAnnouncements([announcement]).length > 0 ? (
+          {isActive ? (
             <TertiaryButton
               text="Edit"
               action={() => console.log("Button clicked")}
@@ -57,7 +58,7 @@ export default function AnnouncementCell({ announcement }: Props) {
             <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
           ))}
         </div>
-        {filterActiveAnnouncements([announcement]).length > 0 ? (
+        {isActive ? (
           <TertiaryButton
             text="Edit"
             action={() => console.log("Button clicked")}
