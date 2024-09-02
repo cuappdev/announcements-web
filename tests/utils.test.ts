@@ -300,6 +300,7 @@ describe("Utils", () => {
       expect(result[0].id).toBe("1");
       expect(result[1].id).toBe("2");
     });
+
     it("all announcements are in the future (returns empty array)", () => {
       const result = filterPastAnnouncements(
         duplicateStartAnnouncements,
@@ -307,6 +308,7 @@ describe("Utils", () => {
       );
       expect(result.length).toBe(0);
     });
+
     it("all announcements are in the past (returns the same array as input)", () => {
       const result = filterPastAnnouncements(
         noFutureAnnouncements,
@@ -315,10 +317,12 @@ describe("Utils", () => {
       expect(result.length).toBe(noFutureAnnouncements.length);
       expect(result).toEqual(noFutureAnnouncements);
     });
+
     it("no announcements are given (returns empty array)", () => {
       const result = filterPastAnnouncements([], new Date(2025, 11, 1));
       expect(result.length).toBe(0);
     });
+
     it("one input announcement has the exact same end date as the date it's being compared to (should not be in the output)", () => {
       const result = filterPastAnnouncements(
         announcements,
