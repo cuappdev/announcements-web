@@ -5,7 +5,7 @@ import ButtonPrimary1 from "../shared/ButtonPrimary1";
 
 export default function CreateAnnouncementEntry() {
   return (
-    <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
+    <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white w-full">
       <div className="flex items-center gap-4 self-stretch">
         <SpeakerIcon className="min-w-[32px] w-[32px] h-[32px] md:w-[40px] md:h-[40px] fill-neutral-800" />
         <div className="flex flex-col gap-1">

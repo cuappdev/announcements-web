@@ -44,7 +44,7 @@ export default function ActiveAnnouncements({ announcements }: Props) {
   }, [announcements]);
 
   return (
-    <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
+    <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white w-full">
       <div className="flex items-center gap-4 self-stretch">
         <CalendarArrowIcon className="w-[32px] md:w-[40px] h-[32px] md:h-[40px] fill-neutral-800" />
         <div className="flex flex-col">

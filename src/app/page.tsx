@@ -1,10 +1,15 @@
+import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
+import CreateAnnouncementEntry from "@/components/landing/CreateAnnouncementEntry";
+import Footer from "@/components/landing/Footer";
+import LandingHeader from "@/components/landing/LandingHeader";
 import PastAnnouncements from "@/components/landing/PastAnnouncements";
+import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
 import { Announcement } from "@/models/Announcement";
 import { AppName } from "@/models/AppName";
 
 // TODO: Remove hardcoded announcements once API is connected
 
-const pastAnn: Announcement = {
+const ann0: Announcement = {
   id: "0",
   apps: [AppName.EATERY, AppName.RESELL],
   body: "Pizza will be provided. Come and see us! We would love to speak with you!",
@@ -16,7 +21,7 @@ const pastAnn: Announcement = {
   title: "Demo Day",
 };
 
-const pastAnn2: Announcement = {
+const ann1: Announcement = {
   id: "1",
   apps: [AppName.UPLIFT],
   body: "Short body.",
@@ -28,7 +33,7 @@ const pastAnn2: Announcement = {
   title: "Title",
 };
 
-const pastAnn3: Announcement = {
+const ann2: Announcement = {
   id: "2",
   apps: [
     AppName.TRANSIT,
@@ -48,7 +53,7 @@ const pastAnn3: Announcement = {
   title: "Happening now.",
 };
 
-const pastAnn4: Announcement = {
+const ann3: Announcement = {
   id: "3",
   apps: [AppName.EATERY, AppName.RESELL, AppName.UPLIFT, AppName.TRANSIT],
   body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -60,7 +65,7 @@ const pastAnn4: Announcement = {
   title: "Very, Very, Very Big Announcement.",
 };
 
-const currentAnn: Announcement = {
+const ann4: Announcement = {
   id: "4",
   apps: [AppName.RESELL],
   body: "Starting at the same time as ...",
@@ -72,7 +77,7 @@ const currentAnn: Announcement = {
   title: "Announcement",
 };
 
-const futureAnn: Announcement = {
+const ann5: Announcement = {
   id: "4",
   apps: [AppName.RESELL],
   body: "Starting at the same time as ...",
@@ -86,32 +91,31 @@ const futureAnn: Announcement = {
 
 export default function Landing() {
   return (
-    <div className="w-[361px] md:w-[770px] lg:w-[597px]">
-      {/* empty state (there are no announcements) */}
-      <PastAnnouncements announcements={[]} />
-      {/* empty state (there are no past announcements) */}
-      <PastAnnouncements announcements={[currentAnn, futureAnn]} />
-      {/* filled state (exactly 1 past announcement -- will show all for tablet/desktop/mobile, view all button does not render) */}
-      <PastAnnouncements announcements={[pastAnn, currentAnn]} />
-      {/* filled state (there are more than 1 past announcement but less than 3 -- will show all for tablet/desktop and cap at 1 for mobile) */}
-      <PastAnnouncements
-        announcements={[pastAnn3, pastAnn4, currentAnn, futureAnn]}
-      />
-      {/* filled state (exactly 3 past announcements -- will show all for tablet/desktop and cap at 1 for mobile) */}
-      <PastAnnouncements
-        announcements={[pastAnn, pastAnn3, pastAnn4, currentAnn, futureAnn]}
-      />
-      {/* filled state (there are more than 3 past announcements -- will cap at 3 for tablet/desktop and 1 for mobile) */}
-      <PastAnnouncements
-        announcements={[
-          pastAnn,
-          pastAnn2,
-          pastAnn3,
-          pastAnn4,
-          currentAnn,
-          futureAnn,
-        ]}
-      />
+    <div className="flex flex-col justify-center items-center bg-other-background w-full">
+      <div>
+        <div className="flex flex-col items-center gap-8 self-stretch py-16 px-4 md:py-20 md:px-8 lg:w-[1128px] lg:px-0 lg:py-[132px] lg:h-[2048px]">
+          <LandingHeader name="Vin"></LandingHeader>
+          <div className="lg:hidden flex flex-col items-start gap-8 self-stretch">
+            <CreateAnnouncementEntry></CreateAnnouncementEntry>
+            <UpcomingAnnouncements announcements={[]}></UpcomingAnnouncements>
+            <ActiveAnnouncements announcements={[]}></ActiveAnnouncements>
+            <PastAnnouncements announcements={[]}></PastAnnouncements>
+          </div>
+          <div className="max-lg:hidden flex flex-row gap-8 w-full">
+            <div className="flex flex-col gap-8 w-[499px]">
+              <CreateAnnouncementEntry></CreateAnnouncementEntry>
+              <UpcomingAnnouncements
+                announcements={[]}
+              ></UpcomingAnnouncements>
+            </div>
+            <div className="flex flex-col gap-8 w-[597px]">
+              <ActiveAnnouncements announcements={[]}></ActiveAnnouncements>
+              <PastAnnouncements announcements={[]}></PastAnnouncements>
+            </div>
+          </div>
+        </div>
+        <Footer></Footer>
+      </div>
     </div>
   );
 }
