@@ -1,11 +1,11 @@
 import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
 import CreateAnnouncementEntry from "@/components/landing/CreateAnnouncementEntry";
 import Footer from "@/components/landing/Footer";
-import LandingHeader from "@/components/shared/PageHeader";
 import PastAnnouncements from "@/components/landing/PastAnnouncements";
 import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
 import { Announcement } from "@/models/Announcement";
 import { AppName } from "@/models/AppName";
+import PageHeader from "@/components/shared/PageHeader";
 
 // TODO: Remove hardcoded announcements once API is connected
 
@@ -95,14 +95,14 @@ export default function Landing() {
   return (
     <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
       <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
-        <LandingHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"}/>
+        <PageHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"}/>
         <CreateAnnouncementEntry />
         <UpcomingAnnouncements announcements={announcements} />
         <ActiveAnnouncements announcements={announcements} />
         <PastAnnouncements announcements={announcements} />
       </div>
       <div className="max-lg:hidden flex flex-col gap-8">
-        <LandingHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"} />
+        <PageHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"} />
         <div className="flex flex-row gap-8">
           <div className="flex flex-col gap-8">
             <CreateAnnouncementEntry />
