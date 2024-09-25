@@ -3,7 +3,7 @@ interface Props {
   subtitle: String;
 }
 
-export default function LandingHeader({ title, subtitle }: Props) {
+export default function PageHeader({ title, subtitle }: Props) {
   return (
     <div className="inline-flex flex-col items-start gap-2 w-full">
       <h2 className="text-neutral-800">{title}</h2>
