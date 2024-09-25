@@ -1,7 +1,7 @@
 import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
 import CreateAnnouncementEntry from "@/components/landing/CreateAnnouncementEntry";
 import Footer from "@/components/landing/Footer";
-import LandingHeader from "@/components/landing/LandingHeader";
+import LandingHeader from "@/components/shared/PageHeader";
 import PastAnnouncements from "@/components/landing/PastAnnouncements";
 import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
 import { Announcement } from "@/models/Announcement";
@@ -90,32 +90,31 @@ const ann5: Announcement = {
 };
 
 export default function Landing() {
+  const name = "Vin";
+  const announcements = [ann0, ann1, ann2, ann3, ann4, ann5];
   return (
-    <div className="flex flex-col justify-center items-center bg-other-background w-full">
-      <div>
-        <div className="flex flex-col items-center gap-8 self-stretch py-16 px-4 md:py-20 md:px-8 lg:w-[1128px] lg:px-0 lg:py-[132px] lg:h-[2048px]">
-          <LandingHeader name="Vin"></LandingHeader>
-          <div className="lg:hidden flex flex-col items-start gap-8 self-stretch">
-            <CreateAnnouncementEntry></CreateAnnouncementEntry>
-            <UpcomingAnnouncements announcements={[]}></UpcomingAnnouncements>
-            <ActiveAnnouncements announcements={[]}></ActiveAnnouncements>
-            <PastAnnouncements announcements={[]}></PastAnnouncements>
+    <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
+      <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
+        <LandingHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"}/>
+        <CreateAnnouncementEntry />
+        <UpcomingAnnouncements announcements={announcements} />
+        <ActiveAnnouncements announcements={announcements} />
+        <PastAnnouncements announcements={announcements} />
+      </div>
+      <div className="max-lg:hidden flex flex-col gap-8">
+        <LandingHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"} />
+        <div className="flex flex-row gap-8">
+          <div className="flex flex-col gap-8">
+            <CreateAnnouncementEntry />
+            <UpcomingAnnouncements announcements={announcements} />
           </div>
-          <div className="max-lg:hidden flex flex-row gap-8 w-full">
-            <div className="flex flex-col gap-8 w-[499px]">
-              <CreateAnnouncementEntry></CreateAnnouncementEntry>
-              <UpcomingAnnouncements
-                announcements={[]}
-              ></UpcomingAnnouncements>
-            </div>
-            <div className="flex flex-col gap-8 w-[597px]">
-              <ActiveAnnouncements announcements={[]}></ActiveAnnouncements>
-              <PastAnnouncements announcements={[]}></PastAnnouncements>
-            </div>
+          <div className="flex flex-col gap-8">
+            <ActiveAnnouncements announcements={announcements} />
+            <PastAnnouncements announcements={announcements} />
           </div>
         </div>
-        <Footer></Footer>
       </div>
+      <Footer />
     </div>
   );
 }
