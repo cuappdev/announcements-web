@@ -78,31 +78,49 @@ const ann4: Announcement = {
 };
 
 const ann5: Announcement = {
-  id: "4",
+  id: "5",
   apps: [AppName.RESELL],
   body: "Starting at the same time as ...",
   endDate: new Date("2025-08-09T18:57:00Z"),
   imageUrl:
     "https://kidszoo.org/wp-content/uploads/2017/06/IMG_2034-2-scaled.jpg",
   link: "https://www.instagram.com/p/C4ft4SyOaUj/",
+  startDate: new Date("2024-08-08T19:24:20Z"),
+  title: "Yet Another Announcement",
+};
+
+const ann6: Announcement = {
+  id: "6",
+  apps: [AppName.RESELL, AppName.EATERY, AppName.UPLIFT],
+  body: "Starting at the same time as ...",
+  endDate: new Date("2025-08-09T18:57:00Z"),
+  imageUrl:
+    "https://kidszoo.org/wp-content/uploads/2017/06/IMG_2034-2-scaled.jpg",
+  link: "https://www.instagram.com/p/C4ft4SyOaUj/",
   startDate: new Date("2025-08-08T19:24:20Z"),
-  title: "Announcement",
+  title: "Courses Start Soon!",
 };
 
 export default function Landing() {
   const name = "Vin";
-  const announcements = [ann0, ann1, ann2, ann3, ann4, ann5];
+  const announcements = [ann0, ann1, ann2, ann3, ann4, ann5, ann6];
   return (
     <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
       <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
-        <PageHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"}/>
+        <PageHeader
+          title={`Welcome, ${name}!`}
+          subtitle={"Send announcements to our applications"}
+        />
         <CreateAnnouncementEntry />
         <UpcomingAnnouncements announcements={announcements} />
         <ActiveAnnouncements announcements={announcements} />
         <PastAnnouncements announcements={announcements} />
       </div>
       <div className="max-lg:hidden flex flex-col gap-8">
-        <PageHeader title={`Welcome, ${name}!`} subtitle={"Send announcements to our applications"} />
+        <PageHeader
+          title={`Welcome, ${name}!`}
+          subtitle={"Send announcements to our applications"}
+        />
         <div className="flex flex-row gap-8">
           <div className="flex flex-col gap-8">
             <CreateAnnouncementEntry />
