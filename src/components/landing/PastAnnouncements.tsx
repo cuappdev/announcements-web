@@ -8,6 +8,7 @@ import {
   sortAnnouncementsByStartDate,
 } from "@/utils/utils";
 import ActiveCell from "./AnnouncementCell";
+import AnnouncementModal from "./AnnouncementModal";
 import { useState, useEffect } from "react";
 import ButtonSecondary1 from "../shared/ButtonSecondary1";
 
@@ -19,6 +20,20 @@ export default function PastAnnouncements({ announcements }: Props) {
   const pastAnnouncements = sortAnnouncementsByStartDate(
     filterPastAnnouncements(announcements)
   );
+
+  const [selectedAnnouncement, setSelectedAnnouncement] =
+    useState<Announcement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (announcement: Announcement) => {
+    setSelectedAnnouncement(announcement);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedAnnouncement(null);
+  };
 
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
@@ -37,6 +52,7 @@ export default function PastAnnouncements({ announcements }: Props) {
             <ActiveCell
               key={pastAnnouncements[0].id}
               announcement={pastAnnouncements[0]}
+              onClick={() => openModal(pastAnnouncements[0])}
             />
             {pastAnnouncements.length > 1 && (
               <ButtonSecondary1
@@ -53,6 +69,7 @@ export default function PastAnnouncements({ announcements }: Props) {
                   <ActiveCell
                     key={announcement.id}
                     announcement={announcement}
+                    onClick={() => openModal(announcement)}
                   />
                 ))}
                 <ButtonSecondary1
@@ -62,7 +79,11 @@ export default function PastAnnouncements({ announcements }: Props) {
               </>
             ) : (
               pastAnnouncements.map((announcement) => (
-                <ActiveCell key={announcement.id} announcement={announcement} />
+                <ActiveCell
+                  key={announcement.id}
+                  announcement={announcement}
+                  onClick={() => openModal(announcement)}
+                />
               ))
             )}
           </div>
@@ -72,6 +93,11 @@ export default function PastAnnouncements({ announcements }: Props) {
           {NO_ANNOUNCEMENTS_MESSAGE}
         </p>
       )}
+      <AnnouncementModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        announcement={selectedAnnouncement}
+      />
     </div>
   );
 }

@@ -13,9 +13,10 @@ import LiveIndicator from "../shared/LiveIndicator";
 
 interface Props {
   announcement: Announcement;
+  onClick: () => void;
 }
 
-export default function AnnouncementCell({ announcement }: Props) {
+export default function AnnouncementCell({ announcement, onClick }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const isActive = filterActiveAnnouncements([announcement]).length > 0;
 
@@ -28,7 +29,10 @@ export default function AnnouncementCell({ announcement }: Props) {
   }, []);
 
   return (
-    <div className="flex flex-col p-6 items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative">
+    <div
+      className="flex flex-col p-6 items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative"
+      onClick={onClick}
+    >
       <img
         src={announcement.imageUrl}
         className="h-[265px] md:w-[108px] md:h-[108px] self-stretch rounded-lg object-cover bg-center"
@@ -48,7 +52,7 @@ export default function AnnouncementCell({ announcement }: Props) {
           {isActive ? (
             <TertiaryButton
               text="Edit"
-              action={() => console.log("Button clicked")}
+              action={() => console.log("Edit Button clicked")}
               className="max-md:hidden"
             />
           ) : null}
@@ -67,9 +71,9 @@ export default function AnnouncementCell({ announcement }: Props) {
         ) : null}
       </div>
       {dateInRange(
-        currentDate,
         announcement.startDate,
-        announcement.endDate
+        announcement.endDate,
+        currentDate
       ) ? (
         <LiveIndicator />
       ) : null}

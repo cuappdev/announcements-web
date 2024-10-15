@@ -9,6 +9,7 @@ import {
   sortAnnouncementsByStartDate,
 } from "@/utils/utils";
 import ActiveCell from "./AnnouncementCell";
+import AnnouncementModal from "./AnnouncementModal";
 import { useState, useEffect } from "react";
 
 interface Props {
@@ -26,6 +27,21 @@ export default function ActiveAnnouncements({ announcements }: Props) {
     minutes: 0,
     seconds: 0,
   });
+
+  const [selectedAnnouncement, setSelectedAnnouncement] =
+    useState<Announcement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (announcement: Announcement) => {
+    console.log("Announcement clicked:", announcement);
+    setSelectedAnnouncement(announcement);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedAnnouncement(null);
+  };
 
   useEffect(() => {
     if (activeAnnouncements.length === 0) return;
@@ -59,7 +75,14 @@ export default function ActiveAnnouncements({ announcements }: Props) {
       {activeAnnouncements.length > 0 ? (
         <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3">
           {activeAnnouncements.map((announcement) => (
-            <ActiveCell key={announcement.id} announcement={announcement} />
+            <ActiveCell
+              key={announcement.id}
+              announcement={announcement}
+              onClick={() => {
+                console.log("Cell clicked:", announcement);
+                openModal(announcement);
+              }}
+            />
           ))}
         </div>
       ) : (
@@ -67,6 +90,11 @@ export default function ActiveAnnouncements({ announcements }: Props) {
           {NO_ANNOUNCEMENTS_MESSAGE}
         </p>
       )}
+      <AnnouncementModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        announcement={selectedAnnouncement}
+      />
     </div>
   );
 }
