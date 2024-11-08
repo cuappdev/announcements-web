@@ -1,5 +1,3 @@
-"use client";
-
 import AppIcon from "@/icons/AppIcon";
 import TertiaryButton from "../shared/ButtonTertiary";
 import { Announcement } from "@/models/Announcement";
@@ -59,7 +57,11 @@ export default function AnnouncementCell({ announcement, onClick }: Props) {
         </div>
         <div className="flex h-[32px] items-center gap-2">
           {announcement.apps.map((app) => (
-            <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
+            <AppIcon
+              key={app}
+              appName={app}
+              className="rounded-sm w-[32px] h-[32px]"
+            />
           ))}
         </div>
         {isActive ? (

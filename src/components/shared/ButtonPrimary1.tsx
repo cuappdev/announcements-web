@@ -1,5 +1,3 @@
-"use client";
-
 import CaretRightIcon from "@/icons/CaretRightIcon";
 
 interface Props {

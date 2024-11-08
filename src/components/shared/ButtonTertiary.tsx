@@ -1,5 +1,3 @@
-"use client";
-
 import EditIcon from "@/icons/EditIcon";
 
 interface Props {
