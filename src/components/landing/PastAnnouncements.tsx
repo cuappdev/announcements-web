@@ -1,5 +1,3 @@
-"use client";
-
 import CalendarPlainIcon from "@/icons/CalendarPlainIcon";
 import { Announcement } from "@/models/Announcement";
 import { NO_ANNOUNCEMENTS_MESSAGE } from "@/utils/constants";

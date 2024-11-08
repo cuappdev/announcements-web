@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import HourglassIcon from "@/icons/HourglassIcon";
 import AnnouncementBanner from "../shared/AnnouncementBanner";

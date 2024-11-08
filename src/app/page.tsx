@@ -1,3 +1,5 @@
+"use client";
+
 import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
 import CreateAnnouncementEntry from "@/components/landing/CreateAnnouncementEntry";
 import Footer from "@/components/landing/Footer";
@@ -6,6 +8,7 @@ import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
 import { Announcement } from "@/models/Announcement";
 import { AppName } from "@/models/AppName";
 import PageHeader from "@/components/shared/PageHeader";
+import NavBar from "@/components/shared/NavBar";
 
 // TODO: Remove hardcoded announcements once API is connected
 
@@ -105,34 +108,37 @@ export default function Landing() {
   const name = "Vin";
   const announcements = [ann0, ann1, ann2, ann3, ann4, ann5, ann6];
   return (
-    <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
-      <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
-        <PageHeader
-          title={`Welcome, ${name}!`}
-          subtitle={"Send announcements to our applications"}
-        />
-        <CreateAnnouncementEntry />
-        <UpcomingAnnouncements announcements={announcements} />
-        <ActiveAnnouncements announcements={announcements} />
-        <PastAnnouncements announcements={announcements} />
-      </div>
-      <div className="max-lg:hidden flex flex-col gap-8">
-        <PageHeader
-          title={`Welcome, ${name}!`}
-          subtitle={"Send announcements to our applications"}
-        />
-        <div className="flex flex-row gap-8">
-          <div className="flex flex-col gap-8">
-            <CreateAnnouncementEntry />
-            <UpcomingAnnouncements announcements={announcements} />
-          </div>
-          <div className="flex flex-col gap-8">
-            <ActiveAnnouncements announcements={announcements} />
-            <PastAnnouncements announcements={announcements} />
+    <div className="flex flex-col gap-16">
+      <NavBar />
+      <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
+        <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
+          <PageHeader
+            title={`Welcome, ${name}!`}
+            subtitle={"Send announcements to our applications"}
+          />
+          <CreateAnnouncementEntry />
+          <UpcomingAnnouncements announcements={announcements} />
+          <ActiveAnnouncements announcements={announcements} />
+          <PastAnnouncements announcements={announcements} />
+        </div>
+        <div className="max-lg:hidden flex flex-col gap-8">
+          <PageHeader
+            title={`Welcome, ${name}!`}
+            subtitle={"Send announcements to our applications"}
+          />
+          <div className="flex flex-row gap-8">
+            <div className="flex flex-col gap-8">
+              <CreateAnnouncementEntry />
+              <UpcomingAnnouncements announcements={announcements} />
+            </div>
+            <div className="flex flex-col gap-8">
+              <ActiveAnnouncements announcements={announcements} />
+              <PastAnnouncements announcements={announcements} />
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

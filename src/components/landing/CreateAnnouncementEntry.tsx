@@ -1,5 +1,3 @@
-"use client";
-
 import SpeakerIcon from "@/icons/SpeakerIcon";
 import ButtonPrimary1 from "../shared/ButtonPrimary1";
 
