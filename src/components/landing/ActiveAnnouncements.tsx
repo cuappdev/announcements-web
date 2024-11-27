@@ -30,16 +30,12 @@ export default function ActiveAnnouncements({ announcements }: Props) {
 
   const [selectedAnnouncement, setSelectedAnnouncement] =
     useState<Announcement | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (announcement: Announcement) => {
-    console.log("Announcement clicked:", announcement);
     setSelectedAnnouncement(announcement);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedAnnouncement(null);
   };
 
@@ -78,10 +74,7 @@ export default function ActiveAnnouncements({ announcements }: Props) {
             <ActiveCell
               key={announcement.id}
               announcement={announcement}
-              onClick={() => {
-                console.log("Cell clicked:", announcement);
-                openModal(announcement);
-              }}
+              onClick={() => openModal(announcement)}
             />
           ))}
         </div>
@@ -91,7 +84,6 @@ export default function ActiveAnnouncements({ announcements }: Props) {
         </p>
       )}
       <AnnouncementModal
-        isOpen={isModalOpen}
         onClose={closeModal}
         announcement={selectedAnnouncement}
       />

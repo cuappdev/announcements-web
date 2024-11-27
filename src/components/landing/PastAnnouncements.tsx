@@ -23,15 +23,12 @@ export default function PastAnnouncements({ announcements }: Props) {
 
   const [selectedAnnouncement, setSelectedAnnouncement] =
     useState<Announcement | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (announcement: Announcement) => {
     setSelectedAnnouncement(announcement);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedAnnouncement(null);
   };
 
@@ -94,7 +91,6 @@ export default function PastAnnouncements({ announcements }: Props) {
         </p>
       )}
       <AnnouncementModal
-        isOpen={isModalOpen}
         onClose={closeModal}
         announcement={selectedAnnouncement}
       />
