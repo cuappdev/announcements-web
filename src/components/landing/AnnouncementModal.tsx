@@ -11,94 +11,78 @@ import ModalUpcomingIndicator from "../shared/ModalUpcomingIndicator";
 import { useEffect, useState } from "react";
 
 interface AnnouncementModalProps {
-  isOpen: boolean;
   onClose: () => void;
   announcement: Announcement | null;
 }
 
 export default function AnnouncementModal({
-  isOpen,
   onClose,
   announcement,
 }: AnnouncementModalProps) {
-  if (!isOpen || !announcement) return null;
-
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 500);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  if (!announcement) return null;
 
   return (
     <div className="fixed inset-0 bg-neutral-black bg-opacity-60 flex justify-center items-center z-50">
-      <div className="bg-neutral-white rounded-lg p-6 w-[500px] shadow-lg relative">
-        <div className="flex flex-col gap-8">
+      <div className="bg-neutral-white rounded-lg p-8 max-md:w-full m-4 md:m-8 lg:max-w-[1128px]">
+        <div className="flex flex-col gap-4 md:gap-6">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-1">
-              <div className="flex items-center">
-                <h4 className="self-stretch text-neutral-800">
+              <div className="flex flex-row items-center justify-between gap-1">
+                <h4 className="text-neutral-800 break-all">
                   {announcement.title}
                 </h4>
-                <button className="h-[24px] w-[24px] ml-auto" onClick={onClose}>
+                <button
+                  className="h-[24px] w-[24px] fill-neutral-400"
+                  onClick={onClose}
+                >
                   <CrossThinIcon />
                 </button>
               </div>
-              <p className="b1 self-stretch text-neutral-600">
-                {" "}
-                {formatDate(announcement.startDate)} -{" "}
-                {formatDate(announcement.endDate)}{" "}
+              <p className="b1 text-neutral-600">
+                {`${formatDate(announcement.startDate)} - ${formatDate(
+                  announcement.endDate
+                )}`}
               </p>
             </div>
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-row items-center gap-2">
-                <img
-                  src="/user-placeholder-icons/lauren.png"
-                  className="w-8 h-8 rounded-full"
-                />
-                <p className="b2 text-neutral-black text-center">
-                  Scheduled by Lauren Jun
-                </p>
-              </div>
-
-              <div className="flex flex-col md:flex-row gap-4 items-left">
-                <div className="flex h-[32px] items-center gap-2">
-                  {announcement.apps.map((app) => (
-                    <AppIcon
-                      appName={app}
-                      className="rounded-sm w-[32px] h-[32px]"
-                    />
-                  ))}
-                </div>
-                {dateInRange(
-                  announcement.startDate,
-                  announcement.endDate,
-                  currentDate
-                ) ? (
-                  <ModalLiveIndicator className="md:ml-auto w-fit" />
-                ) : currentDate > announcement.endDate ? (
-                  <ModalPastIndicator className="md:ml-auto w-fit" />
-                ) : currentDate < announcement.startDate ? (
-                  <ModalUpcomingIndicator className="md:ml-auto w-fit" />
-                ) : null}
-              </div>
+            <div className="flex flex-row items-center gap-2">
+              <img
+                src="https://runningscaredsite.wordpress.com/wp-content/uploads/2016/01/running-scared-chicken.jpeg?w=640"
+                className="w-6 h-6 rounded-full"
+              />
+              <p className="b2 text-neutral-400">Scheduled by Lauren Jun</p>
             </div>
           </div>
 
-          <div className="flex flex-col p-4 justify-center items-center gap-4 self-stretch rounded-md border border-other-stroke bg-other-offWhite">
-            <AnnouncementBanner
-              key={announcement.id}
-              announcement={announcement}
-            />
+          <div className="flex flex-col md:flex-row md:justify-between gap-4 items-left">
+            <div className="flex flex-row items-center gap-2">
+              {announcement.apps.map((app) => (
+                <AppIcon
+                  appName={app}
+                  className="rounded-sm w-[32px] h-[32px]"
+                />
+              ))}
+            </div>
+            {dateInRange(
+              announcement.startDate,
+              announcement.endDate,
+              new Date()
+            ) ? (
+              <ModalLiveIndicator className="w-fit" />
+            ) : new Date() > announcement.endDate ? (
+              <ModalPastIndicator className="w-fit" />
+            ) : new Date() < announcement.startDate ? (
+              <ModalUpcomingIndicator className="w-fit" />
+            ) : null}
+          </div>
+
+          <div className="flex flex-col p-4 justify-center items-center rounded-md border border-other-stroke bg-other-offWhite">
+            <AnnouncementBanner announcement={announcement} />
           </div>
 
           {dateInRange(
             announcement.startDate,
             announcement.endDate,
-            currentDate
+            new Date()
           ) ? (
             <ButtonPrimary3
               text="End Live Announcement"

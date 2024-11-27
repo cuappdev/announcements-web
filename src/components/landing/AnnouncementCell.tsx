@@ -30,7 +30,7 @@ export default function AnnouncementCell({ announcement, onClick }: Props) {
 
   return (
     <div
-      className="flex flex-col p-6 items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative"
+      className="flex flex-col p-6 cursor-pointer items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative"
       onClick={onClick}
     >
       <img
