@@ -35,21 +35,17 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
               </p>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <img
-                src="https://runningscaredsite.wordpress.com/wp-content/uploads/2016/01/running-scared-chicken.jpeg?w=640"
-                className="w-6 h-6 rounded-full"
-              />
+              <img src="/user-placeholder-icons/lauren.png" className="w-[24px] h-[24px] rounded-full" />
               <p className="b2 text-neutral-400">Scheduled by Lauren Jun</p>
             </div>
           </div>
-
-          <div className="flex flex-col md:flex-row md:justify-between gap-4 items-left">
+          <div className="flex flex-col md:flex-row gap-4 items-left md:justify-between">
             <div className="flex flex-row items-center gap-2">
               {announcement.apps.map((app) => (
                 <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
               ))}
             </div>
-            {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
+            {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate)) ? (
               <ModalLiveIndicator className="w-fit" />
             ) : new Date() > new Date(announcement.endDate) ? (
               <ModalPastIndicator className="w-fit" />
