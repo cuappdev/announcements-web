@@ -9,7 +9,7 @@ interface Props {
   announcements?: Announcement[];
 }
 
-export default function UpcomingAnnouncements({ announcements }: Props) {
+export default function LandingUpcomingSection({ announcements }: Props) {
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,

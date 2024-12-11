@@ -1,7 +1,7 @@
 import SpeakerIcon from "@/icons/SpeakerIcon";
 import ButtonPrimary1 from "../shared/ButtonPrimary1";
 
-export default function CreateAnnouncementEntry() {
+export default function LandingCreateAnnouncement() {
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">

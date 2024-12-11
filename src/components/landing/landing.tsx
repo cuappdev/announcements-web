@@ -1,13 +1,13 @@
 "use client";
 
-import ActiveAnnouncements from "@/components/landing/ActiveAnnouncements";
-import CreateAnnouncementEntry from "@/components/landing/CreateAnnouncementEntry";
-import Footer from "@/components/landing/Footer";
-import PastAnnouncements from "@/components/landing/PastAnnouncements";
-import UpcomingAnnouncements from "@/components/landing/UpcomingAnnouncements";
+import LandingActiveSection from "@/components/landing/landingActiveSection";
+import LandingCreateAnnouncement from "@/components/landing/landingCreateAnnouncement";
+import Footer from "@/components/footer/footer";
+import LandingPastSection from "@/components/landing/landingPastSection";
+import LandingUpcomingSection from "@/components/landing/landingUpcomingSection";
 import { Announcement } from "@/models/announcement";
 import PageHeader from "@/components/shared/PageHeader";
-import NavBar from "@/components/shared/NavBar";
+import NavBar from "@/components/navbar/navBar";
 import { useUserStore } from "@/stores/useUserStore";
 import ApiClient from "@/services/apiClient";
 import { useQuery } from "@tanstack/react-query";
@@ -47,10 +47,10 @@ export default function Landing() {
             title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
             subtitle={"Send announcements to our applications"}
           />
-          <CreateAnnouncementEntry />
-          <UpcomingAnnouncements announcements={fetchAnnouncementsQuery.data} />
-          <ActiveAnnouncements announcements={fetchAnnouncementsQuery.data} />
-          <PastAnnouncements announcements={fetchAnnouncementsQuery.data} />
+          <LandingCreateAnnouncement />
+          <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
+          <LandingActiveSection announcements={fetchAnnouncementsQuery.data} />
+          <LandingPastSection announcements={fetchAnnouncementsQuery.data} />
         </div>
         <div className="max-lg:hidden flex flex-col gap-8">
           <PageHeader
@@ -59,12 +59,12 @@ export default function Landing() {
           />
           <div className="flex flex-row gap-8">
             <div className="flex flex-col gap-8 w-[499px]">
-              <CreateAnnouncementEntry />
-              <UpcomingAnnouncements announcements={fetchAnnouncementsQuery.data} />
+              <LandingCreateAnnouncement />
+              <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
             </div>
             <div className="flex flex-col gap-8 flex-1">
-              <ActiveAnnouncements announcements={fetchAnnouncementsQuery.data} />
-              <PastAnnouncements announcements={fetchAnnouncementsQuery.data} />
+              <LandingActiveSection announcements={fetchAnnouncementsQuery.data} />
+              <LandingPastSection announcements={fetchAnnouncementsQuery.data} />
             </div>
           </div>
         </div>
