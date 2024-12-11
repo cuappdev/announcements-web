@@ -1,4 +1,4 @@
-import { Announcement } from "@/models/Announcement";
+import { Announcement } from "@/models/announcement";
 import AnnouncementBanner from "../shared/AnnouncementBanner";
 import AppIcon from "@/icons/AppIcon";
 import ButtonPrimary2 from "../shared/ButtonPrimary2";

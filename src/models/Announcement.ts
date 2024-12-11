@@ -1,4 +1,4 @@
-import { AppName } from "./AppName";
+import { AppName } from "./appName";
 
 export interface Announcement {
   id: string;

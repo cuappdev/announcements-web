@@ -1,5 +1,5 @@
+import { Constants } from "@/utils/constants";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { BASE_URL } from "@/utils/constants";
 
 /**
  * An API client for making HTTP requests.
@@ -43,7 +43,7 @@ class ApiClient {
    */
   static createInstance(): AxiosInstance {
     return axios.create({
-      baseURL: BASE_URL,
+      baseURL: Constants.api.baseUrl,
       headers: {
         "Content-Type": "application/json",
       },
@@ -57,7 +57,7 @@ class ApiClient {
    * @param token The authorization token.
    */
   static setAuthToken(axiosInstance: AxiosInstance, token: string): void {
-    axiosInstance.defaults.headers.common["Authorization"] = token;
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
   /**
@@ -68,11 +68,7 @@ class ApiClient {
    * @param config Optional Axios request configuration.
    * @returns A promise that resolves to the response data.
    */
-  static async get<T>(
-    axiosInstance: AxiosInstance,
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  static async get<T>(axiosInstance: AxiosInstance, url: string, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await axiosInstance.get(url, config);
     return response.data;
   }
@@ -86,17 +82,8 @@ class ApiClient {
    * @param config Optional Axios request configuration.
    * @returns A promise that resolves to the response data.
    */
-  static async post<T>(
-    axiosInstance: AxiosInstance,
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
-    const response: AxiosResponse<T> = await axiosInstance.post(
-      url,
-      data,
-      config
-    );
+  static async post<T>(axiosInstance: AxiosInstance, url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response: AxiosResponse<T> = await axiosInstance.post(url, data, config);
     return response.data;
   }
 
@@ -109,17 +96,8 @@ class ApiClient {
    * @param config Optional Axios request configuration.
    * @returns A promise that resolves to the response data.
    */
-  static async put<T>(
-    axiosInstance: AxiosInstance,
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
-    const response: AxiosResponse<T> = await axiosInstance.put(
-      url,
-      data,
-      config
-    );
+  static async put<T>(axiosInstance: AxiosInstance, url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response: AxiosResponse<T> = await axiosInstance.put(url, data, config);
     return response.data;
   }
 
@@ -131,11 +109,7 @@ class ApiClient {
    * @param config Optional Axios request configuration.
    * @returns A promise that resolves to the response data.
    */
-  static async delete<T>(
-    axiosInstance: AxiosInstance,
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  static async delete<T>(axiosInstance: AxiosInstance, url: string, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await axiosInstance.delete(url, config);
     return response.data;
   }

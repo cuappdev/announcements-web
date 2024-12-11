@@ -1,6 +1,6 @@
 import AppIcon from "@/icons/AppIcon";
 import TertiaryButton from "../shared/ButtonTertiary";
-import { Announcement } from "@/models/Announcement";
+import { Announcement } from "@/models/announcement";
 import {
   dateInRange,
   filterActiveAnnouncements,

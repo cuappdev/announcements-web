@@ -1,5 +1,5 @@
 import CrossThick from "@/icons/CrossThickIcon";
-import { Announcement } from "@/models/Announcement";
+import { Announcement } from "@/models/announcement";
 
 interface Props {
   announcement: Announcement;

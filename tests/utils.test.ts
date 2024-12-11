@@ -1,15 +1,15 @@
-import { AppName } from "@/models/AppName";
+import { Announcement } from "@/models/announcement";
+import { AppName } from "@/models/appName";
 import {
-  filterFutureAnnouncements,
-  sortAnnouncementsByStartDate,
   calculateTimeRemaining,
-  getEarliestAnnouncements,
   dateInRange,
-  formatDate,
   filterActiveAnnouncements,
+  filterFutureAnnouncements,
   filterPastAnnouncements,
+  formatDate,
+  getEarliestAnnouncements,
+  sortAnnouncementsByStartDate,
 } from "../src/utils/utils";
-import { Announcement } from "@/models/Announcement";
 
 const announcements: Announcement[] = [
   {

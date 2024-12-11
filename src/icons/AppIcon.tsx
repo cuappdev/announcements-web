@@ -1,4 +1,4 @@
-import { AppName } from "@/models/AppName";
+import { AppName } from "@/models/appName";
 import { IconProps } from "@/models/IconProps";
 
 interface Props extends IconProps {
