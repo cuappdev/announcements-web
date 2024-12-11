@@ -8,7 +8,6 @@ import { dateInRange, formatDate } from "@/utils/utils";
 import ModalLiveIndicator from "../shared/ModalLiveIndicator";
 import ModalPastIndicator from "../shared/ModalPastIndicator";
 import ModalUpcomingIndicator from "../shared/ModalUpcomingIndicator";
-import { useEffect, useState } from "react";
 
 interface AnnouncementModalProps {
   onClose: () => void;
@@ -35,14 +34,14 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
               </p>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <img src="/user-placeholder-icons/lauren.png" className="w-[24px] h-[24px] rounded-full" />
-              <p className="b2 text-neutral-400">Scheduled by Lauren Jun</p>
+              <img src={announcement.creator.imageUrl} className="size-[24px] rounded-xl" />
+              <p className="b2 text-neutral-400">{`Scheduled by ${announcement.creator.name}`}</p>
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-4 items-left md:justify-between">
             <div className="flex flex-row items-center gap-2">
               {announcement.apps.map((app) => (
-                <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
+                <AppIcon appName={app} className="rounded-sm size-[32px]" />
               ))}
             </div>
             {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate)) ? (
