@@ -1,12 +1,8 @@
-import { IconProps } from "@/models/IconProps";
+import { IconProps } from "@/models/props/iconProps";
 
 export default function ({ className }: IconProps) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 25 24"
-      className={className}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 24" className={className}>
       <path
         d="M7.32548 21.75H17.6745C18.6027 21.75 19.3409 20.9864 19.2411 20.1066C18.5966 14.4375 14.75 14.5312 14.75 12C14.75 9.46875 18.6458 9.60938 19.2406 3.89344C19.3344 3.01312 18.6027 2.25 17.6745 2.25H7.32548C6.39736 2.25 5.66751 3.01312 5.75939 3.89344C6.35423 9.60938 10.25 9.42188 10.25 12C10.25 14.5781 6.40345 14.4375 5.75939 20.1066C5.65908 20.9864 6.39736 21.75 7.32548 21.75Z"
         strokeWidth="1.5"

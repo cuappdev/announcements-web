@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import HourglassIcon from "@/icons/HourglassIcon";
-import AnnouncementBanner from "../shared/AnnouncementBanner";
+import AnnouncementBanner from "../announcement/announcementBanner";
 import { Announcement } from "@/models/announcement";
 import { calculateTimeRemaining, filterFutureAnnouncements, getEarliestAnnouncements } from "@/utils/utils";
 import { Constants } from "@/utils/constants";

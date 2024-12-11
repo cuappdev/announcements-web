@@ -1,5 +1,5 @@
 import SpeakerIcon from "@/icons/SpeakerIcon";
-import ButtonPrimary1 from "../shared/ButtonPrimary1";
+import ButtonPrimary1 from "../system/ButtonPrimary1";
 
 export default function LandingCreateAnnouncement() {
   return (

@@ -1,6 +1,6 @@
 import appDevLogo from "@/../public/images/appdev_logo.png";
 import appDevLogoName from "@/../public/images/appdev_logo_name.png";
-import ButtonSecondary2 from "../shared/ButtonSecondary2";
+import ButtonSecondary2 from "../system/ButtonSecondary2";
 import { Constants } from "@/utils/constants";
 import { useUserStore } from "@/stores/useUserStore";
 import { useRouter } from "next/navigation";

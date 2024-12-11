@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import SpeakerIcon from "@/icons/SpeakerIcon";
-import AnnouncementBanner from "../shared/AnnouncementBanner";
+import AnnouncementBanner from "./announcementBanner";
 import { Announcement } from "@/models/announcement";
 import { AppName } from "@/models/appName";
-import { InputText } from "../shared/InputText";
-import { InputDropdown } from "../shared/InputDropdown";
-import { InputDatePicker } from "../shared/InputDatePicker";
-import { InputUpload } from "../shared/InputUpload";
+import { InputText } from "../system/InputText";
+import { InputDropdown } from "../system/InputDropdown";
+import { InputDatePicker } from "../system/InputDatePicker";
+import { InputUpload } from "../system/InputUpload";
 import { User } from "@/models/user";
 
 export default function AnnouncementForm() {
