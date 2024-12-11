@@ -3,22 +3,32 @@
 import { useState } from "react";
 import SpeakerIcon from "@/icons/SpeakerIcon";
 import AnnouncementBanner from "../shared/AnnouncementBanner";
-import { Announcement } from "@/models/Announcement";
-import { AppName } from "@/models/AppName";
+import { Announcement } from "@/models/announcement";
+import { AppName } from "@/models/appName";
 import { InputText } from "../shared/InputText";
 import { InputDropdown } from "../shared/InputDropdown";
 import { InputDatePicker } from "../shared/InputDatePicker";
 import { InputUpload } from "../shared/InputUpload";
+import { User } from "@/models/user";
 
-export default function CreateAnnouncementForm() {
+export default function AnnouncementForm() {
+  const creator: User = {
+    email: "vdb23@cornell.edu",
+    idToken: "idToken",
+    imageUrl: "https://lh3.googleusercontent.com/a/ACg8ocLSV3bTsn-XINmiSkt4FbdlzRDV0EJBc_LX-hv7gdo3LGp8cAB_=s96-c",
+    isAdmin: true,
+    name: "Vin Bui",
+  };
+
   const [announcement, setAnnouncement] = useState<Announcement>({
     id: "0",
     apps: [AppName.EATERY, AppName.RESELL],
     body: "Placeholder",
-    endDate: new Date("2024-03-16T03:00:00Z"),
+    creator,
+    endDate: "2024-03-16T03:00:00Z",
     imageUrl: "",
     link: "https://www.instagram.com/p/C4ft4SyOaUj/",
-    startDate: new Date("2024-03-15T03:00:00Z"),
+    startDate: "2024-03-15T03:00:00Z",
     title: "Placeholder",
   });
 
@@ -32,9 +42,7 @@ export default function CreateAnnouncementForm() {
         <SpeakerIcon className="w-[40px] h-[40px] fill-neutral-800" />
         <div className="flex flex-col gap-1">
           <h4 className="text-neutral-800">Create Announcement</h4>
-          <p className="b1 text-neutral-600">
-            Schedule an announcement to our apps with this form.
-          </p>
+          <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row-reverse justify-center items-center gap-8 self-stretch">
@@ -53,12 +61,8 @@ export default function CreateAnnouncementForm() {
             onChange={(e) => handleChange("body", e.target.value)}
           />
           <div className="flex flex-row justify-between gap-6">
-            <InputDatePicker
-              name="Start Date"
-            />
-            <InputDatePicker
-              name="End Date"
-            />
+            <InputDatePicker name="Start Date" />
+            <InputDatePicker name="End Date" />
           </div>
           <InputText
             name="Link"

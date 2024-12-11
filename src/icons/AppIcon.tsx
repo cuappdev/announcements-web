@@ -1,5 +1,5 @@
 import { AppName } from "@/models/appName";
-import { IconProps } from "@/models/IconProps";
+import { IconProps } from "@/models/iconProps";
 
 interface Props extends IconProps {
   appName: AppName;

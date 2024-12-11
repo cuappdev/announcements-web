@@ -1,8 +1,8 @@
 import CalendarArrowIcon from "@/icons/CalendarArrowIcon";
 import { Announcement } from "@/models/announcement";
 import { calculateTimeRemaining, filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
-import ActiveCell from "./AnnouncementCell";
-import AnnouncementModal from "./AnnouncementModal";
+import ActiveCell from "../announcement/announcementCell";
+import AnnouncementModal from "../announcement/announcementModal";
 import { useState, useEffect } from "react";
 import { Constants } from "@/utils/constants";
 
@@ -10,7 +10,7 @@ interface Props {
   announcements?: Announcement[];
 }
 
-export default function ActiveAnnouncements({ announcements }: Props) {
+export default function LandingActiveSection({ announcements }: Props) {
   const activeAnnouncements = sortAnnouncementsByStartDate(filterActiveAnnouncements(announcements ?? []));
 
   const [timeRemaining, setTimeRemaining] = useState({

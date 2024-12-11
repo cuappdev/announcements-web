@@ -1,5 +1,6 @@
 import { Announcement } from "@/models/announcement";
 import { AppName } from "@/models/appName";
+import { User } from "@/models/user";
 import {
   calculateTimeRemaining,
   dateInRange,
@@ -11,11 +12,20 @@ import {
   sortAnnouncementsByStartDate,
 } from "../src/utils/utils";
 
+const creator: User = {
+  email: "vdb23@cornell.edu",
+  idToken: "idToken",
+  imageUrl: "https://lh3.googleusercontent.com/a/ACg8ocLSV3bTsn-XINmiSkt4FbdlzRDV0EJBc_LX-hv7gdo3LGp8cAB_=s96-c",
+  isAdmin: true,
+  name: "Vin Bui",
+};
+
 const announcements: Announcement[] = [
   {
     id: "1",
     apps: [AppName.EATERY],
     body: "Announcement 1",
+    creator,
     endDate: "2024-04-01T00:00:00Z",
     imageUrl: "image1.jpg",
     link: "link1",
@@ -26,6 +36,7 @@ const announcements: Announcement[] = [
     id: "2",
     apps: [AppName.RESELL, AppName.COURSEGRAB],
     body: "Announcement 2",
+    creator,
     endDate: "2024-08-30T00:00:00Z",
     imageUrl: "image2.jpg",
     link: "link2",
@@ -36,6 +47,7 @@ const announcements: Announcement[] = [
     id: "3",
     apps: [AppName.UPLIFT],
     body: "Announcement 3",
+    creator,
     endDate: "2025-03-30T00:00:00Z",
     imageUrl: "image3.jpg",
     link: "link3",
@@ -49,6 +61,7 @@ const duplicateStartAnnouncements: Announcement[] = [
     id: "4",
     apps: [AppName.EATERY],
     body: "Announcement 4",
+    creator,
     endDate: "2024-05-01T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
@@ -63,6 +76,7 @@ const noFutureAnnouncements: Announcement[] = [
     id: "0",
     apps: [AppName.EATERY],
     body: "Announcement 1",
+    creator,
     endDate: "2024-05-01T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
@@ -73,6 +87,7 @@ const noFutureAnnouncements: Announcement[] = [
     id: "1",
     apps: [AppName.EATERY],
     body: "Announcement 2",
+    creator,
     endDate: "2023-11-12T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
