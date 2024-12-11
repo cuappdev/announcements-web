@@ -15,10 +15,7 @@ interface AnnouncementModalProps {
   announcement: Announcement | null;
 }
 
-export default function AnnouncementModal({
-  onClose,
-  announcement,
-}: AnnouncementModalProps) {
+export default function AnnouncementModal({ onClose, announcement }: AnnouncementModalProps) {
   if (!announcement) return null;
 
   return (
@@ -28,20 +25,13 @@ export default function AnnouncementModal({
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center justify-between gap-1">
-                <h4 className="text-neutral-800 break-all">
-                  {announcement.title}
-                </h4>
-                <button
-                  className="h-[24px] w-[24px] fill-neutral-400"
-                  onClick={onClose}
-                >
+                <h4 className="text-neutral-800 break-all">{announcement.title}</h4>
+                <button className="h-[24px] w-[24px] fill-neutral-400" onClick={onClose}>
                   <CrossThinIcon />
                 </button>
               </div>
               <p className="b1 text-neutral-600">
-                {`${formatDate(announcement.startDate)} - ${formatDate(
-                  announcement.endDate
-                )}`}
+                {`${formatDate(new Date(announcement.startDate))} - ${formatDate(new Date(announcement.endDate))}`}
               </p>
             </div>
             <div className="flex flex-row items-center gap-2">
@@ -56,21 +46,14 @@ export default function AnnouncementModal({
           <div className="flex flex-col md:flex-row md:justify-between gap-4 items-left">
             <div className="flex flex-row items-center gap-2">
               {announcement.apps.map((app) => (
-                <AppIcon
-                  appName={app}
-                  className="rounded-sm w-[32px] h-[32px]"
-                />
+                <AppIcon appName={app} className="rounded-sm w-[32px] h-[32px]" />
               ))}
             </div>
-            {dateInRange(
-              announcement.startDate,
-              announcement.endDate,
-              new Date()
-            ) ? (
+            {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
               <ModalLiveIndicator className="w-fit" />
-            ) : new Date() > announcement.endDate ? (
+            ) : new Date() > new Date(announcement.endDate) ? (
               <ModalPastIndicator className="w-fit" />
-            ) : new Date() < announcement.startDate ? (
+            ) : new Date() < new Date(announcement.startDate) ? (
               <ModalUpcomingIndicator className="w-fit" />
             ) : null}
           </div>
@@ -79,20 +62,13 @@ export default function AnnouncementModal({
             <AnnouncementBanner announcement={announcement} />
           </div>
 
-          {dateInRange(
-            announcement.startDate,
-            announcement.endDate,
-            new Date()
-          ) ? (
+          {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
             <ButtonPrimary3
               text="End Live Announcement"
               action={() => console.log("End Live Announcement button tapped")}
             />
           ) : (
-            <ButtonPrimary2
-              text="Delete Announcement"
-              action={() => console.log("Delete button tapped")}
-            />
+            <ButtonPrimary2 text="Delete Announcement" action={() => console.log("Delete button tapped")} />
           )}
         </div>
       </div>

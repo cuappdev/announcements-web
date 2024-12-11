@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
 import { Constants } from "@/utils/constants";
 
 interface Props {
-  announcements: Announcement[];
+  announcements?: Announcement[];
 }
 
 export default function ActiveAnnouncements({ announcements }: Props) {
-  const activeAnnouncements = sortAnnouncementsByStartDate(filterActiveAnnouncements(announcements));
+  const activeAnnouncements = sortAnnouncementsByStartDate(filterActiveAnnouncements(announcements ?? []));
 
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,

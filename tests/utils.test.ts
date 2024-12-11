@@ -16,30 +16,30 @@ const announcements: Announcement[] = [
     id: "1",
     apps: [AppName.EATERY],
     body: "Announcement 1",
-    endDate: new Date("2024-04-01T00:00:00Z"),
+    endDate: "2024-04-01T00:00:00Z",
     imageUrl: "image1.jpg",
     link: "link1",
-    startDate: new Date("2024-03-15T00:00:00Z"),
+    startDate: "2024-03-15T00:00:00Z",
     title: "Announcement 1",
   },
   {
     id: "2",
     apps: [AppName.RESELL, AppName.COURSEGRAB],
     body: "Announcement 2",
-    endDate: new Date("2024-08-30T00:00:00Z"),
+    endDate: "2024-08-30T00:00:00Z",
     imageUrl: "image2.jpg",
     link: "link2",
-    startDate: new Date("2024-08-20T00:00:00Z"),
+    startDate: "2024-08-20T00:00:00Z",
     title: "Announcement 2",
   },
   {
     id: "3",
     apps: [AppName.UPLIFT],
     body: "Announcement 3",
-    endDate: new Date("2025-03-30T00:00:00Z"),
+    endDate: "2025-03-30T00:00:00Z",
     imageUrl: "image3.jpg",
     link: "link3",
-    startDate: new Date("2025-03-25T00:00:00Z"),
+    startDate: "2025-03-25T00:00:00Z",
     title: "Announcement 3",
   },
 ];
@@ -49,10 +49,10 @@ const duplicateStartAnnouncements: Announcement[] = [
     id: "4",
     apps: [AppName.EATERY],
     body: "Announcement 4",
-    endDate: new Date("2024-05-01T00:00:00Z"),
+    endDate: "2024-05-01T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
-    startDate: new Date("2024-03-15T00:00:00Z"),
+    startDate: "2024-03-15T00:00:00Z",
     title: "Announcement 4",
   },
   ...announcements,
@@ -63,20 +63,20 @@ const noFutureAnnouncements: Announcement[] = [
     id: "0",
     apps: [AppName.EATERY],
     body: "Announcement 1",
-    endDate: new Date("2024-05-01T00:00:00Z"),
+    endDate: "2024-05-01T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
-    startDate: new Date("2024-03-15T00:00:00Z"),
+    startDate: "2024-03-15T00:00:00Z",
     title: "Announcement 4",
   },
   {
     id: "1",
     apps: [AppName.EATERY],
     body: "Announcement 2",
-    endDate: new Date("2023-11-12T00:00:00Z"),
+    endDate: "2023-11-12T00:00:00Z",
     imageUrl: "image4.jpg",
     link: "link4",
-    startDate: new Date("2023-05-30T00:00:00Z"),
+    startDate: "2023-05-30T00:00:00Z",
     title: "Announcement 4",
   },
 ];
@@ -84,19 +84,13 @@ const noFutureAnnouncements: Announcement[] = [
 describe("Utils", () => {
   describe("filterFutureAnnouncements", () => {
     it("should filter announcements to only include those with a start date in the future", () => {
-      const result = filterFutureAnnouncements(
-        announcements,
-        new Date(2024, 7, 1)
-      );
+      const result = filterFutureAnnouncements(announcements, new Date(2024, 7, 1));
       expect(result.length).toBe(2);
       expect(result[0].id).toBe("2");
       expect(result[1].id).toBe("3");
     });
     it("should filter out past announcements (no future announcements)", () => {
-      const result = filterFutureAnnouncements(
-        noFutureAnnouncements,
-        new Date(2024, 7, 1)
-      );
+      const result = filterFutureAnnouncements(noFutureAnnouncements, new Date(2024, 7, 1));
       expect(result.length).toBe(0);
     });
   });
@@ -136,9 +130,7 @@ describe("Utils", () => {
     });
 
     it("should calculate days, hours, minutes, and seconds remaining accurately", () => {
-      const startDate = new Date(
-        Date.now() + 1 * 86400000 + 5 * 3600000 + 45 * 60000 + 30 * 1000
-      ); // 1 day, 5 hours, 45 minutes, 30 seconds from now
+      const startDate = new Date(Date.now() + 1 * 86400000 + 5 * 3600000 + 45 * 60000 + 30 * 1000); // 1 day, 5 hours, 45 minutes, 30 seconds from now
       const result = calculateTimeRemaining(startDate);
       expect(result.days).toBe(1);
       expect(result.hours).toBe(5);
@@ -184,25 +176,16 @@ describe("Utils", () => {
 
   describe("filterActiveAnnouncements", () => {
     it("should filter announcements to only include those with an end date in the future", () => {
-      const result = filterActiveAnnouncements(
-        announcements,
-        new Date(2024, 11, 1)
-      );
+      const result = filterActiveAnnouncements(announcements, new Date(2024, 11, 1));
       expect(result.length).toBe(1);
       expect(result[0].id).toBe("3");
     });
     it("should filter announcements to only include those with an end date in the future (all announcements have concluded)", () => {
-      const result = filterActiveAnnouncements(
-        duplicateStartAnnouncements,
-        new Date(2026, 11, 1)
-      );
+      const result = filterActiveAnnouncements(duplicateStartAnnouncements, new Date(2026, 11, 1));
       expect(result.length).toBe(0);
     });
     it("should filter announcements to only include those with an end date in the future (includes active announcement)", () => {
-      const result = filterActiveAnnouncements(
-        announcements,
-        new Date(2024, 7, 25)
-      );
+      const result = filterActiveAnnouncements(announcements, new Date(2024, 7, 25));
       expect(result.length).toBe(2);
       expect(result[0].id).toBe("2");
       expect(result[1].id).toBe("3");
@@ -292,28 +275,19 @@ describe("Utils", () => {
 
   describe("filterPastAnnouncements", () => {
     it("should filter announcements to only include those with an end date in the past", () => {
-      const result = filterPastAnnouncements(
-        announcements,
-        new Date(2024, 11, 1)
-      );
+      const result = filterPastAnnouncements(announcements, new Date(2024, 11, 1));
       expect(result.length).toBe(2);
       expect(result[0].id).toBe("1");
       expect(result[1].id).toBe("2");
     });
 
     it("all announcements are in the future (returns empty array)", () => {
-      const result = filterPastAnnouncements(
-        duplicateStartAnnouncements,
-        new Date(2011, 11, 1)
-      );
+      const result = filterPastAnnouncements(duplicateStartAnnouncements, new Date(2011, 11, 1));
       expect(result.length).toBe(0);
     });
 
     it("all announcements are in the past (returns the same array as input)", () => {
-      const result = filterPastAnnouncements(
-        noFutureAnnouncements,
-        new Date(2025, 11, 1)
-      );
+      const result = filterPastAnnouncements(noFutureAnnouncements, new Date(2025, 11, 1));
       expect(result.length).toBe(noFutureAnnouncements.length);
       expect(result).toEqual(noFutureAnnouncements);
     });
@@ -324,10 +298,7 @@ describe("Utils", () => {
     });
 
     it("one input announcement has the exact same end date as the date it's being compared to (should not be in the output)", () => {
-      const result = filterPastAnnouncements(
-        announcements,
-        new Date("2025-03-30T00:00:00Z")
-      );
+      const result = filterPastAnnouncements(announcements, new Date("2025-03-30T00:00:00Z"));
       expect(result.length).toBe(2);
       expect(result[0].id).toBe("1");
       expect(result[1].id).toBe("2");
