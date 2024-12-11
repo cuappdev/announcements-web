@@ -1,26 +1,20 @@
 import CalendarPlainIcon from "@/icons/CalendarPlainIcon";
-import { Announcement } from "@/models/Announcement";
-import { NO_ANNOUNCEMENTS_MESSAGE } from "@/utils/constants";
-import {
-  filterPastAnnouncements,
-  sortAnnouncementsByStartDate,
-} from "@/utils/utils";
+import { Announcement } from "@/models/announcement";
+import { filterPastAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
 import ActiveCell from "./AnnouncementCell";
 import AnnouncementModal from "./AnnouncementModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ButtonSecondary1 from "../shared/ButtonSecondary1";
+import { Constants } from "@/utils/constants";
 
 interface Props {
   announcements: Announcement[];
 }
 
 export default function PastAnnouncements({ announcements }: Props) {
-  const pastAnnouncements = sortAnnouncementsByStartDate(
-    filterPastAnnouncements(announcements)
-  );
+  const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements));
 
-  const [selectedAnnouncement, setSelectedAnnouncement] =
-    useState<Announcement | null>(null);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   const openModal = (announcement: Announcement) => {
     setSelectedAnnouncement(announcement);
@@ -36,9 +30,7 @@ export default function PastAnnouncements({ announcements }: Props) {
         <CalendarPlainIcon className="w-[32px] md:w-[40px] h-[32px] md:h-[40px] stroke-neutral-800" />
         <div className="flex flex-col">
           <h4 className="self-stretch text-neutral-800">Past Announcements</h4>
-          <p className="b1 self-stretch text-neutral-600">
-            Previous inactive announcements.
-          </p>
+          <p className="b1 self-stretch text-neutral-600">Previous inactive announcements.</p>
         </div>
       </div>
       {pastAnnouncements.length > 0 ? (
@@ -50,10 +42,7 @@ export default function PastAnnouncements({ announcements }: Props) {
               onClick={() => openModal(pastAnnouncements[0])}
             />
             {pastAnnouncements.length > 1 && (
-              <ButtonSecondary1
-                text="View all announcements"
-                action={() => console.log("Button clicked")}
-              />
+              <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
             )}
           </div>
 
@@ -67,31 +56,19 @@ export default function PastAnnouncements({ announcements }: Props) {
                     onClick={() => openModal(announcement)}
                   />
                 ))}
-                <ButtonSecondary1
-                  text="View all announcements"
-                  action={() => console.log("Button clicked")}
-                />
+                <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
               </>
             ) : (
               pastAnnouncements.map((announcement) => (
-                <ActiveCell
-                  key={announcement.id}
-                  announcement={announcement}
-                  onClick={() => openModal(announcement)}
-                />
+                <ActiveCell key={announcement.id} announcement={announcement} onClick={() => openModal(announcement)} />
               ))
             )}
           </div>
         </>
       ) : (
-        <p className="b1 self-stretch text-neutral-400 text-center">
-          {NO_ANNOUNCEMENTS_MESSAGE}
-        </p>
+        <p className="b1 self-stretch text-neutral-400 text-center">{Constants.text.empty}</p>
       )}
-      <AnnouncementModal
-        onClose={closeModal}
-        announcement={selectedAnnouncement}
-      />
+      <AnnouncementModal onClose={closeModal} announcement={selectedAnnouncement} />
     </div>
   );
 }

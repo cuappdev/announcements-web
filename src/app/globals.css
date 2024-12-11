@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Effects */
+  .opacity-hover {
+    @apply cursor-pointer hover:opacity-80 transition-all;
+  }
+
   /* Mobile */
   h1 {
     @apply text-[48px] leading-[60px] font-sfprodisplay font-semibold;

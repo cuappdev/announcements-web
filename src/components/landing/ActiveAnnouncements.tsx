@@ -1,23 +1,17 @@
 import CalendarArrowIcon from "@/icons/CalendarArrowIcon";
-import { Announcement } from "@/models/Announcement";
-import { NO_ANNOUNCEMENTS_MESSAGE } from "@/utils/constants";
-import {
-  calculateTimeRemaining,
-  filterActiveAnnouncements,
-  sortAnnouncementsByStartDate,
-} from "@/utils/utils";
+import { Announcement } from "@/models/announcement";
+import { calculateTimeRemaining, filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
 import ActiveCell from "./AnnouncementCell";
 import AnnouncementModal from "./AnnouncementModal";
 import { useState, useEffect } from "react";
+import { Constants } from "@/utils/constants";
 
 interface Props {
   announcements: Announcement[];
 }
 
 export default function ActiveAnnouncements({ announcements }: Props) {
-  const activeAnnouncements = sortAnnouncementsByStartDate(
-    filterActiveAnnouncements(announcements)
-  );
+  const activeAnnouncements = sortAnnouncementsByStartDate(filterActiveAnnouncements(announcements));
 
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
@@ -26,8 +20,7 @@ export default function ActiveAnnouncements({ announcements }: Props) {
     seconds: 0,
   });
 
-  const [selectedAnnouncement, setSelectedAnnouncement] =
-    useState<Announcement | null>(null);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   const openModal = (announcement: Announcement) => {
     setSelectedAnnouncement(announcement);
@@ -58,33 +51,20 @@ export default function ActiveAnnouncements({ announcements }: Props) {
       <div className="flex items-center gap-4 self-stretch">
         <CalendarArrowIcon className="w-[32px] md:w-[40px] h-[32px] md:h-[40px] fill-neutral-800" />
         <div className="flex flex-col">
-          <h4 className="self-stretch text-neutral-800">
-            Active Announcements
-          </h4>
-          <p className="b1 self-stretch text-neutral-600">
-            Current and upcoming announcements.
-          </p>
+          <h4 className="self-stretch text-neutral-800">Active Announcements</h4>
+          <p className="b1 self-stretch text-neutral-600">Current and upcoming announcements.</p>
         </div>
       </div>
       {activeAnnouncements.length > 0 ? (
         <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3">
           {activeAnnouncements.map((announcement) => (
-            <ActiveCell
-              key={announcement.id}
-              announcement={announcement}
-              onClick={() => openModal(announcement)}
-            />
+            <ActiveCell key={announcement.id} announcement={announcement} onClick={() => openModal(announcement)} />
           ))}
         </div>
       ) : (
-        <p className="b1 self-stretch text-neutral-400 text-center">
-          {NO_ANNOUNCEMENTS_MESSAGE}
-        </p>
+        <p className="b1 self-stretch text-neutral-400 text-center">{Constants.text.empty}</p>
       )}
-      <AnnouncementModal
-        onClose={closeModal}
-        announcement={selectedAnnouncement}
-      />
+      <AnnouncementModal onClose={closeModal} announcement={selectedAnnouncement} />
     </div>
   );
 }

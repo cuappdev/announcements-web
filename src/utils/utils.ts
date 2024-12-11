@@ -1,4 +1,4 @@
-import { Announcement } from "@/models/Announcement";
+import { Announcement } from "@/models/announcement";
 
 /**
  * Filters out announcements whose startDate is in the past.
