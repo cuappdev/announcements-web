@@ -2,12 +2,12 @@
 
 import LandingActiveSection from "@/components/landing/landingActiveSection";
 import LandingCreateAnnouncement from "@/components/landing/landingCreateAnnouncement";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/common/footer";
 import LandingPastSection from "@/components/landing/landingPastSection";
 import LandingUpcomingSection from "@/components/landing/landingUpcomingSection";
 import { Announcement } from "@/models/announcement";
-import PageHeader from "@/components/shared/PageHeader";
-import NavBar from "@/components/navbar/navBar";
+import PageHeader from "@/components/common/pageHeader";
+import NavBar from "@/components/common/navBar";
 import { useUserStore } from "@/stores/useUserStore";
 import ApiClient from "@/services/apiClient";
 import { useQuery } from "@tanstack/react-query";

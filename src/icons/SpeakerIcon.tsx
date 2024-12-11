@@ -1,12 +1,8 @@
-import { IconProps } from "@/models/IconProps";
+import { IconProps } from "@/models/props/iconProps";
 
 export default function ({ className }: IconProps) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      className={className}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

@@ -4,7 +4,7 @@ import { filterPastAnnouncements, sortAnnouncementsByStartDate } from "@/utils/u
 import ActiveCell from "../announcement/announcementCell";
 import AnnouncementModal from "../announcement/announcementModal";
 import { useState } from "react";
-import ButtonSecondary1 from "../shared/ButtonSecondary1";
+import ButtonSecondary1 from "../system/ButtonSecondary1";
 import { Constants } from "@/utils/constants";
 
 interface Props {

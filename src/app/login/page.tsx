@@ -1,4 +1,4 @@
-import { SearchParamsProp } from "@/models/searchParamsProps";
+import { SearchParamsProp } from "@/models/props/searchParamsProps";
 import ApiClient from "@/services/apiClient";
 import { redirect } from "next/navigation";
 import Login from "@/components/login/login";

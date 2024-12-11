@@ -1,13 +1,11 @@
 import { Announcement } from "@/models/announcement";
-import AnnouncementBanner from "../shared/AnnouncementBanner";
+import AnnouncementBanner from "./announcementBanner";
 import AppIcon from "@/icons/AppIcon";
-import ButtonPrimary2 from "../shared/ButtonPrimary2";
-import ButtonPrimary3 from "../shared/ButtonPrimary3";
+import ButtonPrimary2 from "../system/ButtonPrimary2";
+import ButtonPrimary3 from "../system/ButtonPrimary3";
 import CrossThinIcon from "@/icons/CrossThinIcon";
 import { dateInRange, formatDate } from "@/utils/utils";
-import ModalLiveIndicator from "../shared/ModalLiveIndicator";
-import ModalPastIndicator from "../shared/ModalPastIndicator";
-import ModalUpcomingIndicator from "../shared/ModalUpcomingIndicator";
+import AnnouncementIndicator from "./announcementIndicator";
 
 interface AnnouncementModalProps {
   onClose: () => void;
@@ -25,7 +23,7 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center justify-between gap-1">
                 <h4 className="text-neutral-800 break-all">{announcement.title}</h4>
-                <button className="h-[24px] w-[24px] fill-neutral-400" onClick={onClose}>
+                <button className="h-[24px] w-[24px] fill-neutral-400 opacity-hover" onClick={onClose}>
                   <CrossThinIcon />
                 </button>
               </div>
@@ -41,16 +39,10 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
           <div className="flex flex-col md:flex-row gap-4 items-left md:justify-between">
             <div className="flex flex-row items-center gap-2">
               {announcement.apps.map((app) => (
-                <AppIcon appName={app} className="rounded-sm size-[32px]" />
+                <AppIcon key={app} appName={app} className="rounded-sm size-[32px]" />
               ))}
             </div>
-            {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate)) ? (
-              <ModalLiveIndicator className="w-fit" />
-            ) : new Date() > new Date(announcement.endDate) ? (
-              <ModalPastIndicator className="w-fit" />
-            ) : new Date() < new Date(announcement.startDate) ? (
-              <ModalUpcomingIndicator className="w-fit" />
-            ) : null}
+            <AnnouncementIndicator announcement={announcement} />
           </div>
 
           <div className="flex flex-col p-4 justify-center items-center rounded-md border border-other-stroke bg-other-offWhite">

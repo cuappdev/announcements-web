@@ -1,9 +1,8 @@
 import AppIcon from "@/icons/AppIcon";
-import TertiaryButton from "../shared/ButtonTertiary";
+import TertiaryButton from "../system/ButtonTertiary";
 import { Announcement } from "@/models/announcement";
 import { dateInRange, filterActiveAnnouncements, formatDate } from "@/utils/utils";
-import { useEffect, useState } from "react";
-import LiveIndicator from "../shared/LiveIndicator";
+import AnnouncementIndicator from "./announcementIndicator";
 
 interface Props {
   announcement: Announcement;
@@ -11,16 +10,7 @@ interface Props {
 }
 
 export default function AnnouncementCell({ announcement, onClick }: Props) {
-  const [currentDate, setCurrentDate] = useState(new Date());
   const isActive = filterActiveAnnouncements([announcement]).length > 0;
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 500);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <div
@@ -53,8 +43,8 @@ export default function AnnouncementCell({ announcement, onClick }: Props) {
           <TertiaryButton text="Edit" action={() => console.log("Button clicked")} className="md:hidden" />
         ) : null}
       </div>
-      {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), currentDate) ? (
-        <LiveIndicator />
+      {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
+        <AnnouncementIndicator announcement={announcement} />
       ) : null}
     </div>
   );
