@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import HourglassIcon from "@/icons/HourglassIcon";
 import AnnouncementBanner from "../shared/AnnouncementBanner";
 import { Announcement } from "@/models/announcement";
@@ -6,11 +6,10 @@ import { calculateTimeRemaining, filterFutureAnnouncements, getEarliestAnnouncem
 import { Constants } from "@/utils/constants";
 
 interface Props {
-  announcements: Announcement[];
+  announcements?: Announcement[];
 }
 
 export default function UpcomingAnnouncements({ announcements }: Props) {
-  const futureAnnouncements = getEarliestAnnouncements(filterFutureAnnouncements(announcements));
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
@@ -18,18 +17,23 @@ export default function UpcomingAnnouncements({ announcements }: Props) {
     seconds: 0,
   });
 
+  const futureAnnouncements = useMemo(() => {
+    if (!announcements) return [];
+
+    return getEarliestAnnouncements(filterFutureAnnouncements(announcements ?? []));
+  }, [announcements]);
+
   useEffect(() => {
     if (futureAnnouncements.length === 0) return;
 
-    const startDate = futureAnnouncements[0].startDate;
     const updateCountdown = () => {
-      setTimeRemaining(calculateTimeRemaining(startDate));
+      setTimeRemaining(calculateTimeRemaining(new Date(futureAnnouncements[0].startDate)));
     };
     updateCountdown();
 
     const interval = setInterval(updateCountdown, 1000); // Sets up a timer to call updateCountdown every 1000 milliseconds (1 second)
     return () => clearInterval(interval);
-  }, [announcements]);
+  }, [futureAnnouncements]);
 
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">

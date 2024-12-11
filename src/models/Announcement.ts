@@ -4,9 +4,9 @@ export interface Announcement {
   id: string;
   apps: AppName[];
   body: string;
-  endDate: Date;
+  endDate: string;
   imageUrl: string;
   link: string;
-  startDate: Date;
+  startDate: string;
   title: string;
 }

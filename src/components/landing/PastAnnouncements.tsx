@@ -8,11 +8,11 @@ import ButtonSecondary1 from "../shared/ButtonSecondary1";
 import { Constants } from "@/utils/constants";
 
 interface Props {
-  announcements: Announcement[];
+  announcements?: Announcement[];
 }
 
 export default function PastAnnouncements({ announcements }: Props) {
-  const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements));
+  const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? []));
 
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 

@@ -7,11 +7,8 @@ import { Announcement } from "@/models/announcement";
  * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
  * @returns An array of Announcement objects where each startDate is greater than the current date.
  */
-export const filterFutureAnnouncements = (
-  announcements: Announcement[],
-  date: Date = new Date()
-): Announcement[] => {
-  return announcements.filter((announcement) => announcement.startDate > date);
+export const filterFutureAnnouncements = (announcements: Announcement[], date: Date = new Date()): Announcement[] => {
+  return announcements.filter((announcement) => new Date(announcement.startDate) > date);
 };
 
 /**
@@ -21,11 +18,8 @@ export const filterFutureAnnouncements = (
  * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
  * @returns An array of Announcement objects where each endDate is greater than the current date.
  */
-export const filterActiveAnnouncements = (
-  announcements: Announcement[],
-  date: Date = new Date()
-): Announcement[] => {
-  return announcements.filter((announcement) => announcement.endDate > date);
+export const filterActiveAnnouncements = (announcements: Announcement[], date: Date = new Date()): Announcement[] => {
+  return announcements.filter((announcement) => new Date(announcement.endDate) > date);
 };
 
 /**
@@ -35,11 +29,8 @@ export const filterActiveAnnouncements = (
  * @param date - Optional. The date to compare against each announcement's startDate. If not provided, the current date and time when the function is called will be used.
  * @returns An array of Announcement objects where each endDate is less than the current date.
  */
-export const filterPastAnnouncements = (
-  announcements: Announcement[],
-  date: Date = new Date()
-): Announcement[] => {
-  return announcements.filter((announcement) => announcement.endDate < date);
+export const filterPastAnnouncements = (announcements: Announcement[], date: Date = new Date()): Announcement[] => {
+  return announcements.filter((announcement) => new Date(announcement.endDate) < date);
 };
 
 /**
@@ -48,12 +39,8 @@ export const filterPastAnnouncements = (
  * @param announcements - The announcements to filter.
  * @returns An array of Announcement objects sorted by startDate, with the earliest date first.
  */
-export const sortAnnouncementsByStartDate = (
-  announcements: Announcement[]
-): Announcement[] => {
-  return announcements.sort(
-    (a, b) => a.startDate.getTime() - b.startDate.getTime()
-  );
+export const sortAnnouncementsByStartDate = (announcements: Announcement[]): Announcement[] => {
+  return announcements.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
 };
 
 /**
@@ -62,17 +49,15 @@ export const sortAnnouncementsByStartDate = (
  * @param announcements - The announcements to filter.
  * @returns An array of Announcement object(s) from [announcements] which have the earliest start date.
  */
-export const getEarliestAnnouncements = (
-  announcements: Announcement[]
-): Announcement[] => {
+export const getEarliestAnnouncements = (announcements: Announcement[]): Announcement[] => {
   if (announcements.length === 0) {
     return [];
   }
 
   const sortedAnnouncements = sortAnnouncementsByStartDate(announcements);
-  const earliestStartDate = sortedAnnouncements[0].startDate.getTime();
+  const earliestStartDate = new Date(sortedAnnouncements[0].startDate).getTime();
   const earliestAnnouncements = sortedAnnouncements.filter(
-    (announcement) => announcement.startDate.getTime() === earliestStartDate
+    (announcement) => new Date(announcement.startDate).getTime() === earliestStartDate
   );
 
   return earliestAnnouncements;
@@ -110,11 +95,7 @@ export const calculateTimeRemaining = (startDate: Date) => {
  * @param targetDate - Optional. The date that is to be checked if it's in range of [startDate] and [endDate]. If not provided, the current date and time when the function is called will be used.
  * @returns A boolean stating if the current date is greater than or equal to startDate and less than or equal to endDate.
  */
-export const dateInRange = (
-  startDate: Date,
-  endDate: Date,
-  targetDate: Date = new Date()
-) => {
+export const dateInRange = (startDate: Date, endDate: Date, targetDate: Date = new Date()) => {
   return targetDate >= startDate && targetDate <= endDate;
 };
 
