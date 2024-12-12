@@ -1,11 +1,12 @@
 import { Announcement } from "@/models/announcement";
 import AnnouncementBanner from "./announcementBanner";
-import AppIcon from "@/icons/AppIcon";
-import ButtonPrimary2 from "../system/ButtonPrimary2";
-import ButtonPrimary3 from "../system/ButtonPrimary3";
-import CrossThinIcon from "@/icons/CrossThinIcon";
+import AppIcon from "@/icons/appIcon";
+import CrossThinIcon from "@/icons/crossThinIcon";
 import { dateInRange, formatDate } from "@/utils/utils";
 import AnnouncementIndicator from "./announcementIndicator";
+import { DateFormat } from "@/models/enums/dateFormat";
+import ButtonSecondary2 from "../system/button/buttonSecondary2";
+import ButtonPrimary2 from "../system/button/buttonPrimary2";
 
 interface AnnouncementModalProps {
   onClose: () => void;
@@ -28,7 +29,10 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
                 </button>
               </div>
               <p className="b1 text-neutral-600">
-                {`${formatDate(new Date(announcement.startDate))} - ${formatDate(new Date(announcement.endDate))}`}
+                {`${formatDate(new Date(announcement.startDate), DateFormat.SHORT)} - ${formatDate(
+                  new Date(announcement.endDate),
+                  DateFormat.SHORT
+                )}`}
               </p>
             </div>
             <div className="flex flex-row items-center gap-2">
@@ -50,12 +54,12 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
           </div>
 
           {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
-            <ButtonPrimary3
+            <ButtonPrimary2
               text="End Live Announcement"
               action={() => console.log("End Live Announcement button tapped")}
             />
           ) : (
-            <ButtonPrimary2 text="Delete Announcement" action={() => console.log("Delete button tapped")} />
+            <ButtonSecondary2 text="Delete Announcement" action={() => console.log("Delete button tapped")} />
           )}
         </div>
       </div>

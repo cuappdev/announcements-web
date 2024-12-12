@@ -1,4 +1,4 @@
-import CrossThick from "@/icons/CrossThickIcon";
+import CrossThick from "@/icons/crossThickIcon";
 import { Announcement } from "@/models/announcement";
 
 interface Props {

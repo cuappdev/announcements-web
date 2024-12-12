@@ -1,4 +1,4 @@
-import { AppName } from "./appName";
+import { AppName } from "./enums/appName";
 import { User } from "./user";
 
 export interface Announcement {

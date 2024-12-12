@@ -1,4 +1,6 @@
 import { Announcement } from "@/models/announcement";
+import { AppName } from "@/models/enums/appName";
+import { DateFormat } from "@/models/enums/dateFormat";
 
 /**
  * Filters out announcements whose startDate is in the past.
@@ -100,18 +102,61 @@ export const dateInRange = (startDate: Date, endDate: Date, targetDate: Date = n
 };
 
 /**
- * Formats a Date object into a string in the M/D 00:00 AM/PM format.
+ * Formats a date object according to the specified DateFormat.
  *
- * @param date - A date.
- * @returns A string representing [date] in the above format.
+ * @param date - The date object to format.
+ * @param format - The desired date format (from DateFormat enum).
+ * @returns The formatted date string.
+ *
+ * @example
+ * const date = new Date('2024-09-17T05:25:00');
+ * const formattedDate1 = formatDate(date, DateFormat.SHORT); // "9/17 5:25 AM"
+ * const formattedDate2 = formatDate(date, DateFormat.SHORT_YEAR); // "9/17/24 5:25 AM"
  */
-export const formatDate = (date: Date) => {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const time = date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-  return `${month}/${day} ${time}`;
+export const formatDate = (date: Date, format: DateFormat): string => {
+  let options: Intl.DateTimeFormatOptions;
+
+  switch (format) {
+    case DateFormat.SHORT:
+      options = {
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      };
+      break;
+    case DateFormat.SHORT_YEAR:
+      options = {
+        year: "2-digit",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      };
+      break;
+    default:
+      throw new Error(`Invalid DateFormat: ${format}`);
+  }
+
+  return new Intl.DateTimeFormat("en-US", options).format(date).replace(",", "");
+};
+
+/**
+ * Generates a string describing the number of apps provided.
+ *
+ * @param apps An array of AppName enum values.
+ * @returns A string representing the number of apps: "All Apps", "1 App", or "2 Apps".
+ */
+export const getAppCountString = (apps: AppName[]): string => {
+  const appCount = apps.length;
+  switch (appCount) {
+    case Object.keys(AppName).length:
+      return "All Apps";
+    case 1:
+      return "1 App";
+    default:
+      return `${appCount} Apps`;
+  }
 };

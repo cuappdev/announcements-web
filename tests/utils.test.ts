@@ -1,6 +1,7 @@
 import { Announcement } from "@/models/announcement";
-import { AppName } from "@/models/appName";
-import { User } from "@/models/user";
+import { AppName } from "@/models/enums/appName";
+import { DateFormat } from "@/models/enums/dateFormat";
+import { createDummyAnnouncement } from "@/utils/dummy";
 import {
   calculateTimeRemaining,
   dateInRange,
@@ -8,92 +9,25 @@ import {
   filterFutureAnnouncements,
   filterPastAnnouncements,
   formatDate,
+  getAppCountString,
   getEarliestAnnouncements,
   sortAnnouncementsByStartDate,
 } from "../src/utils/utils";
 
-const creator: User = {
-  email: "vdb23@cornell.edu",
-  idToken: "idToken",
-  imageUrl: "https://lh3.googleusercontent.com/a/ACg8ocLSV3bTsn-XINmiSkt4FbdlzRDV0EJBc_LX-hv7gdo3LGp8cAB_=s96-c",
-  isAdmin: true,
-  name: "Vin Bui",
-};
-
 const announcements: Announcement[] = [
-  {
-    id: "1",
-    apps: [AppName.EATERY],
-    body: "Announcement 1",
-    creator,
-    endDate: "2024-04-01T00:00:00Z",
-    imageUrl: "image1.jpg",
-    link: "link1",
-    startDate: "2024-03-15T00:00:00Z",
-    title: "Announcement 1",
-  },
-  {
-    id: "2",
-    apps: [AppName.RESELL, AppName.COURSEGRAB],
-    body: "Announcement 2",
-    creator,
-    endDate: "2024-08-30T00:00:00Z",
-    imageUrl: "image2.jpg",
-    link: "link2",
-    startDate: "2024-08-20T00:00:00Z",
-    title: "Announcement 2",
-  },
-  {
-    id: "3",
-    apps: [AppName.UPLIFT],
-    body: "Announcement 3",
-    creator,
-    endDate: "2025-03-30T00:00:00Z",
-    imageUrl: "image3.jpg",
-    link: "link3",
-    startDate: "2025-03-25T00:00:00Z",
-    title: "Announcement 3",
-  },
+  createDummyAnnouncement("2024-03-15T00:00:00Z", "2024-04-01T00:00:00Z", [AppName.EATERY]),
+  createDummyAnnouncement("2024-08-20T00:00:00Z", "2024-08-30T00:00:00Z", [AppName.RESELL, AppName.COURSEGRAB]),
+  createDummyAnnouncement("2025-03-25T00:00:00Z", "2025-03-30T00:00:00Z", [AppName.UPLIFT]),
 ];
 
 const duplicateStartAnnouncements: Announcement[] = [
-  {
-    id: "4",
-    apps: [AppName.EATERY],
-    body: "Announcement 4",
-    creator,
-    endDate: "2024-05-01T00:00:00Z",
-    imageUrl: "image4.jpg",
-    link: "link4",
-    startDate: "2024-03-15T00:00:00Z",
-    title: "Announcement 4",
-  },
   ...announcements,
+  createDummyAnnouncement("2024-03-15T00:00:00Z", "2024-05-01T00:00:00Z", [AppName.UPLIFT]),
 ];
 
 const noFutureAnnouncements: Announcement[] = [
-  {
-    id: "0",
-    apps: [AppName.EATERY],
-    body: "Announcement 1",
-    creator,
-    endDate: "2024-05-01T00:00:00Z",
-    imageUrl: "image4.jpg",
-    link: "link4",
-    startDate: "2024-03-15T00:00:00Z",
-    title: "Announcement 4",
-  },
-  {
-    id: "1",
-    apps: [AppName.EATERY],
-    body: "Announcement 2",
-    creator,
-    endDate: "2023-11-12T00:00:00Z",
-    imageUrl: "image4.jpg",
-    link: "link4",
-    startDate: "2023-05-30T00:00:00Z",
-    title: "Announcement 4",
-  },
+  createDummyAnnouncement("2024-03-15T00:00:00Z", "2024-05-01T00:00:00Z"),
+  createDummyAnnouncement("2023-05-30T00:00:00Z", "2023-11-12T00:00:00Z"),
 ];
 
 describe("Utils", () => {
@@ -101,8 +35,8 @@ describe("Utils", () => {
     it("should filter announcements to only include those with a start date in the future", () => {
       const result = filterFutureAnnouncements(announcements, new Date(2024, 7, 1));
       expect(result.length).toBe(2);
-      expect(result[0].id).toBe("2");
-      expect(result[1].id).toBe("3");
+      expect(result[0].id).toBe(announcements[1].id);
+      expect(result[1].id).toBe(announcements[2].id);
     });
     it("should filter out past announcements (no future announcements)", () => {
       const result = filterFutureAnnouncements(noFutureAnnouncements, new Date(2024, 7, 1));
@@ -113,9 +47,9 @@ describe("Utils", () => {
   describe("sortAnnouncementsByStartDate", () => {
     it("should sort announcements by their start date in ascending order", () => {
       const result = sortAnnouncementsByStartDate(announcements);
-      expect(result[0].id).toBe("1");
-      expect(result[1].id).toBe("2");
-      expect(result[2].id).toBe("3");
+      expect(result[0].id).toBe(announcements[0].id);
+      expect(result[1].id).toBe(announcements[1].id);
+      expect(result[2].id).toBe(announcements[2].id);
     });
   });
 
@@ -173,14 +107,14 @@ describe("Utils", () => {
     it("should return an array with the announcement with the earliest start date", () => {
       const result = getEarliestAnnouncements(announcements);
       expect(result.length).toBe(1);
-      expect(result[0].id).toBe("1");
+      expect(result[0].id).toBe(announcements[0].id);
     });
 
     it("should return an array with multiple announcements if they have the same earliest start date", () => {
       const result = getEarliestAnnouncements(duplicateStartAnnouncements);
       expect(result.length).toBe(2);
-      expect(result[0].id).toBe("4");
-      expect(result[1].id).toBe("1");
+      expect(result[0].id).toBe(duplicateStartAnnouncements[0].id);
+      expect(result[1].id).toBe(duplicateStartAnnouncements[1].id);
     });
 
     it("should return an empty array if there are no announcements", () => {
@@ -193,7 +127,7 @@ describe("Utils", () => {
     it("should filter announcements to only include those with an end date in the future", () => {
       const result = filterActiveAnnouncements(announcements, new Date(2024, 11, 1));
       expect(result.length).toBe(1);
-      expect(result[0].id).toBe("3");
+      expect(result[0].id).toBe(announcements[2].id);
     });
     it("should filter announcements to only include those with an end date in the future (all announcements have concluded)", () => {
       const result = filterActiveAnnouncements(duplicateStartAnnouncements, new Date(2026, 11, 1));
@@ -202,8 +136,8 @@ describe("Utils", () => {
     it("should filter announcements to only include those with an end date in the future (includes active announcement)", () => {
       const result = filterActiveAnnouncements(announcements, new Date(2024, 7, 25));
       expect(result.length).toBe(2);
-      expect(result[0].id).toBe("2");
-      expect(result[1].id).toBe("3");
+      expect(result[0].id).toBe(announcements[1].id);
+      expect(result[1].id).toBe(announcements[2].id);
     });
   });
 
@@ -253,37 +187,37 @@ describe("Utils", () => {
   describe("formatDate", () => {
     it("should format the date correctly for a date in the middle of the year", () => {
       const date = new Date("2024-07-15T14:30:00");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("7/15 2:30 PM");
     });
 
     it("should format the date correctly for a date at the beginning of the year", () => {
       const date = new Date("2024-01-01T00:00:00");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("1/1 12:00 AM");
     });
 
     it("should format the date correctly for a date at the end of the year", () => {
       const date = new Date("2024-12-31T23:59:59");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("12/31 11:59 PM");
     });
 
     it("should format the date correctly for a single-digit month and day", () => {
       const date = new Date("2024-03-05T07:05:00");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("3/5 7:05 AM");
     });
 
     it("should format the date correctly for noon", () => {
       const date = new Date("2024-06-15T12:00:00");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("6/15 12:00 PM");
     });
 
     it("should format the date correctly for midnight", () => {
       const date = new Date("2024-09-22T00:00:00");
-      const result = formatDate(date);
+      const result = formatDate(date, DateFormat.SHORT);
       expect(result).toBe("9/22 12:00 AM");
     });
   });
@@ -292,8 +226,8 @@ describe("Utils", () => {
     it("should filter announcements to only include those with an end date in the past", () => {
       const result = filterPastAnnouncements(announcements, new Date(2024, 11, 1));
       expect(result.length).toBe(2);
-      expect(result[0].id).toBe("1");
-      expect(result[1].id).toBe("2");
+      expect(result[0].id).toBe(announcements[0].id);
+      expect(result[1].id).toBe(announcements[1].id);
     });
 
     it("all announcements are in the future (returns empty array)", () => {
@@ -315,8 +249,30 @@ describe("Utils", () => {
     it("one input announcement has the exact same end date as the date it's being compared to (should not be in the output)", () => {
       const result = filterPastAnnouncements(announcements, new Date("2025-03-30T00:00:00Z"));
       expect(result.length).toBe(2);
-      expect(result[0].id).toBe("1");
-      expect(result[1].id).toBe("2");
+      expect(result[0].id).toBe(announcements[0].id);
+      expect(result[1].id).toBe(announcements[1].id);
+    });
+  });
+
+  describe("getAppCountString", () => {
+    it("should output all apps", () => {
+      const result = getAppCountString(createDummyAnnouncement().apps);
+      expect(result).toBe("All Apps");
+    });
+
+    it("should output 1 app", () => {
+      const result = getAppCountString(
+        createDummyAnnouncement(new Date().toDateString(), new Date().toDateString(), [AppName.RESELL]).apps
+      );
+      expect(result).toBe("1 App");
+    });
+
+    it("should output multiple but not all apps", () => {
+      const result = getAppCountString(
+        createDummyAnnouncement(new Date().toDateString(), new Date().toDateString(), [AppName.EATERY, AppName.RESELL])
+          .apps
+      );
+      expect(result).toBe("2 Apps");
     });
   });
 });

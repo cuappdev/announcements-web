@@ -5,9 +5,10 @@ interface Props {
   action: () => void;
   disabled?: boolean;
   className?: string;
+  textStyle?: string;
 }
 
-export default function ButtonPrimary3({ text, action, disabled = false, className }: Props) {
+export default function ButtonPrimary3({ text, action, disabled = false, className, textStyle }: Props) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Prevent event from bubbling up
     action();
@@ -15,11 +16,11 @@ export default function ButtonPrimary3({ text, action, disabled = false, classNa
 
   return (
     <button
-      className={`flex p-4 justify-center items-center gap-1 self-stretch bg-red-600 rounded-md ${className}`}
+      className={`p-4 bg-other-background rounded-md w-full ${className}`}
       onClick={handleClick}
       disabled={disabled}
     >
-      <p className="s2 text-neutral-white text-center">{text}</p>
+      <p className={`text-neutral-700 text-center ${textStyle ? textStyle : "s2"}`}>{text}</p>
     </button>
   );
 }

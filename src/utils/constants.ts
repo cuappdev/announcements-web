@@ -9,6 +9,7 @@ export const Constants = {
     default: "/",
     landing: "/landing",
     login: "/login",
+    past: "/past",
   },
   queryKey: {
     fetchAnnouncements: "fetchAnnouncements",

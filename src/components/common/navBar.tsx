@@ -1,6 +1,6 @@
 import appDevLogo from "@/../public/images/appdev_logo.png";
 import appDevLogoName from "@/../public/images/appdev_logo_name.png";
-import ButtonSecondary2 from "../system/ButtonSecondary2";
+import ButtonSecondary2 from "../system/button/buttonSecondary2";
 import { Constants } from "@/utils/constants";
 import { useUserStore } from "@/stores/useUserStore";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function NavBar() {
         </a>
         <div className="flex flex-row gap-3 items-center">
           <img src={user?.imageUrl} alt="User profile image" className="size-[40px] rounded-xl" />
-          <ButtonSecondary2 text="LOG OUT" action={logoutAction} />
+          <ButtonSecondary2 text="LOG OUT" action={logoutAction} className="py-2 rounded-lg" />
         </div>
       </div>
     </div>

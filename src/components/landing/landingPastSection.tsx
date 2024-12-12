@@ -1,11 +1,12 @@
-import CalendarPlainIcon from "@/icons/CalendarPlainIcon";
+import CalendarPlainIcon from "@/icons/calendarPlainIcon";
 import { Announcement } from "@/models/announcement";
 import { filterPastAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
 import AnnouncementCell from "../announcement/announcementCell";
 import AnnouncementModal from "../announcement/announcementModal";
 import { useState } from "react";
-import ButtonSecondary1 from "../system/ButtonSecondary1";
+import ButtonSecondary1 from "../system/button/buttonSecondary1";
 import { Constants } from "@/utils/constants";
+import { useRouter } from "next/navigation";
 
 interface Props {
   announcements?: Announcement[];
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export default function LandingPastSection({ announcements, onEditClick }: Props) {
+  const router = useRouter();
+
   const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? []));
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
@@ -21,6 +24,10 @@ export default function LandingPastSection({ announcements, onEditClick }: Props
   };
   const closeModal = () => {
     setSelectedAnnouncement(null);
+  };
+
+  const viewAllAction = () => {
+    router.push(Constants.pagePath.past);
   };
 
   return (
@@ -41,9 +48,7 @@ export default function LandingPastSection({ announcements, onEditClick }: Props
               onClick={() => openModal(pastAnnouncements[0])}
               onEditClick={() => onEditClick(pastAnnouncements[0])}
             />
-            {pastAnnouncements.length > 1 && (
-              <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
-            )}
+            {pastAnnouncements.length > 1 && <ButtonSecondary1 text="View all announcements" action={viewAllAction} />}
           </div>
 
           <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3 max-md:hidden">
@@ -57,7 +62,7 @@ export default function LandingPastSection({ announcements, onEditClick }: Props
                     onEditClick={() => onEditClick(announcement)}
                   />
                 ))}
-                <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
+                <ButtonSecondary1 text="View all announcements" action={viewAllAction} />
               </>
             ) : (
               pastAnnouncements.map((announcement) => (

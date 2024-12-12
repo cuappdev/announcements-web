@@ -56,7 +56,7 @@ export default function Landing() {
   };
 
   return user?.name !== "" ? (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px]">
       <NavBar />
 
       {showForm ? <AnnouncementForm onClose={closeForm} editingAnnouncement={editingAnnouncement} /> : null}
