@@ -1,5 +1,6 @@
 import { Announcement } from "@/models/announcement";
 import { DateFormat } from "@/models/enums/dateFormat";
+import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
 import { formatDate } from "@/utils/utils";
 import { addDays } from "date-fns";
@@ -33,15 +34,17 @@ const dummyAnnouncement: Announcement = {
 };
 
 interface Props {
-  onClose: () => void;
+  onClose: (refetch: boolean) => void;
   editingAnnouncement?: Announcement;
 }
 
 export default function AnnouncementForm({ onClose, editingAnnouncement }: Props) {
+  const apiClient = ApiClient.createInstance();
   const { user } = useUserStore();
 
   const [announcement, setAnnouncement] = useState<Announcement>(editingAnnouncement ?? dummyAnnouncement);
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (field: keyof Announcement, value: any) => {
     setAnnouncement((prev) => ({ ...prev, [field]: value }));
@@ -66,10 +69,26 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
     if (!user) return;
 
     try {
-      console.log("Scheduling", announcement);
+      setIsLoading(true);
+      ApiClient.setAuthToken(apiClient, user.idToken);
+      await ApiClient.post(apiClient, "/announcements", {
+        apps: announcement.apps,
+        body: announcement.body,
+        endDate: announcement.endDate,
+        imageUrl: announcement.imageUrl,
+        isDebug: false, // TODO: Add debug toggle
+        link: announcement.link,
+        startDate: announcement.startDate,
+        title: announcement.title,
+      });
+
+      // Successful
+      setIsLoading(false);
+      onClose(true);
     } catch (err) {
       console.error(err);
       errorToast();
+      setIsLoading(false);
     }
   };
 
@@ -78,10 +97,14 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
       {/* Alert */}
       <AlertPopup
         title="Schedule Announcement"
-        description={`Are you sure you want to schedule this announcement from ${formatDate(
-          new Date(announcement.startDate),
-          DateFormat.SHORT
-        )} to ${formatDate(new Date(announcement.endDate), DateFormat.SHORT)}?`}
+        description={
+          announcement.startDate && announcement.endDate
+            ? `Are you sure you want to schedule this announcement from ${formatDate(
+                new Date(announcement.startDate),
+                DateFormat.SHORT
+              )} to ${formatDate(new Date(announcement.endDate), DateFormat.SHORT)}?`
+            : ""
+        }
         actionText="Schedule"
         action={scheduleAnnouncement}
         open={showAlert}
@@ -99,7 +122,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
                 <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
               </div>
             </div>
-            <button onClick={onClose}>
+            <button onClick={() => onClose(false)}>
               <X className="size-[32px] stroke-neutral-400 opacity-hover" />
             </button>
           </div>
@@ -158,6 +181,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
                 action={scheduleAnnouncement}
                 disabled={!canSchedule}
                 className="lg:hidden"
+                isLoading={isLoading}
               />
             </div>
           </div>
@@ -168,6 +192,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
             action={() => setShowAlert(true)}
             disabled={!canSchedule}
             className="max-lg:hidden w-full"
+            isLoading={isLoading}
           />
         </div>
       </div>
