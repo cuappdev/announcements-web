@@ -1,12 +1,12 @@
-import { Announcement } from "@/models/announcement";
-import AnnouncementBanner from "./announcementBanner";
 import AppIcon from "@/icons/appIcon";
 import CrossThinIcon from "@/icons/crossThinIcon";
-import { dateInRange, formatDate } from "@/utils/utils";
-import AnnouncementIndicator from "./announcementIndicator";
+import { Announcement } from "@/models/announcement";
 import { DateFormat } from "@/models/enums/dateFormat";
-import ButtonSecondary2 from "../system/button/buttonSecondary2";
+import { dateInRange, formatDate } from "@/utils/utils";
 import ButtonPrimary2 from "../system/button/buttonPrimary2";
+import ButtonSecondary2 from "../system/button/buttonSecondary2";
+import AnnouncementBanner from "./announcementBanner";
+import AnnouncementIndicator from "./announcementIndicator";
 
 interface AnnouncementModalProps {
   onClose: () => void;

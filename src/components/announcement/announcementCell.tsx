@@ -1,9 +1,9 @@
 import AppIcon from "@/icons/appIcon";
-import ButtonTertiary from "../system/button/buttonTertiary";
 import { Announcement } from "@/models/announcement";
-import { dateInRange, filterActiveAnnouncements, formatDate } from "@/utils/utils";
-import AnnouncementIndicator from "./announcementIndicator";
 import { DateFormat } from "@/models/enums/dateFormat";
+import { dateInRange, filterActiveAnnouncements, formatDate } from "@/utils/utils";
+import ButtonTertiary from "../system/button/buttonTertiary";
+import AnnouncementIndicator from "./announcementIndicator";
 
 interface Props {
   announcement: Announcement;
@@ -16,7 +16,7 @@ export default function AnnouncementCell({ announcement, onClick, onEditClick }:
 
   return (
     <div
-      className="flex flex-col p-6 items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative cursor-pointer"
+      className="flex flex-col p-6 items-start md:items-end md:flex-row justify-center gap-6 md:gap-8 self-stretch bg-neutral-white rounded-lg border border-other-stroke relative transition-all duration-300 cursor-pointer hover:bg-neutral-50"
       onClick={onClick}
     >
       <img src={announcement.imageUrl} className="rounded-lg md:size-[108px]" />
