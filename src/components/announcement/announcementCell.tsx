@@ -7,9 +7,10 @@ import AnnouncementIndicator from "./announcementIndicator";
 interface Props {
   announcement: Announcement;
   onClick: () => void;
+  onEditClick: () => void;
 }
 
-export default function AnnouncementCell({ announcement, onClick }: Props) {
+export default function AnnouncementCell({ announcement, onClick, onEditClick }: Props) {
   const isActive = filterActiveAnnouncements([announcement]).length > 0;
 
   return (
@@ -30,18 +31,14 @@ export default function AnnouncementCell({ announcement, onClick }: Props) {
               {formatDate(new Date(announcement.startDate))} - {formatDate(new Date(announcement.endDate))}{" "}
             </p>
           </div>
-          {isActive ? (
-            <TertiaryButton text="Edit" action={() => console.log("Edit Button clicked")} className="max-md:hidden" />
-          ) : null}
+          {isActive ? <TertiaryButton text="Edit" action={onEditClick} className="max-md:hidden" /> : null}
         </div>
         <div className="flex h-[32px] items-center gap-2">
           {announcement.apps.map((app) => (
             <AppIcon key={app} appName={app} className="rounded-sm w-[32px] h-[32px]" />
           ))}
         </div>
-        {isActive ? (
-          <TertiaryButton text="Edit" action={() => console.log("Button clicked")} className="md:hidden" />
-        ) : null}
+        {isActive ? <TertiaryButton text="Edit" action={onEditClick} className="md:hidden" /> : null}
       </div>
       {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
         <AnnouncementIndicator announcement={announcement} />

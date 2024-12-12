@@ -1,7 +1,7 @@
 import CalendarPlainIcon from "@/icons/CalendarPlainIcon";
 import { Announcement } from "@/models/announcement";
 import { filterPastAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
-import ActiveCell from "../announcement/announcementCell";
+import AnnouncementCell from "../announcement/announcementCell";
 import AnnouncementModal from "../announcement/announcementModal";
 import { useState } from "react";
 import ButtonSecondary1 from "../system/ButtonSecondary1";
@@ -9,17 +9,16 @@ import { Constants } from "@/utils/constants";
 
 interface Props {
   announcements?: Announcement[];
+  onEditClick: (announcement: Announcement) => void;
 }
 
-export default function LandingPastSection({ announcements }: Props) {
+export default function LandingPastSection({ announcements, onEditClick }: Props) {
   const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? []));
-
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   const openModal = (announcement: Announcement) => {
     setSelectedAnnouncement(announcement);
   };
-
   const closeModal = () => {
     setSelectedAnnouncement(null);
   };
@@ -36,10 +35,11 @@ export default function LandingPastSection({ announcements }: Props) {
       {pastAnnouncements.length > 0 ? (
         <>
           <div className="flex flex-col items-start self-stretch bg-neutral-white rounded-lg gap-3 md:hidden">
-            <ActiveCell
+            <AnnouncementCell
               key={pastAnnouncements[0].id}
               announcement={pastAnnouncements[0]}
               onClick={() => openModal(pastAnnouncements[0])}
+              onEditClick={() => onEditClick(pastAnnouncements[0])}
             />
             {pastAnnouncements.length > 1 && (
               <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
@@ -50,17 +50,23 @@ export default function LandingPastSection({ announcements }: Props) {
             {pastAnnouncements.length > 3 ? (
               <>
                 {pastAnnouncements.slice(0, 3).map((announcement) => (
-                  <ActiveCell
+                  <AnnouncementCell
                     key={announcement.id}
                     announcement={announcement}
                     onClick={() => openModal(announcement)}
+                    onEditClick={() => onEditClick(announcement)}
                   />
                 ))}
                 <ButtonSecondary1 text="View all announcements" action={() => console.log("Button clicked")} />
               </>
             ) : (
               pastAnnouncements.map((announcement) => (
-                <ActiveCell key={announcement.id} announcement={announcement} onClick={() => openModal(announcement)} />
+                <AnnouncementCell
+                  key={announcement.id}
+                  announcement={announcement}
+                  onClick={() => openModal(announcement)}
+                  onEditClick={() => onEditClick(announcement)}
+                />
               ))
             )}
           </div>

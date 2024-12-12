@@ -23,6 +23,7 @@ export default function Landing() {
   const debug: boolean = false;
 
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | undefined>(undefined);
 
   // Fetch Announcements
   const fetchAnnouncements = async () => {
@@ -42,11 +43,23 @@ export default function Landing() {
     enabled: !!user,
   });
 
+  // Edit Announcement
+  const editAnnouncement = (announcement: Announcement) => {
+    setEditingAnnouncement(announcement);
+    setShowForm(true);
+  };
+
+  // Close Form
+  const closeForm = () => {
+    setShowForm(false);
+    setEditingAnnouncement(undefined);
+  };
+
   return user?.name !== "" ? (
     <div className="flex flex-col gap-16">
       <NavBar />
 
-      {showForm ? <AnnouncementForm onClose={() => setShowForm(false)} /> : null}
+      {showForm ? <AnnouncementForm onClose={closeForm} editingAnnouncement={editingAnnouncement} /> : null}
 
       <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
         <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
@@ -56,8 +69,8 @@ export default function Landing() {
           />
           <LandingCreateAnnouncement action={() => setShowForm(true)} />
           <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
-          <LandingActiveSection announcements={fetchAnnouncementsQuery.data} />
-          <LandingPastSection announcements={fetchAnnouncementsQuery.data} />
+          <LandingActiveSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+          <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
         </div>
         <div className="max-lg:hidden flex flex-col gap-8">
           <PageHeader
@@ -70,8 +83,8 @@ export default function Landing() {
               <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
             </div>
             <div className="flex flex-col gap-8 flex-1">
-              <LandingActiveSection announcements={fetchAnnouncementsQuery.data} />
-              <LandingPastSection announcements={fetchAnnouncementsQuery.data} />
+              <LandingActiveSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+              <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
             </div>
           </div>
         </div>

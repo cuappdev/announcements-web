@@ -8,10 +8,15 @@ interface Props {
 }
 
 export default function ButtonPrimary1({ text, action, disabled = false, className }: Props) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation(); // Prevent event from bubbling up
+    action();
+  };
+
   return (
     <button
       className={`flex py-4 px-6 items-center justify-center gap-2 bg-red-100 rounded-lg self-stretch ${className}`}
-      onClick={action}
+      onClick={handleClick}
       disabled={disabled}
     >
       <p className="s2 text-red-600 text-center">{text}</p>

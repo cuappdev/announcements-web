@@ -19,12 +19,13 @@ const options = [
 ];
 
 interface Props {
+  value: string[];
   setApps: (apps: string[]) => void;
 }
 
-export default function InputMultiSelect({ setApps }: Props) {
+export default function InputMultiSelect({ value, setApps }: Props) {
   const [open, setOpen] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>(value);
 
   const toggleOption = useCallback((value: string) => {
     setSelectedValues((current) =>

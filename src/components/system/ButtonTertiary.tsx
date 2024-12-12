@@ -8,10 +8,15 @@ interface Props {
 }
 
 export default function TertiaryButton({ text, action, className, disabled = false }: Props) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation(); // Prevent event from bubbling up
+    action();
+  };
+
   return (
     <button
       className={`flex py-2 px-4 justify-center items-center gap-2 rounded-xl border border-other-stroke bg-neutral-white ${className}`}
-      onClick={action}
+      onClick={handleClick}
       disabled={disabled}
     >
       <EditIcon className="w-[16px] h-[16px] stroke-neutral-black"></EditIcon>

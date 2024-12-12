@@ -9,6 +9,7 @@ import InputMultiSelect from "../system/input/inputMultiselect";
 import InputUpload from "../system/input/inputUpload";
 import ButtonPrimary1 from "../system/ButtonPrimary1";
 import { useUserStore } from "@/stores/useUserStore";
+import { addDays } from "date-fns";
 
 const dummyAnnouncement: Announcement = {
   id: "",
@@ -21,21 +22,22 @@ const dummyAnnouncement: Announcement = {
     isAdmin: true,
     name: "",
   },
-  endDate: "",
+  endDate: addDays(new Date(), 1).toDateString(),
   imageUrl: "",
   link: "",
-  startDate: "",
+  startDate: new Date().toDateString(),
   title: "",
 };
 
 interface Props {
   onClose: () => void;
+  editingAnnouncement?: Announcement;
 }
 
-export default function AnnouncementForm({ onClose }: Props) {
+export default function AnnouncementForm({ onClose, editingAnnouncement }: Props) {
   const { user } = useUserStore();
 
-  const [announcement, setAnnouncement] = useState<Announcement>(dummyAnnouncement);
+  const [announcement, setAnnouncement] = useState<Announcement>(editingAnnouncement ?? dummyAnnouncement);
   const handleChange = (field: keyof Announcement, value: any) => {
     setAnnouncement((prev) => ({ ...prev, [field]: value }));
   };
@@ -91,16 +93,22 @@ export default function AnnouncementForm({ onClose }: Props) {
             <InputText
               name="Title"
               placeholder="Enter the announcement title"
+              value={announcement.title}
               onChange={(event) => handleChange("title", event.target.value)}
             />
             <InputText
               name="Description"
               placeholder="Enter the announcement description"
+              value={announcement.body}
               onChange={(event) => handleChange("body", event.target.value)}
             />
             <div className="flex flex-col gap-2">
               <h6 className="text-neutral-800">Date</h6>
               <InputDatePicker
+                value={{
+                  from: new Date(announcement.startDate),
+                  to: new Date(announcement.endDate),
+                }}
                 setDateRange={(dateRange) => {
                   handleChange("startDate", dateRange.from);
                   handleChange("endDate", dateRange.to);
@@ -110,11 +118,12 @@ export default function AnnouncementForm({ onClose }: Props) {
             <InputText
               name="Link"
               placeholder="Enter the announcement link"
+              value={announcement.link}
               onChange={(event) => handleChange("link", event.target.value)}
             />
             <div className="flex flex-col gap-2">
               <h6 className="text-neutral-800">Apps</h6>
-              <InputMultiSelect setApps={(apps) => handleChange("apps", apps)} />
+              <InputMultiSelect value={announcement.apps} setApps={(apps) => handleChange("apps", apps)} />
             </div>
             <div className="flex flex-col gap-2">
               <h6 className="text-neutral-800">Upload Image</h6>
