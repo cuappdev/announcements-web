@@ -7,13 +7,15 @@ import LandingActiveSection from "@/components/landing/landingActiveSection";
 import LandingCreateAnnouncement from "@/components/landing/landingCreateAnnouncement";
 import LandingPastSection from "@/components/landing/landingPastSection";
 import LandingUpcomingSection from "@/components/landing/landingUpcomingSection";
+import { useLoading } from "@/hooks/useLoading";
 import { Announcement } from "@/models/announcement";
 import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
 import { Constants } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnnouncementForm from "../announcement/announcementForm";
+import LoadingScreen from "../common/loadingScreen";
 import errorToast from "../system/errorToast";
 
 export default function Landing() {
@@ -59,49 +61,64 @@ export default function Landing() {
     if (refetch) fetchAnnouncementsQuery.refetch();
   };
 
+  // Loading Screen
+  const { isLoading } = useLoading(Constants.timer.loadingScreen, fetchAnnouncementsQuery.isFetched);
+  useEffect(() => {
+    // Disable scrolling when isLoading is true
+    if (isLoading) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isLoading]);
+
   return user?.name !== "" ? (
-    <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px]">
-      <NavBar />
+    <>
+      <LoadingScreen canDismiss={fetchAnnouncementsQuery.isFetched} />
 
-      {showForm ? <AnnouncementForm onClose={closeForm} editingAnnouncement={editingAnnouncement} /> : null}
+      <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px] bg-other-background">
+        <NavBar />
 
-      <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
-        <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
-          <PageHeader
-            title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
-            subtitle={"Send announcements to our applications."}
-          />
-          <LandingCreateAnnouncement action={() => setShowForm(true)} />
-          <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
-          <LandingActiveSection
-            announcements={fetchAnnouncementsQuery.data}
-            onEditClick={editAnnouncement}
-            onRefetch={() => fetchAnnouncementsQuery.refetch()}
-          />
-          <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
-        </div>
-        <div className="max-lg:hidden flex flex-col gap-8">
-          <PageHeader
-            title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
-            subtitle={"Send announcements to our applications."}
-          />
-          <div className="flex flex-row gap-8">
-            <div className="flex flex-col gap-8 w-[499px]">
-              <LandingCreateAnnouncement action={() => setShowForm(true)} />
-              <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
-            </div>
-            <div className="flex flex-col gap-8 flex-1">
-              <LandingActiveSection
-                announcements={fetchAnnouncementsQuery.data}
-                onEditClick={editAnnouncement}
-                onRefetch={() => fetchAnnouncementsQuery.refetch()}
-              />
-              <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+        {showForm ? <AnnouncementForm onClose={closeForm} editingAnnouncement={editingAnnouncement} /> : null}
+
+        <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
+          <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
+            <PageHeader
+              title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
+              subtitle={"Send announcements to our applications."}
+            />
+            <LandingCreateAnnouncement action={() => setShowForm(true)} />
+            <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
+            <LandingActiveSection
+              announcements={fetchAnnouncementsQuery.data}
+              onEditClick={editAnnouncement}
+              onRefetch={() => fetchAnnouncementsQuery.refetch()}
+            />
+            <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+          </div>
+          <div className="max-lg:hidden flex flex-col gap-8">
+            <PageHeader
+              title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
+              subtitle={"Send announcements to our applications."}
+            />
+            <div className="flex flex-row gap-8">
+              <div className="flex flex-col gap-8 w-[499px]">
+                <LandingCreateAnnouncement action={() => setShowForm(true)} />
+                <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
+              </div>
+              <div className="flex flex-col gap-8 flex-1">
+                <LandingActiveSection
+                  announcements={fetchAnnouncementsQuery.data}
+                  onEditClick={editAnnouncement}
+                  onRefetch={() => fetchAnnouncementsQuery.refetch()}
+                />
+                <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
-    </div>
+    </>
   ) : null;
 }

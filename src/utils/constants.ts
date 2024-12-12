@@ -20,4 +20,7 @@ export const Constants = {
   text: {
     empty: "There's nothing to show here.",
   },
+  timer: {
+    loadingScreen: 1 * 1000,
+  },
 };
