@@ -71,16 +71,31 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
     try {
       setIsLoading(true);
       ApiClient.setAuthToken(apiClient, user.idToken);
-      await ApiClient.post(apiClient, "/announcements", {
-        apps: announcement.apps,
-        body: announcement.body,
-        endDate: announcement.endDate,
-        imageUrl: announcement.imageUrl,
-        isDebug: false, // TODO: Add debug toggle
-        link: announcement.link,
-        startDate: announcement.startDate,
-        title: announcement.title,
-      });
+
+      if (editingAnnouncement) {
+        // Editing Announcement
+        await ApiClient.put(apiClient, `/announcements/${announcement.id}`, {
+          apps: announcement.apps,
+          body: announcement.body,
+          endDate: announcement.endDate,
+          imageUrl: announcement.imageUrl,
+          link: announcement.link,
+          startDate: announcement.startDate,
+          title: announcement.title,
+        });
+      } else {
+        // Creating Announcement
+        await ApiClient.post(apiClient, "/announcements", {
+          apps: announcement.apps,
+          body: announcement.body,
+          endDate: announcement.endDate,
+          imageUrl: announcement.imageUrl,
+          isDebug: false, // TODO: Add debug toggle
+          link: announcement.link,
+          startDate: announcement.startDate,
+          title: announcement.title,
+        });
+      }
 
       // Successful
       setIsLoading(false);
