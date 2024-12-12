@@ -12,6 +12,7 @@
   "dependencies": {
     "@nextui-org/date-picker": "^2.1.8",
     "@nextui-org/theme": "^2.2.11",
+    "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-progress": "^1.1.0",
