@@ -1,21 +1,21 @@
 "use client";
 
+import FilterIcon from "@/icons/filterIcon";
 import { Announcement } from "@/models/announcement";
 import { AppName } from "@/models/enums/appName";
 import { SortType } from "@/models/enums/sortType";
 import { createDummyAnnouncement } from "@/utils/dummy";
+import { dateInRange } from "@/utils/utils";
 import { ChangeEvent, useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
+import Footer from "../common/footer";
 import NavBar from "../common/navBar";
 import PageHeader from "../common/pageHeader";
-import InputSearch from "../system/input/inputSearch";
 import Divider from "../system/divider";
-import PastAnnouncementCell from "./pastAnnouncementCell";
-import Footer from "../common/footer";
+import InputSearch from "../system/input/inputSearch";
 import { InputSelect } from "../system/input/inputSelect";
-import FilterIcon from "@/icons/filterIcon";
+import PastAnnouncementCell from "./pastAnnouncementCell";
 import PastFilter from "./pastFilter";
-import { DateRange } from "react-day-picker";
-import { dateInRange } from "@/utils/utils";
 
 // TODO: Replace with React Query to fetch from API
 const allAnnouncements: Announcement[] = [
