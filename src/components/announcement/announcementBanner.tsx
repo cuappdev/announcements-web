@@ -7,16 +7,16 @@ interface Props {
 
 export default function AnnouncementBanner({ announcement }: Props) {
   return (
-    <div className="flex w-[281px] md:w-[361px] p-4 items-start gap-4 rounded-sm bg-neutral-white border border-other-stroke shadow-lg">
+    <div className="flex flex-row w-[281px] md:w-[361px] p-4 gap-4 rounded-sm bg-neutral-white border border-other-stroke shadow-lg">
       <img
-        src={announcement.imageUrl}
-        className="w-[64px] h-[64px] flex-shrink-0 rounded-sm object-cover object-center"
-      ></img>
-      <div className="w-full flex flex-col relative gap-1">
-        <h6 className="text-neutral-800">{announcement.title}</h6>
-        <p className="label text-neutral-600">{announcement.body}</p>
-        <CrossThick className="absolute -right-1 -top-1 h-[20px] w-[20px] fill-neutral-400" />
+        src={announcement.imageUrl || undefined}
+        className="size-[64px] flex-shrink-0 rounded-sm object-cover object-center"
+      />
+      <div className="flex flex-col gap-1 flex-1">
+        <h6 className="text-neutral-800 line-clamp-1 break-words">{announcement.title}</h6>
+        <p className="label text-neutral-600 line-clamp-3 md:line-clamp-2  break-words">{announcement.body}</p>
       </div>
+      <CrossThick className="size-[20px] fill-neutral-400" />
     </div>
   );
 }
