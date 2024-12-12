@@ -5,6 +5,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { addDays } from "date-fns";
 import { useMemo, useState } from "react";
 import ButtonPrimary1 from "../system/button/buttonPrimary1";
+import errorToast from "../system/errorToast";
 import InputDatePicker from "../system/input/inputDatePicker";
 import InputMultiSelect from "../system/input/inputMultiselect";
 import InputText from "../system/input/inputText";
@@ -64,6 +65,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
       console.log("Scheduling", announcement);
     } catch (err) {
       console.error(err);
+      errorToast();
     }
   };
 

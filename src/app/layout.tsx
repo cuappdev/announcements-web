@@ -1,5 +1,6 @@
-import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 import localFont from "next/font/local";
+import "./globals.css";
 
 // Fonts
 const sfProDisplay = localFont({
@@ -30,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-other-background">{children}</body>
+      <body className="bg-other-background">
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
