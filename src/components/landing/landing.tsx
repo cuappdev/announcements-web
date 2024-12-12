@@ -73,7 +73,11 @@ export default function Landing() {
           />
           <LandingCreateAnnouncement action={() => setShowForm(true)} />
           <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
-          <LandingActiveSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+          <LandingActiveSection
+            announcements={fetchAnnouncementsQuery.data}
+            onEditClick={editAnnouncement}
+            onRefetch={() => fetchAnnouncementsQuery.refetch()}
+          />
           <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
         </div>
         <div className="max-lg:hidden flex flex-col gap-8">
@@ -87,7 +91,11 @@ export default function Landing() {
               <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
             </div>
             <div className="flex flex-col gap-8 flex-1">
-              <LandingActiveSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+              <LandingActiveSection
+                announcements={fetchAnnouncementsQuery.data}
+                onEditClick={editAnnouncement}
+                onRefetch={() => fetchAnnouncementsQuery.refetch()}
+              />
               <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
             </div>
           </div>
