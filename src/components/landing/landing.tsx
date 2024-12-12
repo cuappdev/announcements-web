@@ -1,19 +1,20 @@
 "use client";
 
+import Footer from "@/components/common/footer";
+import NavBar from "@/components/common/navBar";
+import PageHeader from "@/components/common/pageHeader";
 import LandingActiveSection from "@/components/landing/landingActiveSection";
 import LandingCreateAnnouncement from "@/components/landing/landingCreateAnnouncement";
-import Footer from "@/components/common/footer";
 import LandingPastSection from "@/components/landing/landingPastSection";
 import LandingUpcomingSection from "@/components/landing/landingUpcomingSection";
 import { Announcement } from "@/models/announcement";
-import PageHeader from "@/components/common/pageHeader";
-import NavBar from "@/components/common/navBar";
-import { useUserStore } from "@/stores/useUserStore";
 import ApiClient from "@/services/apiClient";
-import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/stores/useUserStore";
 import { Constants } from "@/utils/constants";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import AnnouncementForm from "../announcement/announcementForm";
+import errorToast from "../system/errorToast";
 
 export default function Landing() {
   const apiClient = ApiClient.createInstance();
@@ -34,6 +35,7 @@ export default function Landing() {
       return await ApiClient.get<Announcement[]>(apiClient, "/announcements", { params: { debug } });
     } catch (err) {
       console.error(err);
+      errorToast();
       return [];
     }
   };

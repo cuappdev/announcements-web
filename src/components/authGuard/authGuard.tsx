@@ -1,11 +1,12 @@
 "use client";
 
-import { useUserStore } from "@/stores/useUserStore";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import ApiClient from "@/services/apiClient";
-import { Constants } from "@/utils/constants";
 import { User } from "@/models/user";
+import ApiClient from "@/services/apiClient";
+import { useUserStore } from "@/stores/useUserStore";
+import { Constants } from "@/utils/constants";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import errorToast from "../system/errorToast";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const apiClient = ApiClient.createInstance();
@@ -32,10 +33,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           ApiClient.setAuthToken(apiClient, user.idToken);
           const userData = await ApiClient.post<User>(apiClient, "/users/login");
           setUser({ ...userData, idToken: user.idToken });
-        } catch (error) {
+        } catch (err) {
           // Token has expired or unauthorized
-          // TODO: Show error toast
-          console.error(error);
+          console.error(err);
+          errorToast();
           setUser(undefined);
           router.push(Constants.pagePath.default);
         }
