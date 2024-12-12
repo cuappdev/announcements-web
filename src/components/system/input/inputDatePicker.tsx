@@ -11,14 +11,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useEffect, useState } from "react";
 
 interface Props {
+  value: DateRange;
   setDateRange: (dateRange: DateRange) => void;
 }
 
-export default function InputDatePicker({ setDateRange }: Props) {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 1),
-  });
+export default function InputDatePicker({ value, setDateRange }: Props) {
+  const [date, setDate] = useState<DateRange | undefined>(value);
 
   useEffect(() => {
     if (!date) return;
