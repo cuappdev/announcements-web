@@ -11,7 +11,7 @@ export default function Default() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col gap-8 w-screen max-md:h-screen items-center justify-center px-4 md:px-8 md:mt-[128px]">
+    <div className="flex flex-col gap-8 w-screen h-screen items-center max-md:justify-center px-4 md:px-8 md:pt-[128px] bg-other-background">
       <div className="flex flex-col gap-4 items-center">
         <img src={appDevLogoName.src} alt="AppDev logo" className="w-[128px]" />
         <h2 className="text-neutral-800">Announcements</h2>

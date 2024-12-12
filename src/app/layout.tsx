@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sfProDisplay.variable} font-sans bg-other-background`}>
+      <body className={`${sfProDisplay.variable} font-sans bg-neutral-white`}>
         <main>{children}</main>
         <Toaster />
       </body>
