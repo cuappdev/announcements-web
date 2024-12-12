@@ -1,7 +1,7 @@
-import CalendarPlainIcon from "@/icons/calendarPlainIcon";
 import { Announcement } from "@/models/announcement";
 import { Constants } from "@/utils/constants";
 import { filterPastAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
+import { CalendarX2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AnnouncementCell from "../announcement/announcementCell";
@@ -16,7 +16,7 @@ interface Props {
 export default function LandingPastSection({ announcements, onEditClick }: Props) {
   const router = useRouter();
 
-  const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? []));
+  const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? [])).reverse();
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   const openModal = (announcement: Announcement) => {
@@ -33,7 +33,7 @@ export default function LandingPastSection({ announcements, onEditClick }: Props
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
-        <CalendarPlainIcon className="w-[32px] md:w-[40px] h-[32px] md:h-[40px] stroke-neutral-800" />
+        <CalendarX2 className="size-[32px] md:size-[40px] stroke-neutral-800" />
         <div className="flex flex-col">
           <h4 className="self-stretch text-neutral-800">Past Announcements</h4>
           <p className="b1 self-stretch text-neutral-600">Previous inactive announcements.</p>

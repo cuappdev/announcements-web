@@ -4,7 +4,7 @@ import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
 import { formatDate } from "@/utils/utils";
 import { addDays } from "date-fns";
-import { Speaker, X } from "lucide-react";
+import { Megaphone, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import AlertPopup from "../system/alertPopup";
 import ButtonPrimary1 from "../system/button/buttonPrimary1";
@@ -131,7 +131,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
           {/* Header */}
           <div className="flex flex-row justify-between items-start gap-8">
             <div className="flex flex-row items-center gap-4">
-              <Speaker className="size-[40px] stroke-neutral-800" />
+              <Megaphone className="size-[40px] stroke-neutral-800" />
               <div className="flex flex-col gap-1">
                 <h4 className="text-neutral-800">Create Announcement</h4>
                 <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
@@ -170,8 +170,24 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
                     to: new Date(announcement.endDate),
                   }}
                   setDateRange={(dateRange) => {
-                    handleChange("startDate", dateRange?.from ?? "");
-                    handleChange("endDate", dateRange?.to ?? "");
+                    const startDate = dateRange?.from;
+                    const endDate = dateRange?.to;
+
+                    if (!startDate) {
+                      handleChange("startDate", "");
+                      return;
+                    }
+                    if (!endDate) {
+                      handleChange("endDate", "");
+                      return;
+                    }
+
+                    // Beginning of start date to end of end date
+                    startDate.setHours(0, 0, 0, 0);
+                    endDate.setHours(23, 59, 59, 999);
+
+                    handleChange("startDate", startDate);
+                    handleChange("endDate", endDate);
                   }}
                 />
               </div>

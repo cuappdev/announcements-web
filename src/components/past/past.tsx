@@ -1,11 +1,11 @@
 "use client";
 
-import FilterIcon from "@/icons/filterIcon";
 import { Announcement } from "@/models/announcement";
 import { AppName } from "@/models/enums/appName";
 import { SortType } from "@/models/enums/sortType";
 import { createDummyAnnouncement } from "@/utils/dummy";
 import { dateInRange } from "@/utils/utils";
+import { ListFilter } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import Footer from "../common/footer";
@@ -139,7 +139,7 @@ export default function Past() {
               className="flex flex-row gap-3 items-center px-4 py-3 rounded-md bg-neutral-white border border-other-stroke opacity-hover"
               onClick={() => setShowFilters(true)}
             >
-              <FilterIcon className="size-[16px] fill-neutral-400" />
+              <ListFilter className="size-[16px] stroke-neutral-400" />
               <p className="b1 text-neutral-500">
                 {filterDateRange && filterApps.length !== 0
                   ? "Filter - 2"
