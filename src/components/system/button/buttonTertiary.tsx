@@ -1,6 +1,7 @@
 "use client";
 
-import EditIcon from "@/icons/editIcon";
+import { Loader2, PencilIcon } from "lucide-react";
+import { useState } from "react";
 
 interface Props {
   text: string;
@@ -8,9 +9,19 @@ interface Props {
   disabled?: boolean;
   className?: string;
   textStyle?: string;
+  isLoading?: boolean;
 }
 
-export default function TertiaryButton({ text, action, disabled = false, className, textStyle }: Props) {
+export default function ButtonTertiary({
+  text,
+  action,
+  disabled = false,
+  className,
+  textStyle,
+  isLoading = false,
+}: Props) {
+  const [isPressed, setIsPressed] = useState<boolean>(false);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Prevent event from bubbling up
     action();
@@ -18,12 +29,34 @@ export default function TertiaryButton({ text, action, disabled = false, classNa
 
   return (
     <button
-      className={`flex p-4 justify-center items-center gap-2 rounded-md border border-other-stroke bg-neutral-white w-full ${className}`}
+      className={`flex p-4 justify-center items-center gap-2 rounded-md border border-other-stroke bg-neutral-white hover:bg-other-offWhite w-full ${
+        isPressed && "bg-other-background hover:bg-other-background"
+      } ${disabled || isLoading ? "cursor-default hover:bg-neutral-white" : ""} ${className}`}
       onClick={handleClick}
       disabled={disabled}
+      onMouseDown={() => {
+        if (!isLoading) setIsPressed(true);
+      }}
+      onMouseUp={() => {
+        if (!isLoading) setIsPressed(false);
+      }}
     >
-      <EditIcon className="w-[16px] h-[16px] stroke-neutral-black"></EditIcon>
-      <p className={`text-neutral-800 text-center ${textStyle ? textStyle : "b1"}`}>{text}</p>
+      {isLoading ? (
+        <div className="animate-spin">
+          <Loader2 className="stroke-neutral-black" />
+        </div>
+      ) : (
+        <>
+          <PencilIcon className={`size-[16px] ${disabled ? "stroke-neutral-300" : "stroke-neutral-black"}`} />
+          <p
+            className={`text-center ${disabled ? "text-neutral-300" : "text-neutral-800"} ${
+              textStyle ? textStyle : "b1"
+            }`}
+          >
+            {text}
+          </p>
+        </>
+      )}
     </button>
   );
 }
