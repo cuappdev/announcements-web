@@ -94,7 +94,11 @@ export default function Landing() {
               onEditClick={editAnnouncement}
               onRefetch={() => fetchAnnouncementsQuery.refetch()}
             />
-            <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+            <LandingPastSection
+              announcements={fetchAnnouncementsQuery.data}
+              onEditClick={editAnnouncement}
+              onRefetch={() => fetchAnnouncementsQuery.refetch()}
+            />
           </div>
           <div className="max-lg:hidden flex flex-col gap-8">
             <PageHeader
@@ -112,7 +116,11 @@ export default function Landing() {
                   onEditClick={editAnnouncement}
                   onRefetch={() => fetchAnnouncementsQuery.refetch()}
                 />
-                <LandingPastSection announcements={fetchAnnouncementsQuery.data} onEditClick={editAnnouncement} />
+                <LandingPastSection
+                  announcements={fetchAnnouncementsQuery.data}
+                  onEditClick={editAnnouncement}
+                  onRefetch={() => fetchAnnouncementsQuery.refetch()}
+                />
               </div>
             </div>
           </div>

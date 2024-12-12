@@ -11,9 +11,10 @@ import ButtonSecondary1 from "../system/button/buttonSecondary1";
 interface Props {
   announcements?: Announcement[];
   onEditClick: (announcement: Announcement) => void;
+  onRefetch: () => void;
 }
 
-export default function LandingPastSection({ announcements, onEditClick }: Props) {
+export default function LandingPastSection({ announcements, onEditClick, onRefetch }: Props) {
   const router = useRouter();
 
   const pastAnnouncements = sortAnnouncementsByStartDate(filterPastAnnouncements(announcements ?? [])).reverse();
@@ -79,7 +80,13 @@ export default function LandingPastSection({ announcements, onEditClick }: Props
       ) : (
         <p className="b1 self-stretch text-neutral-400 text-center">{Constants.text.empty}</p>
       )}
-      <AnnouncementModal onClose={closeModal} announcement={selectedAnnouncement} />
+      <AnnouncementModal
+        onClose={(refetch) => {
+          if (refetch) onRefetch();
+          closeModal();
+        }}
+        announcement={selectedAnnouncement}
+      />
     </div>
   );
 }

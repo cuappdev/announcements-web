@@ -111,7 +111,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
     <>
       {/* Alert */}
       <AlertPopup
-        title="Schedule Announcement"
+        title={`${editingAnnouncement ? "Edit" : "Schedule"} Announcement`}
         description={
           announcement.startDate && announcement.endDate
             ? `Are you sure you want to schedule this announcement from ${formatDate(
@@ -120,7 +120,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
               )} to ${formatDate(new Date(announcement.endDate), DateFormat.SHORT)}?`
             : ""
         }
-        actionText="Schedule"
+        actionText={editingAnnouncement ? "Edit" : "Schedule"}
         action={scheduleAnnouncement}
         open={showAlert}
         onOpenChange={(val) => setShowAlert(val)}
@@ -208,7 +208,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
 
               {/* Submit Button */}
               <ButtonPrimary1
-                text="Schedule Announcement"
+                text={`${editingAnnouncement ? "Edit" : "Schedule"} Announcement`}
                 action={scheduleAnnouncement}
                 disabled={!canSchedule}
                 className="lg:hidden"
@@ -219,7 +219,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
 
           {/* Submit Button */}
           <ButtonPrimary1
-            text="Schedule Announcement"
+            text={`${editingAnnouncement ? "Edit" : "Schedule"} Announcement`}
             action={() => setShowAlert(true)}
             disabled={!canSchedule}
             className="max-lg:hidden w-full"
