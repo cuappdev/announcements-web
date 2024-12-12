@@ -113,6 +113,46 @@ class ApiClient {
     const response: AxiosResponse<T> = await axiosInstance.delete(url, config);
     return response.data;
   }
+
+  /**
+   * Makes a POST request with form data, including optional file uploads.
+   *
+   * @param axiosInstance The Axios instance to use for the request.
+   * @param data An object containing the form data.
+   * @param file An optional File object to upload.
+   * @param config Optional Axios request configuration.
+   * @returns A promise that resolves to the response data.
+   */
+  static async postFormData<T>(
+    axiosInstance: AxiosInstance,
+    url: string,
+    data?: any,
+    file?: File,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
+    const formData = new FormData();
+
+    // Add form data fields
+    if (data) {
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    // Add file if provided
+    if (file) {
+      formData.append("image", file);
+    }
+
+    const response: AxiosResponse<T> = await axiosInstance.post(url, formData, {
+      ...config,
+      headers: {
+        ...config?.headers,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  }
 }
 
 export default ApiClient;

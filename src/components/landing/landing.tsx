@@ -12,6 +12,8 @@ import { useUserStore } from "@/stores/useUserStore";
 import ApiClient from "@/services/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { Constants } from "@/utils/constants";
+import { useState } from "react";
+import AnnouncementForm from "../announcement/announcementForm";
 
 export default function Landing() {
   const apiClient = ApiClient.createInstance();
@@ -19,6 +21,8 @@ export default function Landing() {
 
   // TODO: Add debug toggle
   const debug: boolean = false;
+
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   // Fetch Announcements
   const fetchAnnouncements = async () => {
@@ -41,13 +45,16 @@ export default function Landing() {
   return user?.name !== "" ? (
     <div className="flex flex-col gap-16">
       <NavBar />
+
+      {showForm ? <AnnouncementForm onClose={() => setShowForm(false)} /> : null}
+
       <div className="flex flex-col gap-16 md:gap-20 lg:w-[1128px] lg:mx-auto">
         <div className="flex flex-col gap-8 px-4 md:px-8 lg:hidden">
           <PageHeader
             title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
-            subtitle={"Send announcements to our applications"}
+            subtitle={"Send announcements to our applications."}
           />
-          <LandingCreateAnnouncement />
+          <LandingCreateAnnouncement action={() => setShowForm(true)} />
           <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
           <LandingActiveSection announcements={fetchAnnouncementsQuery.data} />
           <LandingPastSection announcements={fetchAnnouncementsQuery.data} />
@@ -55,11 +62,11 @@ export default function Landing() {
         <div className="max-lg:hidden flex flex-col gap-8">
           <PageHeader
             title={`Welcome, ${user?.name.substring(0, user.name.indexOf(" "))}!`}
-            subtitle={"Send announcements to our applications"}
+            subtitle={"Send announcements to our applications."}
           />
           <div className="flex flex-row gap-8">
             <div className="flex flex-col gap-8 w-[499px]">
-              <LandingCreateAnnouncement />
+              <LandingCreateAnnouncement action={() => setShowForm(true)} />
               <LandingUpcomingSection announcements={fetchAnnouncementsQuery.data} />
             </div>
             <div className="flex flex-col gap-8 flex-1">

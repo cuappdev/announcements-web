@@ -16,7 +16,7 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
   if (!announcement) return null;
 
   return (
-    <div className="fixed inset-0 bg-neutral-black bg-opacity-60 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
       <div className="bg-neutral-white rounded-lg p-8 max-md:w-full m-4 md:m-8 lg:max-w-[1128px]">
         <div className="flex flex-col gap-4 md:gap-6">
           <div className="flex flex-col gap-2">

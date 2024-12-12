@@ -1,7 +1,11 @@
 import SpeakerIcon from "@/icons/SpeakerIcon";
 import ButtonPrimary1 from "../system/ButtonPrimary1";
 
-export default function LandingCreateAnnouncement() {
+interface Props {
+  action: () => void;
+}
+
+export default function LandingCreateAnnouncement({ action }: Props) {
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
@@ -11,7 +15,7 @@ export default function LandingCreateAnnouncement() {
           <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
         </div>
       </div>
-      <ButtonPrimary1 text="Create Announcement" action={() => console.log("Button clicked")} />
+      <ButtonPrimary1 text="Create Announcement" action={action} />
     </div>
   );
 }

@@ -1,94 +1,143 @@
-"use client";
-
-import { useState } from "react";
+import CrossThinIcon from "@/icons/CrossThinIcon";
 import SpeakerIcon from "@/icons/SpeakerIcon";
 import AnnouncementBanner from "./announcementBanner";
+import { useMemo, useState } from "react";
 import { Announcement } from "@/models/announcement";
-import { AppName } from "@/models/appName";
-import { InputText } from "../system/InputText";
-import { InputDropdown } from "../system/InputDropdown";
-import { InputDatePicker } from "../system/InputDatePicker";
-import { InputUpload } from "../system/InputUpload";
-import { User } from "@/models/user";
+import InputText from "../system/input/inputText";
+import InputDatePicker from "../system/input/inputDatePicker";
+import InputMultiSelect from "../system/input/inputMultiselect";
+import InputUpload from "../system/input/inputUpload";
+import ButtonPrimary1 from "../system/ButtonPrimary1";
+import { useUserStore } from "@/stores/useUserStore";
 
-export default function AnnouncementForm() {
-  const creator: User = {
-    email: "vdb23@cornell.edu",
-    idToken: "idToken",
-    imageUrl: "https://lh3.googleusercontent.com/a/ACg8ocLSV3bTsn-XINmiSkt4FbdlzRDV0EJBc_LX-hv7gdo3LGp8cAB_=s96-c",
-    isAdmin: true,
-    name: "Vin Bui",
-  };
-
-  const [announcement, setAnnouncement] = useState<Announcement>({
-    id: "0",
-    apps: [AppName.EATERY, AppName.RESELL],
-    body: "Placeholder",
-    creator,
-    endDate: "2024-03-16T03:00:00Z",
+const dummyAnnouncement: Announcement = {
+  id: "",
+  apps: [],
+  body: "",
+  creator: {
+    email: "",
+    idToken: "",
     imageUrl: "",
-    link: "https://www.instagram.com/p/C4ft4SyOaUj/",
-    startDate: "2024-03-15T03:00:00Z",
-    title: "Placeholder",
-  });
+    isAdmin: true,
+    name: "",
+  },
+  endDate: "",
+  imageUrl: "",
+  link: "",
+  startDate: "",
+  title: "",
+};
 
+interface Props {
+  onClose: () => void;
+}
+
+export default function AnnouncementForm({ onClose }: Props) {
+  const { user } = useUserStore();
+
+  const [announcement, setAnnouncement] = useState<Announcement>(dummyAnnouncement);
   const handleChange = (field: keyof Announcement, value: any) => {
     setAnnouncement((prev) => ({ ...prev, [field]: value }));
   };
 
+  const canSchedule = useMemo(
+    () =>
+      announcement.apps.length !== 0 &&
+      announcement.body !== "" &&
+      announcement.endDate !== "" &&
+      announcement.imageUrl !== "" &&
+      announcement.link !== "" &&
+      announcement.startDate !== "" &&
+      announcement.title !== "",
+    [announcement]
+  );
+
+  // Schedule Announcement
+  const scheduleAnnouncement = async () => {
+    if (!user) return;
+
+    try {
+      console.log("scheduling");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center p-6 gap-6 rounded-lg bg-neutral-white lg:w-[1128px]">
-      <div className="flex items-center gap-4 self-stretch">
-        <SpeakerIcon className="w-[40px] h-[40px] fill-neutral-800" />
-        <div className="flex flex-col gap-1">
-          <h4 className="text-neutral-800">Create Announcement</h4>
-          <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
-        </div>
-      </div>
-      <div className="flex flex-col lg:flex-row-reverse justify-center items-center gap-8 self-stretch">
-        <div className="flex flex-col justify-center items-center self-stretch rounded-md border-[1px] border-other-stroke bg-other-offWhite h-[152px] md:h-[304px]">
-          <AnnouncementBanner announcement={announcement}></AnnouncementBanner>
-        </div>
-        <div className="flex flex-col items-start self-stretch gap-6 lg:w-[401px]">
-          <InputText
-            name="Title"
-            placeholder="Enter the announcement title"
-            onChange={(e) => handleChange("title", e.target.value)}
-          />
-          <InputText
-            name="Description"
-            placeholder="Enter the announcement description"
-            onChange={(e) => handleChange("body", e.target.value)}
-          />
-          <div className="flex flex-row justify-between gap-6">
-            <InputDatePicker name="Start Date" />
-            <InputDatePicker name="End Date" />
+    <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
+      <div className="flex flex-col gap-6 p-6 rounded-lg bg-neutral-white overflow-auto h-4/5 w-full mx-4 md:mx-8 lg:w-[1128px]">
+        {/* Header */}
+        <div className="flex flex-row justify-between items-start gap-8">
+          <div className="flex flex-row items-center gap-4">
+            <SpeakerIcon className="size-[40px] fill-neutral-800" />
+            <div className="flex flex-col gap-1">
+              <h4 className="text-neutral-800">Create Announcement</h4>
+              <p className="b1 text-neutral-600">Schedule an announcement to our apps with this form.</p>
+            </div>
           </div>
-          <InputText
-            name="Link"
-            placeholder="Enter the announcement link"
-            onChange={(e) => handleChange("link", e.target.value)}
-          />
-          <InputDropdown
-            name="Apps"
-            placeholder="Select apps"
-            options={[
-              AppName.COURSEGRAB,
-              AppName.EATERY,
-              AppName.RESELL,
-              AppName.SCOOPED,
-              AppName.TRANSIT,
-              AppName.UPLIFT,
-              AppName.VOLUME,
-            ]}
-            onChange={(apps) => handleChange("apps", apps)}
-          />
-          <InputUpload
-            name="Upload Image"
-            placeholder="Drag your file here"
-            onChange={(url) => handleChange("imageUrl", url)}
-          />
+          <button onClick={onClose}>
+            <CrossThinIcon className="size-[32px] fill-neutral-400 opacity-hover" />
+          </button>
         </div>
+
+        <div className="flex flex-col gap-6 lg:flex-row-reverse">
+          {/* Preview */}
+          <div className="flex flex-col justify-center items-center rounded-md border-[1px] border-other-stroke bg-other-offWhite p-8 flex-1">
+            <AnnouncementBanner announcement={announcement}></AnnouncementBanner>
+          </div>
+
+          {/* Form */}
+          <div className="flex flex-col gap-6 lg:w-[400px]">
+            <InputText
+              name="Title"
+              placeholder="Enter the announcement title"
+              onChange={(event) => handleChange("title", event.target.value)}
+            />
+            <InputText
+              name="Description"
+              placeholder="Enter the announcement description"
+              onChange={(event) => handleChange("body", event.target.value)}
+            />
+            <div className="flex flex-col gap-2">
+              <h6 className="text-neutral-800">Date</h6>
+              <InputDatePicker
+                setDateRange={(dateRange) => {
+                  handleChange("startDate", dateRange.from);
+                  handleChange("endDate", dateRange.to);
+                }}
+              />
+            </div>
+            <InputText
+              name="Link"
+              placeholder="Enter the announcement link"
+              onChange={(event) => handleChange("link", event.target.value)}
+            />
+            <div className="flex flex-col gap-2">
+              <h6 className="text-neutral-800">Apps</h6>
+              <InputMultiSelect setApps={(apps) => handleChange("apps", apps)} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h6 className="text-neutral-800">Upload Image</h6>
+              <InputUpload setUrl={(url) => handleChange("imageUrl", url)} />
+            </div>
+
+            {/* Submit Button */}
+            <ButtonPrimary1
+              text="Schedule Announcement"
+              action={scheduleAnnouncement}
+              disabled={!canSchedule}
+              className="lg:hidden"
+            />
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <ButtonPrimary1
+          text="Schedule Announcement"
+          action={scheduleAnnouncement}
+          disabled={!canSchedule}
+          className="max-lg:hidden w-full"
+        />
       </div>
     </div>
   );
