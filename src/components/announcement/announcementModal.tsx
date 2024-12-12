@@ -1,6 +1,7 @@
 import AppIcon from "@/icons/appIcon";
 import { Announcement } from "@/models/announcement";
 import { DateFormat } from "@/models/enums/dateFormat";
+import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
 import { dateInRange, formatDate } from "@/utils/utils";
 import { X } from "lucide-react";
@@ -12,16 +13,18 @@ import errorToast from "../system/errorToast";
 import AnnouncementBanner from "./announcementBanner";
 import AnnouncementIndicator from "./announcementIndicator";
 
-interface AnnouncementModalProps {
-  onClose: () => void;
+interface Props {
+  onClose: (refetch: boolean) => void;
   announcement: Announcement | null;
 }
 
-export default function AnnouncementModal({ onClose, announcement }: AnnouncementModalProps) {
+export default function AnnouncementModal({ onClose, announcement }: Props) {
+  const apiClient = ApiClient.createInstance();
   const { user } = useUserStore();
 
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
   const [showEndAlert, setShowEndAlert] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (!announcement) return null;
 
@@ -42,10 +45,18 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
     if (!user) return;
 
     try {
-      console.log("Deleting", announcement);
+      setIsLoading(true);
+      ApiClient.setAuthToken(apiClient, user.idToken);
+
+      await ApiClient.delete(apiClient, `/announcements/${announcement.id}`);
+
+      // Successful
+      setIsLoading(false);
+      onClose(true);
     } catch (err) {
       console.error(err);
       errorToast();
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +87,7 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
               <div className="flex flex-col gap-1">
                 <div className="flex flex-row items-center justify-between gap-1">
                   <h4 className="text-neutral-800 break-all">{announcement.title}</h4>
-                  <button className="size-[24px] opacity-hover" onClick={onClose}>
+                  <button className="size-[24px] opacity-hover" onClick={() => onClose(false)}>
                     <X className="size-[24px] fill-neutral-400" />
                   </button>
                 </div>
@@ -106,9 +117,13 @@ export default function AnnouncementModal({ onClose, announcement }: Announcemen
             </div>
 
             {dateInRange(new Date(announcement.startDate), new Date(announcement.endDate), new Date()) ? (
-              <ButtonPrimary2 text="End Live Announcement" action={() => setShowEndAlert(true)} />
+              <ButtonPrimary2 text="End Live Announcement" action={() => setShowEndAlert(true)} isLoading={isLoading} />
             ) : (
-              <ButtonSecondary2 text="Delete Announcement" action={() => setShowDeleteAlert(true)} />
+              <ButtonSecondary2
+                text="Delete Announcement"
+                action={() => setShowDeleteAlert(true)}
+                isLoading={isLoading}
+              />
             )}
           </div>
         </div>
