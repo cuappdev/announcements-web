@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
-import HourglassIcon from "@/icons/hourglassIcon";
-import AnnouncementBanner from "../announcement/announcementBanner";
 import { Announcement } from "@/models/announcement";
-import { calculateTimeRemaining, filterFutureAnnouncements, getEarliestAnnouncements } from "@/utils/utils";
 import { Constants } from "@/utils/constants";
+import { calculateTimeRemaining, filterFutureAnnouncements, getEarliestAnnouncements } from "@/utils/utils";
+import { Timer } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import AnnouncementBanner from "../announcement/announcementBanner";
 
 interface Props {
   announcements?: Announcement[];
@@ -38,7 +38,7 @@ export default function LandingUpcomingSection({ announcements }: Props) {
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
-        <HourglassIcon className="w-[32px] h-[32px] md:w-[40px] md:h-[40px] stroke-neutral-800 fill-neutral-800" />
+        <Timer className="size-[32px] md:size-[40px] stroke-neutral-800" />
         <div className="flex flex-col gap-1">
           <h4 className="text-neutral-800">Up Next</h4>
           <p className="b1 text-neutral-600">Countdown to the next announcement.</p>

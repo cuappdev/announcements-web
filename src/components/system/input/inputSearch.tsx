@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import SearchIcon from "@/icons/searchIcon";
+import { Search } from "lucide-react";
 import { ChangeEvent } from "react";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 export default function InputSearch({ text, placeholder, onChange }: Props) {
   return (
     <div className="relative flex items-center md:w-[320px] lg:w-[400px]">
-      <SearchIcon className="w-[16px] h-[16px] fill-neutral-300 absolute left-4" />
+      <Search className="size-[16px] stroke-neutral-300 absolute left-4" />
       <Input
         value={text}
         onChange={onChange}

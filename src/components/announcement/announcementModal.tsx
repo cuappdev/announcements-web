@@ -33,10 +33,18 @@ export default function AnnouncementModal({ onClose, announcement }: Props) {
     if (!user) return;
 
     try {
-      console.log("Ending", announcement);
+      setIsLoading(true);
+      ApiClient.setAuthToken(apiClient, user.idToken);
+
+      await ApiClient.put(apiClient, `/announcements/${announcement.id}`, { endDate: new Date() });
+
+      // Successful
+      setIsLoading(false);
+      onClose(true);
     } catch (err) {
       console.error(err);
       errorToast();
+      setIsLoading(false);
     }
   };
 

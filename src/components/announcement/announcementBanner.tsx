@@ -1,5 +1,5 @@
-import CrossThick from "@/icons/crossThickIcon";
 import { Announcement } from "@/models/announcement";
+import { X } from "lucide-react";
 
 interface Props {
   announcement: Announcement;
@@ -16,7 +16,7 @@ export default function AnnouncementBanner({ announcement }: Props) {
         <h6 className="text-neutral-800 line-clamp-1 break-words">{announcement.title}</h6>
         <p className="label text-neutral-600 line-clamp-3 md:line-clamp-2  break-words">{announcement.body}</p>
       </div>
-      <CrossThick className="size-[20px] fill-neutral-400" />
+      <X className="size-[20px] stroke-neutral-400" />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { Announcement } from "@/models/announcement";
 import { Constants } from "@/utils/constants";
 import { filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
-import { CalendarArrowUp } from "lucide-react";
+import { CalendarCheck2 } from "lucide-react";
 import { useState } from "react";
 import AnnouncementCell from "../announcement/announcementCell";
 import AnnouncementModal from "../announcement/announcementModal";
@@ -26,7 +26,7 @@ export default function LandingActiveSection({ announcements, onEditClick, onRef
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
-        <CalendarArrowUp className="size-[32px] md:size-[40px] stroke-neutral-800" />
+        <CalendarCheck2 className="size-[32px] md:size-[40px] stroke-neutral-800" />
         <div className="flex flex-col">
           <h4 className="self-stretch text-neutral-800">Active Announcements</h4>
           <p className="b1 self-stretch text-neutral-600">Current and upcoming announcements.</p>

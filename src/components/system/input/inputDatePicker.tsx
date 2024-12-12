@@ -38,10 +38,10 @@ export default function InputDatePicker({ value, setDateRange }: Props) {
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                  {format(date.from, "LLL d, hh:mm aa")} - {format(date.to, "LLL d, hh:mm aa")}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                format(date.from, "LLL d, hh:mm aa")
               )
             ) : (
               <span>Pick a date</span>
