@@ -52,9 +52,11 @@ export default function Landing() {
   };
 
   // Close Form
-  const closeForm = () => {
+  const closeForm = (refetch: boolean) => {
     setShowForm(false);
     setEditingAnnouncement(undefined);
+
+    if (refetch) fetchAnnouncementsQuery.refetch();
   };
 
   return user?.name !== "" ? (

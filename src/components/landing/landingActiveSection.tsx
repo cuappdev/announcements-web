@@ -1,10 +1,10 @@
-import CalendarArrowIcon from "@/icons/calendarArrowIcon";
 import { Announcement } from "@/models/announcement";
-import { filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
-import AnnouncementModal from "../announcement/announcementModal";
-import { useState } from "react";
 import { Constants } from "@/utils/constants";
+import { filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
+import { CalendarArrowUp } from "lucide-react";
+import { useState } from "react";
 import AnnouncementCell from "../announcement/announcementCell";
+import AnnouncementModal from "../announcement/announcementModal";
 
 interface Props {
   announcements?: Announcement[];
@@ -25,7 +25,7 @@ export default function LandingActiveSection({ announcements, onEditClick }: Pro
   return (
     <div className="flex flex-col p-6 items-start gap-6 rounded-lg bg-neutral-white">
       <div className="flex items-center gap-4 self-stretch">
-        <CalendarArrowIcon className="w-[32px] md:w-[40px] h-[32px] md:h-[40px] fill-neutral-800" />
+        <CalendarArrowUp className="size-[32px] md:size-[40px] stroke-neutral-800" />
         <div className="flex flex-col">
           <h4 className="self-stretch text-neutral-800">Active Announcements</h4>
           <p className="b1 self-stretch text-neutral-600">Current and upcoming announcements.</p>
