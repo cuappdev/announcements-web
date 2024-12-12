@@ -1,13 +1,13 @@
-import CrossThinIcon from "@/icons/CrossThinIcon";
-import SpeakerIcon from "@/icons/SpeakerIcon";
+import CrossThinIcon from "@/icons/crossThinIcon";
+import SpeakerIcon from "@/icons/speakerIcon";
 import AnnouncementBanner from "./announcementBanner";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Announcement } from "@/models/announcement";
 import InputText from "../system/input/inputText";
 import InputDatePicker from "../system/input/inputDatePicker";
 import InputMultiSelect from "../system/input/inputMultiselect";
 import InputUpload from "../system/input/inputUpload";
-import ButtonPrimary1 from "../system/ButtonPrimary1";
+import ButtonPrimary1 from "../system/button/buttonPrimary1";
 import { useUserStore } from "@/stores/useUserStore";
 import { addDays } from "date-fns";
 
@@ -46,9 +46,11 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
     () =>
       announcement.apps.length !== 0 &&
       announcement.body !== "" &&
+      announcement.endDate &&
       announcement.endDate !== "" &&
       announcement.imageUrl !== "" &&
       announcement.link !== "" &&
+      announcement.startDate &&
       announcement.startDate !== "" &&
       announcement.title !== "",
     [announcement]
@@ -59,7 +61,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
     if (!user) return;
 
     try {
-      console.log("scheduling");
+      console.log("Scheduling", announcement);
     } catch (err) {
       console.error(err);
     }
@@ -110,8 +112,8 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
                   to: new Date(announcement.endDate),
                 }}
                 setDateRange={(dateRange) => {
-                  handleChange("startDate", dateRange.from);
-                  handleChange("endDate", dateRange.to);
+                  handleChange("startDate", dateRange?.from ?? "");
+                  handleChange("endDate", dateRange?.to ?? "");
                 }}
               />
             </div>
@@ -123,7 +125,7 @@ export default function AnnouncementForm({ onClose, editingAnnouncement }: Props
             />
             <div className="flex flex-col gap-2">
               <h6 className="text-neutral-800">Apps</h6>
-              <InputMultiSelect value={announcement.apps} setApps={(apps) => handleChange("apps", apps)} />
+              <InputMultiSelect value={announcement.apps} setValues={(apps) => handleChange("apps", apps)} />
             </div>
             <div className="flex flex-col gap-2">
               <h6 className="text-neutral-800">Upload Image</h6>

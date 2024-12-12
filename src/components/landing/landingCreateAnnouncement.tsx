@@ -1,5 +1,5 @@
-import SpeakerIcon from "@/icons/SpeakerIcon";
-import ButtonPrimary1 from "../system/ButtonPrimary1";
+import SpeakerIcon from "@/icons/speakerIcon";
+import ButtonPrimary1 from "../system/button/buttonPrimary1";
 
 interface Props {
   action: () => void;

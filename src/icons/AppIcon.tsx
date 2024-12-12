@@ -1,4 +1,4 @@
-import { AppName } from "@/models/appName";
+import { AppName } from "@/models/enums/appName";
 import { IconProps } from "@/models/props/iconProps";
 
 interface Props extends IconProps {
@@ -20,8 +20,6 @@ export default function AppIcon({ appName, className }: Props) {
         return "/app-icons/Volume.png";
       case AppName.UPLIFT:
         return "/app-icons/Uplift.png";
-      case AppName.SCOOPED:
-        return "/app-icons/Scooped.png";
       default:
         throw new Error(`No icon found for app name: ${appName}`);
     }

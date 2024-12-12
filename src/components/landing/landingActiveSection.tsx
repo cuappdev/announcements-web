@@ -1,4 +1,4 @@
-import CalendarArrowIcon from "@/icons/CalendarArrowIcon";
+import CalendarArrowIcon from "@/icons/calendarArrowIcon";
 import { Announcement } from "@/models/announcement";
 import { filterActiveAnnouncements, sortAnnouncementsByStartDate } from "@/utils/utils";
 import AnnouncementModal from "../announcement/announcementModal";

@@ -20,10 +20,10 @@ const options = [
 
 interface Props {
   value: string[];
-  setApps: (apps: string[]) => void;
+  setValues: (values: string[]) => void;
 }
 
-export default function InputMultiSelect({ value, setApps }: Props) {
+export default function InputMultiSelect({ value, setValues }: Props) {
   const [open, setOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string[]>(value);
 
@@ -39,7 +39,7 @@ export default function InputMultiSelect({ value, setApps }: Props) {
   );
 
   useEffect(() => {
-    setApps(selectedValues);
+    setValues(selectedValues);
   }, [selectedValues]);
 
   return (

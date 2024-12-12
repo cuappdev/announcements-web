@@ -1,7 +1,23 @@
-export default function Past() {
+"use client";
+
+import AuthGuard from "@/components/authGuard/authGuard";
+import Past from "@/components/past/past";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+export default function PastPage() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false, // default: true
+      },
+    },
+  });
+
   return (
-    <div>
-      <h1>Past Announcements</h1>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AuthGuard>
+        <Past />
+      </AuthGuard>
+    </QueryClientProvider>
   );
 }

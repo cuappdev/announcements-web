@@ -1,6 +1,6 @@
 "use client";
 
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -11,15 +11,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useEffect, useState } from "react";
 
 interface Props {
-  value: DateRange;
-  setDateRange: (dateRange: DateRange) => void;
+  value: DateRange | undefined;
+  setDateRange: (dateRange: DateRange | undefined) => void;
 }
 
 export default function InputDatePicker({ value, setDateRange }: Props) {
   const [date, setDate] = useState<DateRange | undefined>(value);
 
   useEffect(() => {
-    if (!date) return;
     setDateRange(date);
   }, [date]);
 

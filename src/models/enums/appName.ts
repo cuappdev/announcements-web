@@ -31,9 +31,4 @@ export enum AppName {
    * The Uplift app.
    */
   UPLIFT = "uplift",
-
-  /**
-   * The Scooped app.
-   */
-  SCOOPED = "scooped",
 }
