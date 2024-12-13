@@ -3,6 +3,7 @@ import { Announcement } from "@/models/announcement";
 import { DateFormat } from "@/models/enums/dateFormat";
 import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
+import { Constants } from "@/utils/constants";
 import { dateInRange, formatDate } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useState } from "react";
@@ -107,8 +108,10 @@ export default function AnnouncementModal({ onClose, announcement }: Props) {
                 </p>
               </div>
               <div className="flex flex-row items-center gap-2">
-                <img src={announcement.creator.imageUrl} className="size-[24px] rounded-xl" />
-                <p className="b2 text-neutral-400">{`Scheduled by ${announcement.creator.name}`}</p>
+                <img src={announcement.creator?.imageUrl} className="size-[24px] rounded-xl" />
+                <p className="b2 text-neutral-400">{`Scheduled by ${
+                  announcement.creator?.name || Constants.text.deletedUser
+                }`}</p>
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-4 items-left md:justify-between">
