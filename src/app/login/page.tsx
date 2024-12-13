@@ -3,7 +3,8 @@ import { SearchParamsProp } from "@/models/props/searchParamsProps";
 import ApiClient from "@/services/apiClient";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage({ searchParams }: SearchParamsProp) {
+export default async function LoginPage(props: SearchParamsProp) {
+  const searchParams = await props.searchParams;
   const authCode = searchParams.code;
   const apiClient = ApiClient.createInstance();
 
