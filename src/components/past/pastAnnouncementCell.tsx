@@ -2,6 +2,7 @@ import AppIcon from "@/icons/appIcon";
 import { Announcement } from "@/models/announcement";
 import { AppName } from "@/models/enums/appName";
 import { DateFormat } from "@/models/enums/dateFormat";
+import { Constants } from "@/utils/constants";
 import { formatDate, getAppCountString } from "@/utils/utils";
 
 interface Props {
@@ -46,8 +47,12 @@ export default function PastAnnouncementCell({ announcement }: Props) {
           {formatDate(new Date(announcement.endDate), DateFormat.SHORT_YEAR)}
         </p>
         <div className="max-lg:hidden flex flex-row gap-2 items-center w-[164px]">
-          <img src={announcement.creator.imageUrl} alt={announcement.creator.name} className="size-[40px] rounded-xl" />
-          <p className="b1 text-neutral-600 line-clamp-1">{announcement.creator.name}</p>
+          <img
+            src={announcement.creator?.imageUrl}
+            alt={announcement.creator?.name || Constants.text.deletedUser}
+            className="size-[40px] rounded-xl"
+          />
+          <p className="b1 text-neutral-600 line-clamp-1">{announcement.creator?.name || Constants.text.deletedUser}</p>
         </div>
         <p className="lg:hidden b1 text-neutral-600 w-[144px] line-clamp-1">{getAppCountString(announcement.apps)}</p>
         <div className="max-lg:hidden w-[216px]">{renderAppIcons()}</div>
@@ -66,11 +71,13 @@ export default function PastAnnouncementCell({ announcement }: Props) {
           </div>
           <div className="flex flex-row gap-2 items-center">
             <img
-              src={announcement.creator.imageUrl}
-              alt={announcement.creator.name}
+              src={announcement.creator?.imageUrl}
+              alt={announcement.creator?.name || Constants.text.deletedUser}
               className="size-[24px] rounded-xl"
             />
-            <p className="b1 text-neutral-400">{`Scheduled by ${announcement.creator.name}`}</p>
+            <p className="b1 text-neutral-400">{`Scheduled by ${
+              announcement.creator?.name || Constants.text.deletedUser
+            }`}</p>
           </div>
           <div className="flex flex-row gap-2">
             {announcement.apps.map((app) => (

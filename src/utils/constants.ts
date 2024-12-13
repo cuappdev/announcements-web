@@ -20,6 +20,7 @@ export const Constants = {
     userKey: "userKey",
   },
   text: {
+    deletedUser: "DELETED_USER",
     empty: "There's nothing to show here.",
   },
   timer: {
