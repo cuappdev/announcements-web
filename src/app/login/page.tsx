@@ -1,7 +1,7 @@
+import Login from "@/components/login/login";
 import { SearchParamsProp } from "@/models/props/searchParamsProps";
 import ApiClient from "@/services/apiClient";
 import { redirect } from "next/navigation";
-import Login from "@/components/login/login";
 
 export default async function LoginPage({ searchParams }: SearchParamsProp) {
   const authCode = searchParams.code;

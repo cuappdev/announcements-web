@@ -24,6 +24,7 @@ export function createDummyAnnouncement(
   ]
 ): Announcement {
   const creator: User = {
+    id: "675c9f36dea6d3c5ee0e3053",
     email: "vdb23@cornell.edu",
     idToken: "idToken",
     imageUrl: "https://lh3.googleusercontent.com/a/ACg8ocLSV3bTsn-XINmiSkt4FbdlzRDV0EJBc_LX-hv7gdo3LGp8cAB_=s96-c",

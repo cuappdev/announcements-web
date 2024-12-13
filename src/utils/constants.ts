@@ -13,8 +13,10 @@ export const Constants = {
   },
   queryKey: {
     fetchAnnouncements: "fetchAnnouncements",
+    fetchUsers: "fetchUsers",
   },
   storage: {
+    debugKey: "debugKey",
     userKey: "userKey",
   },
   text: {

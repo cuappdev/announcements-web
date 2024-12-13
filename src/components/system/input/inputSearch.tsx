@@ -8,11 +8,12 @@ interface Props {
   text: string;
   placeholder: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
-export default function InputSearch({ text, placeholder, onChange }: Props) {
+export default function InputSearch({ text, placeholder, onChange, className }: Props) {
   return (
-    <div className="relative flex items-center md:w-[320px] lg:w-[400px]">
+    <div className={`relative flex items-center md:w-[320px] lg:w-[400px] ${className}`}>
       <Search className="size-[16px] stroke-neutral-300 absolute left-4" />
       <Input
         value={text}

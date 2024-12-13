@@ -129,7 +129,7 @@ export default function Past() {
     <>
       <LoadingScreen canDismiss={fetchAnnouncementsQuery.isFetched} />
 
-      <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px] bg-other-background">
+      <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px] bg-other-background min-h-screen">
         <NavBar />
         <div className="flex flex-col gap-6 px-4 md:gap-8 lg:px-0 lg:w-[1128px] lg:mx-auto">
           {/* Header */}
