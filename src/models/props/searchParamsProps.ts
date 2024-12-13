@@ -7,5 +7,5 @@ export interface SearchParamsProp {
    * The keys are the parameter names, and the values are the corresponding parameter values.
    * Values can be strings, arrays of strings, or undefined.
    */
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }

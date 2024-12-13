@@ -1,10 +1,10 @@
 "use client";
 
-import { useUserStore } from "@/stores/useUserStore";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Constants } from "@/utils/constants";
 import { User } from "@/models/user";
+import { useUserStore } from "@/stores/useUserStore";
+import { Constants } from "@/utils/constants";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   idToken: string;
@@ -17,7 +17,7 @@ export default function Login({ idToken }: Props) {
   useEffect(() => {
     if (user) return;
 
-    const dummyUser: User = { name: "", imageUrl: "", isAdmin: true, email: "", idToken };
+    const dummyUser: User = { id: "", name: "", imageUrl: "", isAdmin: true, email: "", idToken };
     setUser(dummyUser);
     router.push(Constants.pagePath.landing);
   }, [user]);

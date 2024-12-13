@@ -20,6 +20,7 @@ const dummyAnnouncement: Announcement = {
   apps: [],
   body: "",
   creator: {
+    id: "",
     email: "",
     idToken: "",
     imageUrl: "",
