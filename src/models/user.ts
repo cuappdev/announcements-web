@@ -3,6 +3,11 @@
  */
 export interface User {
   /**
+   * The ID of the user.
+   */
+  id: string;
+
+  /**
    * The user's email address.
    */
   email: string;
