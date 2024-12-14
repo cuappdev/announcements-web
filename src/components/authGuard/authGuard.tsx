@@ -4,11 +4,20 @@ import { User } from "@/models/user";
 import ApiClient from "@/services/apiClient";
 import { useUserStore } from "@/stores/useUserStore";
 import { Constants } from "@/utils/constants";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import errorToast from "../system/errorToast";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false, // default: true
+      },
+    },
+  });
+
   const apiClient = ApiClient.createInstance();
 
   const { user, setUser } = useUserStore();
@@ -51,5 +60,5 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
-  return <>{children}</>;
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
