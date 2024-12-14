@@ -11,7 +11,7 @@ type UploadServiceResponse = {
 
 export async function uploadFile(formData: FormData): Promise<UploadFields> {
   const apiClient = ApiClient.createInstance();
-  const uploadUrl = process.env.UPLOAD_URL;
+  const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_URL;
   if (!uploadUrl) return { success: false, error: "Upload URL invalid" };
 
   try {
@@ -19,7 +19,7 @@ export async function uploadFile(formData: FormData): Promise<UploadFields> {
     const response = await ApiClient.postFormData<UploadServiceResponse>(
       apiClient,
       `${uploadUrl}/upload/`,
-      { bucket: process.env.UPLOAD_BUCKET },
+      { bucket: process.env.NEXT_PUBLIC_UPLOAD_BUCKET },
       file
     );
 
