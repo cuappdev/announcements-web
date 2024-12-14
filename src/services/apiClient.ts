@@ -1,4 +1,3 @@
-import { Constants } from "@/utils/constants";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 /**
@@ -43,7 +42,7 @@ class ApiClient {
    */
   static createInstance(): AxiosInstance {
     return axios.create({
-      baseURL: Constants.api.baseUrl,
+      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
       headers: {
         "Content-Type": "application/json",
       },

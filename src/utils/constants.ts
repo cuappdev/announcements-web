@@ -2,9 +2,6 @@
  * A collection of constant values used throughout the application.
  */
 export const Constants = {
-  api: {
-    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000",
-  },
   pagePath: {
     default: "/",
     landing: "/landing",
