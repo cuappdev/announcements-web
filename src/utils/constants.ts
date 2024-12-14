@@ -3,7 +3,7 @@
  */
 export const Constants = {
   api: {
-    baseUrl: process.env.API_BASE_URL,
+    baseUrl: process.env.API_BASE_URL || "http://localhost:8000",
   },
   pagePath: {
     default: "/",
