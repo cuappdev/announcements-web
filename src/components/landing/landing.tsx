@@ -76,7 +76,7 @@ export default function Landing() {
     <>
       <LoadingScreen canDismiss={fetchAnnouncementsQuery.isFetched} />
 
-      <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px] bg-other-background">
+      <div className="flex flex-col gap-16 md:gap-20 lg:gap-[132px] min-h-screen bg-other-background">
         <NavBar />
 
         {showForm ? <AnnouncementForm onClose={closeForm} editingAnnouncement={editingAnnouncement} /> : null}
